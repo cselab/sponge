@@ -3,7 +3,7 @@
 #include "navier-stokes/centered.h"
 #include "view.h"
 static const double d = 0.25;
-static double Reynolds = 1;
+static double Reynolds = 100;
 static int maxlevel = 4;
 
 u.n[left] = dirichlet(1);
@@ -50,8 +50,6 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
     return 1;
   }
   fprintf(fp, "\
-<?xml version=\"1.0\" ?>\n\
-<!DOCTYPE Xdmf SYSTEM \"Xdmf.dtd\" []>\n\
 <Xdmf Version=\"2.0\">\n\
  <Domain>\n\
    <Grid>\n\
