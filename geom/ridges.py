@@ -24,6 +24,6 @@ diameter = xhi - xlo
 mesh.points[:, 0] = x
 mesh.points[:, 1] = y
 mesh.points[:, 2] = z
-mesh.write("out.stl", binary=True)
+mesh.write("scaled.stl", binary=True)
 print(diameter, diameter * s, 40 * s)
 

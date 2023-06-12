@@ -1,9 +1,3 @@
-/**
-# Distance field computation from a 3D model
-
-The goal is to build a distance field representation of a 3D
-[CAD](https://en.wikipedia.org/wiki/Computer-aided_design) model. */
-
 #include "grid/octree.h"
 #include "utils.h"
 #include "distance.h"
