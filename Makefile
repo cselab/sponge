@@ -6,7 +6,6 @@ BASILISK = $(HOME)/basilisk/src
 BASILISK_VIEW_FLAGS = `pkg-config --libs osmesa glu` -lm
 MPICC = mpicc
 MPICCFLAGS = -O2 -g
-CFLAGS = -O2 -g
 
 QCC = qcc
 all: 3 distance stl

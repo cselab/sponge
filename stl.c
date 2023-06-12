@@ -5,7 +5,7 @@
 #include "distance.h"
 #include "view.h"
 
-static const double diameter = 0.3733333285861546;
+static const double diameter = 0.3733333285861546 / 2;
 static double Reynolds = 10000;
 static int maxlevel = 4;
 scalar stl[];
@@ -16,7 +16,7 @@ pf[left] = neumann(0);
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
-stl[back] = 0;
+//stl[back] = 0;
 face vector muv[];
 
 static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
@@ -117,19 +117,22 @@ event init(t = 0) {
     s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
 	  d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
     p0 = sq(x) + sq(y) - sq(diameter / 2);
-    //    p0 = max(p0, - 0.4 - z);
-    p0 = max(p0, z + 0.4);
+    p0 = max(p0, z - 0.4);
+    p0 = max(p0, -z + 0.4);
+
     phi[] = p0;
+    //phi[] = min(-s0, p0);
   }
   fractions (phi, stl);
   foreach ()
     u.x[] = stl[] ? 1. : 0.;
 
-  view (fov = 30, quat = {-0.52,0.31,0.38,-0.7},
+  view (fov = 40, quat = {-0.52,0.31,0.38,-0.7},
 	tx = -0.045, ty = 0.015, width = 640, height = 480, bg = {1,1,1});
   draw_vof ("stl", "s");
   draw_vof ("stl", "s", edges = true, lw = 0.5);
   save ("stl.png");
+  exit(0);
 }
 
 event velocity (i++) {
