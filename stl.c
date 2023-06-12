@@ -1,10 +1,14 @@
 #include "grid/octree.h"
-#include "embed.h"
-#include "distance.h"
 #include "navier-stokes/centered.h"
-static const double d = 0.40;
+#include "fractions.h"
+#include "two-phase.h"
+#include "distance.h"
+#include "view.h"
+
+static const double diameter = 0.3733333285861546;
 static double Reynolds = 10000;
 static int maxlevel = 4;
+scalar stl[];
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
@@ -12,6 +16,7 @@ pf[left] = neumann(0);
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
+stl[back] = 0;
 face vector muv[];
 
 static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
@@ -91,22 +96,46 @@ int main(int argc, char **argv) {
   mu = muv;
   run();
 }
-event properties(i++) { foreach_face() muv.x[] = fm.x[] * d / Reynolds; }
+event properties(i++) { foreach_face() muv.x[] = fm.x[] * diameter / Reynolds; }
 
 event init(t = 0) {
-  vertex scalar phi[];
-  FILE * fp = fopen ("geom/scaled.stl", "r");
-  coord * p = input_stl (fp);
   coord min, max;
+  coord * p;
+  FILE * fp;
+  vertex scalar phi[];
+  scalar d[];  
+  
+  fp = fopen ("geom/scaled.stl", "r");
+  p = input_stl (fp);
+  fclose(fp);
   bounding_box (p, &min, &max);
   fprintf(stderr, "distance: min: %g %g %g\n", min.x, min.y, min.z);
   fprintf(stderr, "distance: max: %g %g %g\n", max.x, max.y, max.z);
-  fclose(fp)
-  
-  
-  solid(cs, fs, difference(difference(x * x + y * y - sq(d/2), z - 0.4), -0.4 - z));
+  distance (d, p);
+  foreach_vertex() {
+    double p0, s0;
+    s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
+	  d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
+    p0 = sq(x) + sq(y) - sq(diameter / 2);
+    //    p0 = max(p0, - 0.4 - z);
+    p0 = max(p0, z + 0.4);
+    phi[] = p0;
+  }
+  fractions (phi, stl);
   foreach ()
-    u.x[] = cs[] ? 1. : 0.;
+    u.x[] = stl[] ? 1. : 0.;
+
+  view (fov = 30, quat = {-0.52,0.31,0.38,-0.7},
+	tx = -0.045, ty = 0.015, width = 640, height = 480, bg = {1,1,1});
+  draw_vof ("stl", "s");
+  draw_vof ("stl", "s", edges = true, lw = 0.5);
+  save ("stl.png");
+}
+
+event velocity (i++) {
+  foreach()
+    foreach_dimension()
+      u.x[] = (1. - stl[])*u.x[];
 }
 
 event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }

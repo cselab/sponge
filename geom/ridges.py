@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import meshio
 mesh = meshio.read("ridges.stl")
 x, y, z = zip(*mesh.points)
@@ -25,5 +27,5 @@ mesh.points[:, 0] = x
 mesh.points[:, 1] = y
 mesh.points[:, 2] = z
 mesh.write("scaled.stl", binary=True)
-print(diameter, diameter * s, 40 * s)
+print(diameter, diameter * s, 40 * s, s)
 
