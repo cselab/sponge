@@ -4,6 +4,7 @@
 #include "two-phase.h"
 #include "distance.h"
 #include "view.h"
+#include "lambda2.h"
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 10000;
@@ -17,7 +18,6 @@ pf[left] = neumann(0);
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
-//stl[back] = 0;
 face vector muv[];
 
 static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
@@ -168,7 +168,6 @@ event init(t = 0) {
   draw_vof ("stl", "s");
   draw_vof ("stl", "s", edges = true, lw = 0.5);
   save ("stl.png");
-  exit(0);
 }
 
 event velocity (i++) {
@@ -181,11 +180,19 @@ event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }
 
 event movies(i += 1; t <= 100) {
   static long iframe = 0;
-  char raw[FILENAME_MAX], xdmf[FILENAME_MAX];
+  char raw[FILENAME_MAX], xdmf[FILENAME_MAX], l2path[FILENAME_MAX];
   sprintf(xdmf, "a.%09ld.xdmf2", iframe);
   sprintf(raw, "%09ld.raw", iframe);
-  if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0)
-      exit(1);
+  sprintf(l2path, "l2.%09ld.png", iframe);
+  if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0) {
+    fprintf(stderr, "stl: dump_fields failed\n");
+    exit(1);
+  }
+  scalar l2[];
+  lambda2 (u, l2);
+  isosurface ("l2", -10);
+  save(l2path);
+  
   iframe++;
 }
 
