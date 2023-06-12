@@ -1,9 +1,8 @@
 #include "grid/octree.h"
 #include "embed.h"
 #include "navier-stokes/centered.h"
-#include "view.h"
-static const double d = 0.25;
-static double Reynolds = 100;
+static const double d = 0.40;
+static double Reynolds = 10000;
 static int maxlevel = 4;
 
 u.n[left] = dirichlet(1);
@@ -15,7 +14,7 @@ pf[right] = dirichlet(0);
 face vector muv[];
 
 static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
-                double oy, double ex, double ey, long nx) {
+		double oy, double ex, double ey, long nx) {
   long k, j, ny;
   double sx, sy, xp, yp, zp;
   float v;
@@ -26,7 +25,7 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
   ny = ey / sx;
   sy = ey / ny;
   if ((fp = fopen(raw, "w")) == NULL) {
-    fprintf(stderr, "cylinder: fail to write to '%s'\n", raw);
+    fprintf(stderr, "3: fail to write to '%s'\n", raw);
     exit(1);
   }
   for (k = 0; k < ny; k++) {
@@ -42,11 +41,11 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
     }
   }
   if (fclose(fp) != 0) {
-    fprintf(stderr, "cylinder: fail to close '%s'\n", raw);
+    fprintf(stderr, "3: fail to close '%s'\n", raw);
     return 1;
   }
   if ((fp = fopen(xdmf, "w")) == NULL) {
-    fprintf(stderr, "cylinder: fail to write to '%s'\n", xdmf);
+    fprintf(stderr, "3: fail to write to '%s'\n", xdmf);
     return 1;
   }
   fprintf(fp, "\
@@ -60,7 +59,7 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
        <DataItem Name=\"Spacing\" Dimensions=\"2\">%.16e %.16e</DataItem>\n\
      </Geometry>\n\
 ",
-          t, ny + 1, nx + 1, oy, ox, sy, sx);
+	  t, ny + 1, nx + 1, oy, ox, sy, sx);
   for (j = 0; j < sizeof names / sizeof *names; j++)
     fprintf(fp, "\
      <Attribute Name=\"%s\" Center=\"Cell\">\n\
@@ -70,15 +69,15 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
 	</DataItem>\n\
      </Attribute>\n\
 ",
-            names[j], ny, nx, j, sizeof names / sizeof *names, ny, nx, ny,
-            3 * nx, raw);
+	    names[j], ny, nx, j, sizeof names / sizeof *names, ny, nx, ny,
+	    3 * nx, raw);
   fprintf(fp, "\
    </Grid>\n\
  </Domain>\n\
 </Xdmf>\n\
 ");
   if (fclose(fp) != 0) {
-    fprintf(stderr, "cylinder: fail to close '%s'\n", xdmf);
+    fprintf(stderr, "3: fail to close '%s'\n", xdmf);
     return 1;
   }
   return 0;
@@ -86,8 +85,8 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
 
 int main(int argc, char **argv) {
   L0 = 1.0;
-  origin(-L0/2, -L0/2, -L0/2);
   N = 64;
+  origin(-L0/2, -L0/2, -L0/2);
   mu = muv;
   run();
 }
@@ -95,18 +94,16 @@ event properties(i++) { foreach_face() muv.x[] = fm.x[] * d / Reynolds; }
 
 event init(t = 0) {
   vertex scalar phi[];
-  solid(cs, fs, x * x + y * y - sq(d/2));
+  solid(cs, fs, difference(difference(x * x + y * y - sq(d/2), z - 0.4), -0.4 - z));
+  foreach ()
+    u.x[] = cs[] ? 1. : 0.;
 }
 
 event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }
 
 event movies(i += 1; t <= 100) {
   static long iframe = 0;
-  char path[FILENAME_MAX], raw[FILENAME_MAX], xdmf[FILENAME_MAX];
-  view(fov = 11, theta = 0.05, relative = false);
-  isosurface("u.x", 0.5, color = "level");
-  sprintf(path, "%09ld.png", iframe);
-  save(path);
+  char raw[FILENAME_MAX], xdmf[FILENAME_MAX];
   sprintf(xdmf, "a.%09ld.xdmf2", iframe);
   sprintf(raw, "%09ld.raw", iframe);
   if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0)
@@ -119,4 +116,3 @@ event adapt(i++) {
   adapt_wavelet({cs, u}, (double[]){1e-2, 3e-3, 3e-3}, maxlevel, 4);
 }
 */
-
