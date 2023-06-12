@@ -5,11 +5,12 @@
 #include "distance.h"
 #include "view.h"
 
-static const double diameter = 0.3733333285861546 / 2;
+static const double diameter = 0.3733333285861546;
 static double Reynolds = 10000;
 static int maxlevel = 4;
-scalar stl[];
+static char *stl_path;
 
+scalar stl[];
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
 pf[left] = neumann(0);
@@ -90,8 +91,42 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
 }
 
 int main(int argc, char **argv) {
-  L0 = 1.0;
-  N = 64;
+  int LevelFlag;
+  long level;
+  char *end;
+  LevelFlag = 0;
+  while (*++argv != NULL && argv[0][0] == '-')
+    switch (argv[0][1]) {
+    case 'h':
+      exit(1);
+    case 'l':
+      argv++;
+      if (*argv == NULL) {
+	fprintf(stderr, "distance: -l needs an argument\n");
+	exit(1);
+      }
+      level = strtol(*argv, &end, 10);
+      if (*end != '\0' || level <= 0) {
+	fprintf(stderr, "distance: '%s' is not a positive integer\n", *argv);
+	exit(1);
+      }
+      LevelFlag = 1;
+      break;
+    default:
+      fprintf(stderr, "stl: error: unrecognized command-line option '%s'\n", *argv);
+      exit(1);
+    }
+  if (LevelFlag == 0) {
+    fprintf(stderr, "distance: error: -l must be set\n");
+    exit(1);
+  }
+  if (*argv == NULL) {
+    fprintf(stderr, "stl: error: not input file\n");
+    exit(1);
+  }
+  stl_path = *argv;
+  size(1.0);
+  init_grid (1 << level);
   origin(-L0/2, -L0/2, -L0/2);
   mu = muv;
   run();
@@ -103,31 +138,32 @@ event init(t = 0) {
   coord * p;
   FILE * fp;
   vertex scalar phi[];
-  scalar d[];  
-  
-  fp = fopen ("geom/scaled.stl", "r");
+  scalar d[];
+
+  if ((fp = fopen (stl_path, "r")) == NULL) {
+    fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
+    exit(1);
+  }
   p = input_stl (fp);
   fclose(fp);
   bounding_box (p, &min, &max);
-  fprintf(stderr, "distance: min: %g %g %g\n", min.x, min.y, min.z);
-  fprintf(stderr, "distance: max: %g %g %g\n", max.x, max.y, max.z);
+  fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
+  fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
   distance (d, p);
   foreach_vertex() {
     double p0, s0;
     s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
 	  d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
-    p0 = sq(x) + sq(y) - sq(diameter / 2);
+    p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
     p0 = max(p0, z - 0.4);
-    p0 = max(p0, -z + 0.4);
-
+    p0 = max(p0, - 0.4 - z);
     phi[] = p0;
-    //phi[] = min(-s0, p0);
   }
   fractions (phi, stl);
   foreach ()
     u.x[] = stl[] ? 1. : 0.;
 
-  view (fov = 40, quat = {-0.52,0.31,0.38,-0.7},
+  view (fov = 20, quat = {-0.52,0.31,0.38,-0.7},
 	tx = -0.045, ty = 0.015, width = 640, height = 480, bg = {1,1,1});
   draw_vof ("stl", "s");
   draw_vof ("stl", "s", edges = true, lw = 0.5);
