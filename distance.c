@@ -10,86 +10,89 @@ The goal is to build a distance field representation of a 3D
 #include "fractions.h"
 #include "view.h"
 
-int main()
+int main(int argc, char **argv)
 {
-
-  /**
-  We get the 3D model from the [Large Geometric Models
-  Archive](http://www.cc.gatech.edu/projects/large_models/). This is
-  in [PLY format](https://en.wikipedia.org/wiki/PLY_%28file_format%29)
-  which we need to convert to
-  [STL](https://en.wikipedia.org/wiki/STL_%28file_format%29) using
-  [meshlab](http://www.meshlab.net/). */
-
-  system ("test -f distance.stl || "
-	  "(wget http://www.cc.gatech.edu/data_files/large_models/horse.ply.gz && "
-	  "gunzip -f horse.ply.gz && "
-	  "meshlabserver -i horse.ply -o distance.stl)");
-
-  /**
-  We read the STL file, compute the bounding box of the model and set
-  the domain center and size using this bounding box. */
-
-  coord * p = input_stl (fopen ("distance.stl", "r"));
+  int Verbose, Refine, LevelFlag;
+  long level;
+  FILE *file;
+  char *end;
+  Verbose = 0;
+  Refine = 0;
+  LevelFlag = 0;
+  while (*++argv != NULL && argv[0][0] == '-')
+    switch (argv[0][1]) {
+    case 'h':
+      exit(1);
+    case 'v':
+      Verbose = 1;
+      break;
+    case 'r':
+      Refine = 1;
+      break;
+    case 'l':
+      argv++;
+      if (*argv == NULL) {
+	fprintf(stderr, "distance: -l needs an argument\n");
+	exit(1);
+      }
+      level = strtol(*argv, &end, 10);
+      if (*end != '\0' || level <= 0) {
+	fprintf(stderr, "distance: '%s' is not a positive integer\n", *argv);
+	exit(1);
+      }
+      LevelFlag = 1;
+      break;
+    default:
+      fprintf(stderr, "distance: unknown option '%s'\n", *argv);
+      exit(1);
+    }
+  if (*argv == NULL) {
+    fprintf(stderr, "distance: error: not input file\n");
+    exit(1);
+  }
+  if (LevelFlag == 0) {
+    fprintf(stderr, "distance: error: -l must be set\n");
+    exit(1);
+  }
+  if ((file = fopen(*argv, "r")) == NULL) {
+    fprintf(stderr, "distance: error: '%s': no suck file\n");
+    exit(1);
+  }
+  coord * p = input_stl(file);
+  if (fclose(file) != 0) {
+    fprintf(stderr, "distance: fail to close '%s'\n", *argv);
+    exit(1);
+  }
   coord min, max;
   bounding_box (p, &min, &max);
   double maxl = -HUGE;
   foreach_dimension()
     if (max.x - min.x > maxl)
       maxl = max.x - min.x;
-
-  init_grid (8);
+  init_grid (1 << level);
+  if (Verbose) {
+    fprintf(stderr, "distance: min: %g %g %g\n", min.x, min.y, min.z);
+    fprintf(stderr, "distance: max: %g %g %g\n", max.x, max.y, max.z);
+    fprintf(stderr, "distance: init_grid: %ld\n", N);
+  }
   size (1.2*maxl);
   origin ((max.x + min.x)/2. - L0/2,
 	  (max.y + min.y)/2. - L0/2,
 	  (max.z + min.z)/2. - L0/2);
-
-  /**
-  We initialize the distance field on the coarse initial mesh and
-  refine it adaptively until the threshold error (on distance) is
-  reached. */
-
   scalar d[];
   distance (d, p);
-  while (adapt_wavelet ({d}, (double[]){5e-4*L0}, 10).nf);
-
-  /**
-  We display an isosurface of the distance function coloured with the
-  level of refinement. */
-
+  if (Refine)
+    while (adapt_wavelet ({d}, (double[]){5e-4*L0}, 10).nf);
   view (fov = 15.65, quat = {-0.52,0.31,0.38,-0.7},
 	tx = -0.045, ty = 0.015, width = 640, height = 480, bg = {1,1,1});
   isosurface ("d", 0, color = "level", min = 5, max = 10);
-  save ("horse.png");
-
-  /**
-  We also compute the volume and surface fractions from the distance
-  field. */
-
+  save ("isosurface.png");
   scalar f[];
   face vector s[];
   solid (f, s, (d[] + d[-1] + d[0,-1] + d[-1,-1] +
 		d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.);
-
-  /**
-  Finally we display the surface reconstructed from volume fractions. */
-
   clear();
   draw_vof ("f", "s");
   draw_vof ("f", "s", edges = true, lw = 0.5);
   save ("vof.png");
 }
-
-/**
-Note that the "tail" of the horse is an artefact due to an
-inconsistency in the surface mesh, which is self-intersecting near
-this point.
-
-![Isosurface of the distance function coloured with level of refinement.](distance/horse.png)
-
-![Reconstructed VOF surface.](distance/vof.png)
-
-## See also
-
-* [Computation of a levelset field from a contour](/src/test/basilisk.c)
-*/

@@ -8,3 +8,14 @@ skeletal adaptations of deep-sea sponges. Nature, 595(7868), 537-541.
 # Geometry
 
 [ridges.stl](ridges.stl): R1 from [1]
+
+# Basilisk
+
+```
+sudo apt install libglu1-mesa-dev libosmesa6-dev meshlab -y
+cd basilisk/src
+make
+cp qcc $HOME/.local/bin/
+cd basilisk/src/gl
+make libglutils.a libfb_osmesa.a
+```

@@ -9,7 +9,7 @@ MPICCFLAGS = -O2 -g
 CFLAGS = -O2 -g
 
 QCC = qcc
-all: 3 distance.c
+all: 3 distance
 _3.c: 3.c; $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
 3: _3.c; $(MPICC) -o $@ $(MPICCFLAGS) _3.c -lm
 _distance.c: distance.c; $(QCC) $(QCCFLAGS) -D_MPI=1 distance.c -source
