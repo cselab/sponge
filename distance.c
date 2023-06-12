@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     exit(1);
   }
   if ((file = fopen(*argv, "r")) == NULL) {
-    fprintf(stderr, "distance: error: '%s': no suck file\n");
+    fprintf(stderr, "distance: error: '%s': no suck file\n", *argv);
     exit(1);
   }
   coord * p = input_stl(file);
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
   if (Verbose) {
     fprintf(stderr, "distance: min: %g %g %g\n", min.x, min.y, min.z);
     fprintf(stderr, "distance: max: %g %g %g\n", max.x, max.y, max.z);
-    fprintf(stderr, "distance: init_grid: %ld\n", N);
+    fprintf(stderr, "distance: init_grid: %d\n", N);
   }
   size (1.2*maxl);
   origin ((max.x + min.x)/2. - L0/2,

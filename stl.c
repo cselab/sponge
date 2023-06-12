@@ -55,7 +55,7 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
     return 1;
   }
   fprintf(fp, "\
-<Xdmf Version=\"2.0\">\n\
+<Xdmf>\n\
  <Domain>\n\
    <Grid>\n\
      <Time Value=\"%.16e\"/>\n\
