@@ -1,5 +1,4 @@
 #include "grid/octree.h"
-#include "embed.h"
 #include "navier-stokes/centered.h"
 #include "fractions.h"
 #include "two-phase.h"
@@ -17,8 +16,6 @@ pf[left] = neumann(0);
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
-u.n[embed] = dirichlet(0.);
-u.t[embed] = dirichlet(0.);
 face vector muv[];
 scalar stl[];
 
@@ -181,13 +178,11 @@ event init(t = 0) {
   save ("stl.png");
 }
 
-/*
 event velocity (i++) {
   foreach()
     foreach_dimension()
-      u.x[] = (1. - stl[])*u.x[];
+      u.x[] = stl[]*u.x[];
 }
-*/
 
 event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }
 
@@ -199,6 +194,8 @@ event movies(i++; t <= 100) {
   sprintf(raw, "%09ld.raw", iframe);
   sprintf(omega_path, "omega.%09ld.png", iframe);
   vorticity(u, omega);
+  draw_vof ("stl", "s");
+  draw_vof ("stl", "s", edges = true, lw = 0.5);
   isosurface("u.x", 0.5);
   save(omega_path);
   if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0) {
