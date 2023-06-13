@@ -7,7 +7,7 @@
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 400;
-static int maxlevel = 4;
+static int maxlevel = 8;
 static char *stl_path;
 static int period;
 
@@ -190,8 +190,6 @@ event init(t = 0) {
     u.y[] = 0;
     u.z[] = 0;
   }
-  /* foreach ()
-     u.x[] = stl[] ? 1. : 0.; */
   view (fov = 20, width = 640, height = 480, bg = {1,1,1});
   draw_vof ("stl", "s");
   draw_vof ("stl", "s", edges = true, lw = 0.5);
@@ -227,8 +225,10 @@ event dump(i ++; t <= 100) {
   iframe++;
 }
 
-/*
-event adapt(i++) {
-  adapt_wavelet({cs, u}, (double[]){1e-2, 3e-3, 3e-3}, maxlevel, 4);
+event adapt (i++) {
+  double uemax = 0.1;
+  astats s = adapt_wavelet ({stl, u},
+			    (double[]){0.01,0.01,uemax,uemax,uemax}, maxlevel, 5);
+  fprintf(stderr, "stl: %g refined %d cells, coarsened %d cells\n",
+	   t, s.nf, s.nc);
 }
-*/
