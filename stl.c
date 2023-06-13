@@ -1,4 +1,5 @@
 #include "grid/octree.h"
+#include "embed.h"
 #include "navier-stokes/centered.h"
 #include "fractions.h"
 #include "two-phase.h"
@@ -6,18 +7,93 @@
 #include "view.h"
 
 static const double diameter = 0.3733333285861546;
-static double Reynolds = 10000;
+static double Reynolds = 400;
 static int maxlevel = 4;
 static char *stl_path;
 
-scalar stl[];
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
 pf[left] = neumann(0);
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
+u.n[embed] = dirichlet(0.);
+u.t[embed] = dirichlet(0.);
 face vector muv[];
+scalar stl[];
+
+static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
+		double oy, double ex, double ey, long nx) {
+  long k, j, ny, nfield;
+  double sx, sy, xp, yp, zp;
+  float v;
+  FILE *fp;
+  char *names[] = {"ux", "uy", "uz", "p"};
+  zp = 0;
+  sx = ex / nx;
+  ny = ey / sx;
+  sy = ey / ny;
+  if ((fp = fopen(raw, "w")) == NULL) {
+    fprintf(stderr, "stl: fail to write to '%s'\n", raw);
+    exit(1);
+  }
+  for (k = 0; k < ny; k++) {
+    yp = oy + sy * k + sy / 2.;
+    for (j = 0; j < nx; j++) {
+      xp = ox + sx * j + sx / 2;
+#define FIELD(f)				\
+      v = interpolate((f), xp, yp, zp);		\
+      fwrite(&v, sizeof v, 1, fp);		\
+
+      FIELD(u.x);
+      FIELD(u.y);
+      FIELD(u.z);
+      FIELD(p);
+    }
+  }
+  if (fclose(fp) != 0) {
+    fprintf(stderr, "3: fail to close '%s'\n", raw);
+    return 1;
+  }
+  if ((fp = fopen(xdmf, "w")) == NULL) {
+    fprintf(stderr, "3: fail to write to '%s'\n", xdmf);
+    return 1;
+  }
+  nfield = sizeof names / sizeof *names;
+  fprintf(fp, "\
+<Xdmf Version=\"2.0\">\n\
+ <Domain>\n\
+   <Grid>\n\
+     <Time Value=\"%.16e\"/>\n\
+     <Topology TopologyType=\"2DCORECTMesh\" Dimensions=\"%ld %ld\"/>\n\
+     <Geometry GeometryType=\"ORIGIN_DXDY\">\n\
+       <DataItem Name=\"Origin\" Dimensions=\"2\">%.16e %.16e</DataItem>\n\
+       <DataItem Name=\"Spacing\" Dimensions=\"2\">%.16e %.16e</DataItem>\n\
+     </Geometry>\n\
+",
+	  t, ny + 1, nx + 1, oy, ox, sy, sx);
+  for (j = 0; j < nfield; j++)
+    fprintf(fp, "\
+     <Attribute Name=\"%s\" Center=\"Cell\">\n\
+	<DataItem ItemType=\"HyperSlab\" Dimensions=\"%ld %ld\">\n\
+	  <DataItem Dimensions=\"3 2\">0 %ld 1 %ld %ld %ld</DataItem>\n\
+	  <DataItem Dimensions=\"%ld %ld\" Format=\"Binary\">%s</DataItem>\n\
+	</DataItem>\n\
+     </Attribute>\n\
+",
+	    names[j], ny, nx, j, nfield, ny, nx, ny,
+	    nfield * nx, raw);
+  fprintf(fp, "\
+   </Grid>\n\
+ </Domain>\n\
+</Xdmf>\n\
+");
+  if (fclose(fp) != 0) {
+    fprintf(stderr, "3: fail to close '%s'\n", xdmf);
+    return 1;
+  }
+  return 0;
+}
 
 int main(int argc, char **argv) {
   int LevelFlag;
@@ -60,7 +136,10 @@ int main(int argc, char **argv) {
   mu = muv;
   run();
 }
-event properties(i++) { foreach_face() muv.x[] = fm.x[] * diameter / Reynolds; }
+event properties(i++) {
+  foreach_face()
+    muv.x[] = fm.x[] * diameter / Reynolds;
+}
 
 event init(t = 0) {
   coord min, max;
@@ -89,34 +168,43 @@ event init(t = 0) {
     phi[] = p0;
   }
   fractions (phi, stl);
-  foreach ()
-    u.x[] = stl[] ? 1. : 0.;
-
-  view (fov = 20, quat = {-0.52, 0.31, 0.38, -0.7},
-	tx = -0.045, ty = 0.015, width = 640, height = 480, bg = {1,1,1});
+  foreach () {
+    u.x[] = 0;
+    u.y[] = 0;
+    u.z[] = 0;
+  }
+  /* foreach ()
+     u.x[] = stl[] ? 1. : 0.; */
+  view (fov = 20, width = 640, height = 480, bg = {1,1,1});
   draw_vof ("stl", "s");
   draw_vof ("stl", "s", edges = true, lw = 0.5);
   save ("stl.png");
 }
 
+/*
 event velocity (i++) {
   foreach()
     foreach_dimension()
       u.x[] = (1. - stl[])*u.x[];
 }
+*/
 
 event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }
 
-event movies(i += 1; t <= 100) {
+event movies(i++; t <= 100) {
   static long iframe = 0;
   scalar omega[];
   char raw[FILENAME_MAX], xdmf[FILENAME_MAX], omega_path[FILENAME_MAX];
   sprintf(xdmf, "a.%09ld.xdmf2", iframe);
   sprintf(raw, "%09ld.raw", iframe);
-  sprintf(omega_path, "omega.%09ld.png", iframe);  
-  vorticity (u, omega);
-  isosurface ("omega", 0, color = "level");
+  sprintf(omega_path, "omega.%09ld.png", iframe);
+  vorticity(u, omega);
+  isosurface("u.x", 0.5);
   save(omega_path);
+  if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0) {
+    fprintf(stderr, "stl: error:dump_fields failed\n");
+    exit(1);
+  }
   iframe++;
 }
 
