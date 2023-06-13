@@ -9,6 +9,7 @@ static const double diameter = 0.3733333285861546;
 static double Reynolds = 400;
 static int maxlevel = 4;
 static char *stl_path;
+static int period;
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
@@ -94,9 +95,11 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
 
 int main(int argc, char **argv) {
   int LevelFlag;
+  int PeriodFlag;
   long level;
   char *end;
   LevelFlag = 0;
+  PeriodFlag = 0;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
@@ -114,12 +117,29 @@ int main(int argc, char **argv) {
       }
       LevelFlag = 1;
       break;
+    case 'p':
+      argv++;
+      if (*argv == NULL) {
+	fprintf(stderr, "cylinder: -p needs an argument\n");
+	exit(1);
+      }
+      period = strtol(*argv, &end, 10);
+      if (*end != '\0' || period <= 0) {
+	fprintf(stderr, "cylinder: '%s' is not a positive integer\n", *argv);
+	exit(1);
+      }
+      PeriodFlag = 1;
+      break;
     default:
       fprintf(stderr, "stl: error: unrecognized command-line option '%s'\n", *argv);
       exit(1);
     }
   if (LevelFlag == 0) {
     fprintf(stderr, "distance: error: -l must be set\n");
+    exit(1);
+  }
+  if (!PeriodFlag) {
+    fprintf(stderr, "distance: error: -p must be set\n");
     exit(1);
   }
   if (*argv == NULL) {
@@ -186,21 +206,23 @@ event velocity (i++) {
 
 event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }
 
-event movies(i++; t <= 100) {
+event dump(i ++; t <= 100) {
   static long iframe = 0;
   scalar omega[];
   char raw[FILENAME_MAX], xdmf[FILENAME_MAX], omega_path[FILENAME_MAX];
-  sprintf(xdmf, "a.%09ld.xdmf2", iframe);
-  sprintf(raw, "%09ld.raw", iframe);
-  sprintf(omega_path, "omega.%09ld.png", iframe);
-  vorticity(u, omega);
-  draw_vof ("stl", "s");
-  draw_vof ("stl", "s", edges = true, lw = 0.5);
-  isosurface("u.x", 0.5);
-  save(omega_path);
-  if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0) {
-    fprintf(stderr, "stl: error:dump_fields failed\n");
-    exit(1);
+  if (iframe % period == 0) {
+    sprintf(xdmf, "a.%09ld.xdmf2", iframe);
+    sprintf(raw, "%09ld.raw", iframe);
+    sprintf(omega_path, "omega.%09ld.png", iframe);
+    vorticity(u, omega);
+    draw_vof ("stl", "s");
+    draw_vof ("stl", "s", edges = true, lw = 0.5);
+    isosurface("u.x", 0.5);
+    save(omega_path);
+    if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0) {
+      fprintf(stderr, "stl: error:dump_fields failed\n");
+      exit(1);
+    }
   }
   iframe++;
 }
