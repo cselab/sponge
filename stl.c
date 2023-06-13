@@ -7,9 +7,10 @@
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 400;
-static int maxlevel = 8;
+static int maxlevel = 7;
 static char *stl_path;
 static int period;
+static long level;
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
@@ -96,7 +97,6 @@ static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
 int main(int argc, char **argv) {
   int LevelFlag;
   int PeriodFlag;
-  long level;
   char *end;
   LevelFlag = 0;
   PeriodFlag = 0;
@@ -221,6 +221,7 @@ event dump(i ++; t <= 100) {
       fprintf(stderr, "stl: error:dump_fields failed\n");
       exit(1);
     }
+    fields_stats();
   }
   iframe++;
 }
@@ -228,7 +229,7 @@ event dump(i ++; t <= 100) {
 event adapt (i++) {
   double uemax = 0.1;
   astats s = adapt_wavelet ({stl, u},
-			    (double[]){0.01,0.01,uemax,uemax,uemax}, maxlevel, 5);
+			    (double[]){0.01,0.01,uemax,uemax,uemax}, maxlevel, level);
   fprintf(stderr, "stl: %g refined %d cells, coarsened %d cells\n",
 	   t, s.nf, s.nc);
 }
