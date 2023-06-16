@@ -4,9 +4,12 @@
 
 # Basilisk
 
+Follow <http://basilisk.fr/src/INSTALL>
+
 ```
 sudo apt install libglu1-mesa-dev libosmesa6-dev meshlab -y
 cd basilisk/src
+cp config.gcc config
 make
 cp qcc $HOME/.local/bin/
 cd basilisk/src/gl
