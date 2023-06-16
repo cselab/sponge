@@ -3,6 +3,7 @@
 #include "fractions.h"
 #include "two-phase.h"
 #include "distance.h"
+#include "embed.h"
 #include "view.h"
 
 static const double diameter = 0.3733333285861546;
@@ -14,13 +15,15 @@ static long level;
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
-pf[left] = neumann(0);
+
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
-pf[right] = dirichlet(0);
-face vector muv[];
-scalar stl[];
 
+u.n[embed] = dirichlet(0.);
+u.t[embed] = dirichlet(0.);
+u.r[embed] = dirichlet(0.);
+
+face vector muv[];
 static int dump_fields(const char *raw, const char *xdmf, double t, double ox,
 		double oy, double ex, double ey, long nx) {
   long k, j, ny, nfield;
@@ -177,30 +180,33 @@ event init(t = 0) {
   distance (d, p);
   foreach_vertex() {
     double p0, s0;
-    s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
-	  d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
+    /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] + 
+       d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.; 
     p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
     p0 = max(p0, z - 0.4);
-    p0 = max(p0, - 0.4 - z);
+    p0 = max(p0, - 0.4 - z); */
+    p0 = sq(x) + sq(y) + sq(z) - sq(diameter / 2);
     phi[] = p0;
   }
-  fractions (phi, stl);
+  fractions (phi, cs, fs);
   foreach () {
     u.x[] = 0;
     u.y[] = 0;
     u.z[] = 0;
   }
   view (fov = 20, width = 640, height = 480, bg = {1,1,1});
-  draw_vof ("stl", "s");
-  draw_vof ("stl", "s", edges = true, lw = 0.5);
-  save ("stl.png");
+  draw_vof ("cs", "fs");
+  draw_vof ("cs", "fs", edges = true, lw = 0.5);
+  save ("vof.png");
 }
 
+/*
 event velocity (i++) {
   foreach()
     foreach_dimension()
       u.x[] = stl[]*u.x[];
 }
+*/
 
 event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }
 
@@ -213,8 +219,8 @@ event dump(i ++; t <= 100) {
     sprintf(raw, "%09ld.raw", iframe);
     sprintf(omega_path, "omega.%09ld.png", iframe);
     vorticity(u, omega);
-    draw_vof ("stl", "s");
-    draw_vof ("stl", "s", edges = true, lw = 0.5);
+    draw_vof ("cs", "fs");
+    draw_vof ("cs", "fs", edges = true, lw = 0.5);
     isosurface("u.x", 0.5);
     save(omega_path);
     if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0) {
@@ -226,6 +232,7 @@ event dump(i ++; t <= 100) {
   iframe++;
 }
 
+/*
 event adapt (i++) {
   double uemax = 0.1;
   astats s = adapt_wavelet ({stl, u},
@@ -233,3 +240,4 @@ event adapt (i++) {
   fprintf(stderr, "stl: %g refined %d cells, coarsened %d cells\n",
 	   t, s.nf, s.nc);
 }
+*/
