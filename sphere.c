@@ -124,7 +124,6 @@ event movies (t = 30; t += 0.25; t <= 60)
   isosurface ("l2", -0.01, color = "vyz", min = -1, max = 1,
 	      linear = true, map = cool_warm);
   save ("movie.mp4");
-  fields_stats();
 }
 
 /**
@@ -135,4 +134,5 @@ event adapt (i++) {
   astats s = adapt_wavelet ({cs,u}, (double[]){1e-2,0.02,0.02,0.02},
 			    maxlevel, 4);
   fprintf (stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
+  fields_stats();
 }
