@@ -15,6 +15,7 @@ static char *stl_path;
 static int period;
 static long level;
 vertex scalar phi[];
+scalar omega[];
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
@@ -137,19 +138,13 @@ event velocity (i++) {
 
 event dump(i ++; t <= 100) {
   static long iframe = 0;
-  scalar omega[];
-  char hdg[FILENAME_MAX], omega_path[FILENAME_MAX];
+  char hdg[FILENAME_MAX];
   char path[]=".";
   if (iframe % period == 0) {
     fields_stats();
-    sprintf(omega_path, "omega.%09ld.png", iframe);
     vorticity(u, omega);
-    draw_vof ("cs", "fs");
-    draw_vof ("cs", "fs", edges = true, lw = 0.5);
-    isosurface("u.x", 0.5);
-    save(omega_path);
     sprintf(hdg, "h.%09ld", iframe);
-    output_htg({p, cs, phi}, {u}, path, hdg, iframe, t);
+    output_htg({p, cs, phi, omega}, {u}, path, hdg, iframe, t);
   }
   iframe++;
 }
