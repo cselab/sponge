@@ -181,8 +181,8 @@ event init(t = 0) {
   distance (d, p);
   foreach_vertex() {
     double p0, s0;
-    /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] + 
-       d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.; 
+    /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
+       d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
     p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
     p0 = max(p0, z - 0.4);
     p0 = max(p0, - 0.4 - z); */
@@ -228,6 +228,9 @@ event dump(i ++; t <= 100) {
       fprintf(stderr, "stl: error:dump_fields failed\n");
       exit(1);
     }
+    sprintf(raw, "h.%09ld", iframe);
+    char path[]="htg";
+    output_htg({p}, {u}, path, raw, iframe, t);
     fields_stats();
   }
   iframe++;
