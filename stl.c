@@ -232,12 +232,9 @@ event dump(i ++; t <= 100) {
   iframe++;
 }
 
-/*
 event adapt (i++) {
-  double uemax = 0.1;
-  astats s = adapt_wavelet ({stl, u},
-			    (double[]){0.01,0.01,uemax,uemax,uemax}, maxlevel, level);
-  fprintf(stderr, "stl: %g refined %d cells, coarsened %d cells\n",
-	   t, s.nf, s.nc);
+  astats s = adapt_wavelet ({cs,u}, (double[]){1e-2, 0.02, 0.02, 0.02},
+			    maxlevel, 4);
+  fprintf (stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
+  fields_stats();
 }
-*/
