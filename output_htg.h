@@ -419,7 +419,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 			   "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
 			   s.name, vertices, min_val[i], max_val[i],
 			   byte_offset));
-	byte_offset += vertices * sizeof(float_t) + sizeof(uint32_t);
+	byte_offset += vertices * sizeof(float) + sizeof(uint32_t);
 	i++;
       }
     }
@@ -433,7 +433,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 	    "Name=\"%s\" NumberOfTuples=\"%u\" format=\"appended\"  "
 	    "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
 	    3, vname, vertices, min_val_v[i], max_val_v[i], byte_offset));
-	byte_offset += vertices * 3 * sizeof(float_t) + sizeof(uint32_t);
+	byte_offset += vertices * 3 * sizeof(float) + sizeof(uint32_t);
 	i++;
       }
     }
@@ -654,7 +654,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 
     cell_size = sizeof(uint8_t);
     level_struct.size = vertices * cell_size;
-    level_struct.data = (uint8_t *)malloc(vertices_local * cell_size);
+    level_struct.data = malloc(vertices_local * cell_size);
 
     MPI_Aint m_displacements[2];
     MPI_Aint base_address;
@@ -715,7 +715,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 
     cell_size = sizeof(float);
     scalar_struct.size = vertices * cell_size;
-    scalar_struct.data = (float *)malloc(vertices_local * cell_size);
+    scalar_struct.data = malloc(vertices_local * cell_size);
 
     MPI_Aint m_displacements[2];
     MPI_Aint base_address;
@@ -775,7 +775,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 
     cell_size = 3 * sizeof(float);
     vector_struct.size = vertices * cell_size;
-    vector_struct.data = (float *)malloc(vertices_local * cell_size);
+    vector_struct.data = malloc(vertices_local * cell_size);
 
     MPI_Aint m_displacements[2];
     MPI_Aint base_address;
@@ -1095,7 +1095,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 	      "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"%g\" "
 	      "RangeMax=\"%g\" offset=\"%u\"/>\n",
 	      s.name, vertices_local, min_val[i], max_val[i], byte_offset);
-      byte_offset += vertices_local * sizeof(float_t) + sizeof(uint32_t);
+      byte_offset += vertices_local * sizeof(float) + sizeof(uint32_t);
       i++;
     }
   }
@@ -1109,7 +1109,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 	      "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
 	      3, vname, vertices_local, min_val_v[i], max_val_v[i],
 	      byte_offset);
-      byte_offset += vertices_local * 3 * sizeof(float_t) + sizeof(uint32_t);
+      byte_offset += vertices_local * 3 * sizeof(float) + sizeof(uint32_t);
       i++;
     }
   }
@@ -1173,7 +1173,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 
   for (int lvl = 0; lvl <= grid->maxdepth; ++lvl) {
     uint8_t *write_cache =
-	(uint8_t *)malloc(vertices_local_pL[lvl] * sizeof(uint8_t));
+	malloc(vertices_local_pL[lvl] * sizeof(uint8_t));
     long index = 0;
     foreach_level(lvl, serial) if (is_local(cell)) write_cache[index++] =
 	(uint8_t)lvl;
@@ -1186,15 +1186,15 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 #endif
 
   for (scalar s in list) {
-    cell_size = sizeof(float_t);
+    cell_size = sizeof(float);
 
     uint32_t prepend_size = vertices_local * cell_size;
     fwrite(&prepend_size, sizeof(uint32_t), 1, fp);
 
     for (int lvl = 0; lvl < grid->maxdepth + 1; ++lvl) {
 
-      float_t *write_cache =
-	  (float_t *)malloc(vertices_local_pL[lvl] * cell_size);
+      float *write_cache =
+	  malloc(vertices_local_pL[lvl] * cell_size);
       long index = 0;
 
       foreach_level(lvl, serial) if (is_local(cell)) write_cache[index++] =
@@ -1207,15 +1207,15 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   }
 
   for (vector v in vlist) {
-    cell_size = 3 * sizeof(float_t);
+    cell_size = 3 * sizeof(float);
 
     uint32_t prepend_size = vertices_local * cell_size;
     fwrite(&prepend_size, sizeof(uint32_t), 1, fp);
 
     for (int lvl = 0; lvl <= grid->maxdepth; ++lvl) {
 
-      float_t *write_cache =
-	  (float_t *)malloc(vertices_local_pL[lvl] * cell_size);
+      float *write_cache =
+	  malloc(vertices_local_pL[lvl] * cell_size);
       long index = 0;
       foreach_level(lvl, serial) if (is_local(cell)) {
 #if dimension == 2

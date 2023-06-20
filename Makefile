@@ -18,8 +18,8 @@ _3.c: 3.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
 _distance.c: distance.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 distance.c -source
 distance: _distance.c; $(MPICC) -o $@ $(MPICCFLAGS) _distance.c $(V_LIBS)
 
-_stl.c: stl.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source
-stl: _stl.c; $(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS)
+_stl.c: stl.c; CC99=$(CC) $(QCC) $(QCCFLAGS) stl.c -source
+stl: _stl.c; $(CC) -o $@ $(CFLAGS) _stl.c $(V_LIBS)
 
 _sphere.c: sphere.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 sphere.c -source
 sphere: _sphere.c; $(MPICC) -o $@ $(MPICCFLAGS) _sphere.c $(V_LIBS)
