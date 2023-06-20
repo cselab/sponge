@@ -6,6 +6,7 @@ BASILISK = $(HOME)/basilisk/src
 BASILISK_VIEW_FLAGS = `pkg-config --libs osmesa glu` -lm
 MPICC = mpicc
 MPICCFLAGS = -O2 -g
+CFLAGS = -O2 -g
 V_LIBS = $(BASILISK)/gl/libglutils.a $(BASILISK)/gl/libfb_osmesa.a -lm $(BASILISK_VIEW_FLAGS)
 
 QCC = qcc
@@ -17,8 +18,8 @@ _3.c: 3.c; $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
 _distance.c: distance.c; $(QCC) $(QCCFLAGS) -D_MPI=1 distance.c -source
 distance: _distance.c; $(MPICC) -o $@ $(MPICCFLAGS) _distance.c $(V_LIBS)
 
-_stl.c: stl.c; $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source
-stl: _stl.c; $(MPICC) -o $@ $(MPICCFLAGS) _stl.c $(V_LIBS)
+_stl.c: stl.c; CC99=cc $(QCC) $(QCCFLAGS) stl.c -source
+stl: _stl.c; $(CC) -o $@ $(CFLAGS) _stl.c $(V_LIBS)
 
 _sphere.c: sphere.c; $(QCC) $(QCCFLAGS) -D_MPI=1 sphere.c -source
 sphere: _sphere.c; $(MPICC) -o $@ $(MPICCFLAGS) _sphere.c $(V_LIBS)

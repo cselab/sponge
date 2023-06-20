@@ -224,10 +224,11 @@ event dump(i ++; t <= 100) {
     draw_vof ("cs", "fs", edges = true, lw = 0.5);
     isosurface("u.x", 0.5);
     save(omega_path);
+    /*
     if (dump_fields(raw, xdmf, t, X0, Y0, L0, L0, N) != 0) {
       fprintf(stderr, "stl: error:dump_fields failed\n");
       exit(1);
-    }
+      } */
     sprintf(raw, "h.%09ld", iframe);
     char path[]="htg";
     output_htg({p}, {u}, path, raw, iframe, t);
