@@ -12,16 +12,16 @@ V_LIBS = $(BASILISK)/gl/libglutils.a $(BASILISK)/gl/libfb_osmesa.a -lm $(BASILIS
 QCC = qcc
 all: 3 distance stl sphere
 
-_3.c: 3.c; $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
+_3.c: 3.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
 3: _3.c; $(MPICC) -o $@ $(MPICCFLAGS) _3.c -lm
 
-_distance.c: distance.c; $(QCC) $(QCCFLAGS) -D_MPI=1 distance.c -source
+_distance.c: distance.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 distance.c -source
 distance: _distance.c; $(MPICC) -o $@ $(MPICCFLAGS) _distance.c $(V_LIBS)
 
-_stl.c: stl.c; CC99=cc $(QCC) $(QCCFLAGS) stl.c -source
-stl: _stl.c; $(CC) -o $@ $(CFLAGS) _stl.c $(V_LIBS)
+_stl.c: stl.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source
+stl: _stl.c; $(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS)
 
-_sphere.c: sphere.c; $(QCC) $(QCCFLAGS) -D_MPI=1 sphere.c -source
+_sphere.c: sphere.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 sphere.c -source
 sphere: _sphere.c; $(MPICC) -o $@ $(MPICCFLAGS) _sphere.c $(V_LIBS)
 
 clean:

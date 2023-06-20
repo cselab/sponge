@@ -346,7 +346,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 		       "NumberOfTuples=\"%u\" format=\"appended\" "
 		       "RangeMin=\"0\" RangeMax=\"1\" offset=\"%u\"/>\n",
 		       descBits, byte_offset));
-    byte_offset += (descBits / 8 + 1) * sizeof(u_int8_t) + sizeof(u_int32_t);
+    byte_offset += (descBits / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
     Write2File(
 	sprintf(buffer,
@@ -368,7 +368,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 		       "NumberOfTuples=\"%u\" format=\"appended\" "
 		       "RangeMin=\"0\" RangeMax=\"1\" offset=\"%u\"/>\n",
 		       descBits, byte_offset));
-    byte_offset += (descBits / 8 + 1) * sizeof(u_int8_t) + sizeof(u_int32_t);
+    byte_offset += (descBits / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
     Write2File(
 	sprintf(buffer,
@@ -408,7 +408,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 		       "NumberOfTuples=\"%u\" format=\"appended\" "
 		       "RangeMin=\"0\" RangeMax=\"%i\" offset=\"%u\"/>\n",
 		       vertices, grid->maxdepth, byte_offset));
-    byte_offset += vertices * sizeof(u_int8_t) + sizeof(u_int32_t);
+    byte_offset += vertices * sizeof(uint8_t) + sizeof(uint32_t);
 #endif
     {
       int i = 0;
@@ -419,7 +419,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 			   "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
 			   s.name, vertices, min_val[i], max_val[i],
 			   byte_offset));
-	byte_offset += vertices * sizeof(float_t) + sizeof(u_int32_t);
+	byte_offset += vertices * sizeof(float_t) + sizeof(uint32_t);
 	i++;
       }
     }
@@ -433,7 +433,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 	    "Name=\"%s\" NumberOfTuples=\"%u\" format=\"appended\"  "
 	    "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
 	    3, vname, vertices, min_val_v[i], max_val_v[i], byte_offset));
-	byte_offset += vertices * 3 * sizeof(float_t) + sizeof(u_int32_t);
+	byte_offset += vertices * 3 * sizeof(float_t) + sizeof(uint32_t);
 	i++;
       }
     }
@@ -458,18 +458,18 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
   int cell_size;
 
   {
-    cell_size = sizeof(u_int8_t);
+    cell_size = sizeof(uint8_t);
     int vertices_local_pL_offset[grid->maxdepth + 1];
 
     long length_w_spacing = descBits_local + 7 * (grid->maxdepth + 1) + 8;
-    u_int8_t *mask = (u_int8_t *)calloc(length_w_spacing, cell_size);
+    uint8_t *mask = (uint8_t *)calloc(length_w_spacing, cell_size);
 
     long index = 8;
     for (int lvl = 0; lvl < grid->maxdepth; ++lvl) {
       vertices_local_pL_offset[lvl] = index;
       foreach_level(lvl, serial) {
 	if (is_local(cell)) {
-	  mask[index++] = (u_int8_t)(!is_leaf(cell));
+	  mask[index++] = (uint8_t)(!is_leaf(cell));
 	}
       }
       index += 7;
@@ -488,7 +488,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     long vertices_local_corr = 0;
 
     int num_from_prev = 0;
-    u_int8_t tmp[7];
+    uint8_t tmp[7];
     for (int lvl = 0; lvl < grid->maxdepth; ++lvl) {
       for (int pe = 0; pe < npe(); ++pe) {
 	int send_rank = pe;
@@ -586,8 +586,8 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     }
 
     struct descBit_t {
-      u_int32_t size;
-      u_int8_t *data;
+      uint32_t size;
+      uint8_t *data;
     } descBit_struct;
 
     descBit_struct.size = (descBits / 8 + 1) * cell_size;
@@ -622,7 +622,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 		     &tree_type_descBit);
     MPI_Type_commit(&tree_type_descBit);
 
-    MPI_Aint f_displacements[2] = {0, sizeof(u_int32_t)};
+    MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
     int f_lengths[2] = {1, 1};
     MPI_Datatype f_types[2] = {MPI_UINT32_T, tree_type_descBit};
 
@@ -634,7 +634,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 
     MPI_File_write_all(fp, &descBit_struct, 1, m_view, MPI_STATUS_IGNORE);
 
-    offset += (descBits / 8 + 1) * sizeof(u_int8_t) + sizeof(u_int32_t);
+    offset += (descBits / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
     MPI_Type_free(&m_view);
     MPI_Type_free(&f_view);
@@ -648,13 +648,13 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 #if WRITE_HTG_LEVEL
   {
     struct level_t {
-      u_int32_t size;
-      u_int8_t *data;
+      uint32_t size;
+      uint8_t *data;
     } level_struct;
 
-    cell_size = sizeof(u_int8_t);
+    cell_size = sizeof(uint8_t);
     level_struct.size = vertices * cell_size;
-    level_struct.data = (u_int8_t *)malloc(vertices_local * cell_size);
+    level_struct.data = (uint8_t *)malloc(vertices_local * cell_size);
 
     MPI_Aint m_displacements[2];
     MPI_Aint base_address;
@@ -682,7 +682,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 		     &tree_type_level);
     MPI_Type_commit(&tree_type_level);
 
-    MPI_Aint f_displacements[2] = {0, sizeof(u_int32_t)};
+    MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
     int f_lengths[2] = {1, 1};
     MPI_Datatype f_types[2] = {MPI_UINT32_T, tree_type_level};
 
@@ -693,12 +693,12 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     long index = 0;
     for (int lvl = 0; lvl <= grid->maxdepth; ++lvl)
       foreach_level(lvl, serial) if (is_local(cell))
-	  level_struct.data[index++] = (u_int8_t)lvl;
+	  level_struct.data[index++] = (uint8_t)lvl;
 
     MPI_File_set_view(fp, offset, f_view, f_view, "native", MPI_INFO_NULL);
     MPI_File_write_all(fp, &level_struct, 1, m_view, MPI_STATUS_IGNORE);
 
-    offset += vertices * cell_size + sizeof(u_int32_t);
+    offset += vertices * cell_size + sizeof(uint32_t);
 
     free(level_struct.data);
     level_struct.data = NULL;
@@ -709,7 +709,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 #endif
   {
     struct scalar_t {
-      u_int32_t size;
+      uint32_t size;
       float *data;
     } scalar_struct;
 
@@ -743,7 +743,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 		     &tree_type_scalar);
     MPI_Type_commit(&tree_type_scalar);
 
-    MPI_Aint f_displacements[2] = {0, sizeof(u_int32_t)};
+    MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
     int f_lengths[2] = {1, 1};
     MPI_Datatype f_types[2] = {MPI_UINT32_T, tree_type_scalar};
 
@@ -759,7 +759,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 
       MPI_File_set_view(fp, offset, f_view, f_view, "native", MPI_INFO_NULL);
       MPI_File_write_all(fp, &scalar_struct, 1, m_view, MPI_STATUS_IGNORE);
-      offset += vertices * cell_size + sizeof(u_int32_t);
+      offset += vertices * cell_size + sizeof(uint32_t);
     }
     free(scalar_struct.data);
     scalar_struct.data = NULL;
@@ -769,7 +769,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
   }
   {
     struct vector_t {
-      u_int32_t size;
+      uint32_t size;
       float *data;
     } vector_struct;
 
@@ -803,7 +803,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 		     &tree_type_vector);
     MPI_Type_commit(&tree_type_vector);
 
-    MPI_Aint f_displacements[2] = {0, sizeof(u_int32_t)};
+    MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
     int f_lengths[2] = {1, 1};
     MPI_Datatype f_types[2] = {MPI_UINT32_T, tree_type_vector};
 
@@ -829,7 +829,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 	}
       MPI_File_set_view(fp, offset, f_view, f_view, "native", MPI_INFO_NULL);
       MPI_File_write_all(fp, &vector_struct, 1, m_view, MPI_STATUS_IGNORE);
-      offset += vertices * cell_size + sizeof(u_int32_t);
+      offset += vertices * cell_size + sizeof(uint32_t);
     }
     free(vector_struct.data);
     vector_struct.data = NULL;
@@ -1024,7 +1024,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 	  "RangeMax=\"1\" offset=\"%u\"/>\n",
 	  descBits_local, byte_offset);
   byte_offset +=
-      (descBits_local / 8 + 1) * sizeof(u_int8_t) + sizeof(u_int32_t);
+      (descBits_local / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
   fprintf(fp,
 	  "\t\t\t\t<DataArray type=\"Int64\" Name=\"NbVerticesByLevel\" "
@@ -1046,7 +1046,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 	  "RangeMax=\"1\" offset=\"%u\"/>\n",
 	  descBits_local, byte_offset);
   byte_offset +=
-      (descBits_local / 8 + 1) * sizeof(u_int8_t) + sizeof(u_int32_t);
+      (descBits_local / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
   fprintf(fp,
 	  "\t\t\t\t<DataArray type=\"Int64\" Name=\"NumberOfVerticesPerDepth\" "
@@ -1085,7 +1085,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 	  "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"0\" "
 	  "RangeMax=\"%i\" offset=\"%u\"/>\n",
 	  vertices_local, grid->maxdepth, byte_offset);
-  byte_offset += vertices_local * sizeof(u_int8_t) + sizeof(u_int32_t);
+  byte_offset += vertices_local * sizeof(uint8_t) + sizeof(uint32_t);
 #endif
   {
     int i = 0;
@@ -1095,7 +1095,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 	      "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"%g\" "
 	      "RangeMax=\"%g\" offset=\"%u\"/>\n",
 	      s.name, vertices_local, min_val[i], max_val[i], byte_offset);
-      byte_offset += vertices_local * sizeof(float_t) + sizeof(u_int32_t);
+      byte_offset += vertices_local * sizeof(float_t) + sizeof(uint32_t);
       i++;
     }
   }
@@ -1109,7 +1109,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 	      "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
 	      3, vname, vertices_local, min_val_v[i], max_val_v[i],
 	      byte_offset);
-      byte_offset += vertices_local * 3 * sizeof(float_t) + sizeof(u_int32_t);
+      byte_offset += vertices_local * 3 * sizeof(float_t) + sizeof(uint32_t);
       i++;
     }
   }
@@ -1133,13 +1133,13 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 
   int cell_size;
 
-  cell_size = sizeof(u_int8_t);
+  cell_size = sizeof(uint8_t);
 
   int vertices_local_corr = ((descBits_local / 8) + 1) * 8;
 
-  u_int32_t prepend_size = vertices_local_corr;
-  fwrite(&prepend_size, sizeof(u_int32_t), 1, fp);
-  u_int8_t *write_cache = (u_int8_t *)calloc(vertices_local_corr, cell_size);
+  uint32_t prepend_size = vertices_local_corr;
+  fwrite(&prepend_size, sizeof(uint32_t), 1, fp);
+  uint8_t *write_cache = (uint8_t *)calloc(vertices_local_corr, cell_size);
   long index = 1;
   for (int lvl = 0; lvl < grid->maxdepth; ++lvl) {
     foreach_level(lvl, serial) if (is_local(cell)) {
@@ -1166,17 +1166,17 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 
 #if WRITE_HTG_LEVEL
 
-  cell_size = sizeof(u_int8_t);
+  cell_size = sizeof(uint8_t);
 
   prepend_size = vertices_local * cell_size;
-  fwrite(&prepend_size, sizeof(u_int32_t), 1, fp);
+  fwrite(&prepend_size, sizeof(uint32_t), 1, fp);
 
   for (int lvl = 0; lvl <= grid->maxdepth; ++lvl) {
-    u_int8_t *write_cache =
-	(u_int8_t *)malloc(vertices_local_pL[lvl] * sizeof(u_int8_t));
+    uint8_t *write_cache =
+	(uint8_t *)malloc(vertices_local_pL[lvl] * sizeof(uint8_t));
     long index = 0;
     foreach_level(lvl, serial) if (is_local(cell)) write_cache[index++] =
-	(u_int8_t)lvl;
+	(uint8_t)lvl;
 
     fwrite(&write_cache[0], cell_size, vertices_local_pL[lvl], fp);
     free(write_cache);
@@ -1188,8 +1188,8 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   for (scalar s in list) {
     cell_size = sizeof(float_t);
 
-    u_int32_t prepend_size = vertices_local * cell_size;
-    fwrite(&prepend_size, sizeof(u_int32_t), 1, fp);
+    uint32_t prepend_size = vertices_local * cell_size;
+    fwrite(&prepend_size, sizeof(uint32_t), 1, fp);
 
     for (int lvl = 0; lvl < grid->maxdepth + 1; ++lvl) {
 
@@ -1209,8 +1209,8 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   for (vector v in vlist) {
     cell_size = 3 * sizeof(float_t);
 
-    u_int32_t prepend_size = vertices_local * cell_size;
-    fwrite(&prepend_size, sizeof(u_int32_t), 1, fp);
+    uint32_t prepend_size = vertices_local * cell_size;
+    fwrite(&prepend_size, sizeof(uint32_t), 1, fp);
 
     for (int lvl = 0; lvl <= grid->maxdepth; ++lvl) {
 

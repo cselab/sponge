@@ -5,6 +5,8 @@
 #include "distance.h"
 #include "embed.h"
 #include "view.h"
+#include <mpi.h>
+#include <stdint.h>
 #include "output_htg.h"
 
 static const double diameter = 0.3733333285861546;
