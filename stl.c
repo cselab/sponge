@@ -5,6 +5,7 @@
 #include "distance.h"
 #include "embed.h"
 #include "view.h"
+#include "output_htg.h"
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 400;
