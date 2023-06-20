@@ -14,12 +14,15 @@ static int maxlevel = 7;
 static char *stl_path;
 static int period;
 static long level;
+vertex scalar phi[];
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
+pf[left]   = neumann(0.);
 
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
+pf[right]  = dirichlet(0.);
 
 u.n[embed] = dirichlet(0.);
 u.t[embed] = dirichlet(0.);
@@ -94,7 +97,6 @@ event init(t = 0) {
   coord min, max;
   coord * p;
   FILE * fp;
-  vertex scalar phi[];
   scalar d[];
 
   if ((fp = fopen (stl_path, "r")) == NULL) {
@@ -112,17 +114,13 @@ event init(t = 0) {
     /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
        d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
        p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2)); */
-    p0 = sq(x) + sq(y) + sq(z) - sq(diameter / 2);
-    //p0 = max(p0, z - 0.4);
-    //p0 = max(p0, - 0.4 - z);
+    p0 = sq(x) + sq(y) - sq(diameter / 2);
+    p0 = max(p0, z - 0.4);
+    p0 = max(p0, - 0.4 - z);
     phi[] = p0;
   }
   fractions (phi, cs, fs);
-  foreach () {
-    u.x[] = 0;
-    u.y[] = 0;
-    u.z[] = 0;
-  }
+  fractions_cleanup (cs, fs);
   view (fov = 20, width = 640, height = 480, bg = {1,1,1});
   draw_vof ("cs", "fs");
   draw_vof ("cs", "fs", edges = true, lw = 0.5);
@@ -137,14 +135,13 @@ event velocity (i++) {
 }
 */
 
-event logfile(i += 10) { fprintf(stderr, "%d %g %d %d\n", i, t, mgp.i, mgu.i); }
-
 event dump(i ++; t <= 100) {
   static long iframe = 0;
   scalar omega[];
   char hdg[FILENAME_MAX], omega_path[FILENAME_MAX];
   char path[]=".";
   if (iframe % period == 0) {
+    fields_stats();
     sprintf(omega_path, "omega.%09ld.png", iframe);
     vorticity(u, omega);
     draw_vof ("cs", "fs");
@@ -152,15 +149,16 @@ event dump(i ++; t <= 100) {
     isosurface("u.x", 0.5);
     save(omega_path);
     sprintf(hdg, "h.%09ld", iframe);
-    output_htg({p, cs}, {u}, path, hdg, iframe, t);
-    fields_stats();
+    output_htg({p, cs, phi}, {u}, path, hdg, iframe, t);
   }
   iframe++;
 }
 
+/*
 event adapt (i++) {
   astats s = adapt_wavelet ({cs,u}, (double[]){1e-2, 0.02, 0.02, 0.02},
 			    maxlevel, 4);
   fprintf (stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
   fields_stats();
 }
+*/
