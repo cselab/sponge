@@ -111,10 +111,10 @@ event init(t = 0) {
     double p0, s0;
     /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
        d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
-    p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
-    p0 = max(p0, z - 0.4);
-    p0 = max(p0, - 0.4 - z); */
+       p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2)); */
     p0 = sq(x) + sq(y) + sq(z) - sq(diameter / 2);
+    //p0 = max(p0, z - 0.4);
+    //p0 = max(p0, - 0.4 - z);
     phi[] = p0;
   }
   fractions (phi, cs, fs);
@@ -152,7 +152,7 @@ event dump(i ++; t <= 100) {
     isosurface("u.x", 0.5);
     save(omega_path);
     sprintf(hdg, "h.%09ld", iframe);
-    output_htg({p}, {u}, path, hdg, iframe, t);
+    output_htg({p, cs}, {u}, path, hdg, iframe, t);
     fields_stats();
   }
   iframe++;
