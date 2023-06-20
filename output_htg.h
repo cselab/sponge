@@ -1,7 +1,5 @@
-# 1 "output_htg.h"
 #include "output_pvd.h"
 #include "utils.h"
-# 129 "output_htg.h"
 #ifndef HEADER_MIN_MAX_VAL
 #define HEADER_MIN_MAX_VAL 1
 #endif
