@@ -11,6 +11,7 @@ int main(int argc, char **argv)
   FILE *file;
   char *end;
   coord *p, min, max;
+  scalar d[];
 
   Verbose = 0;
   Refine = 0;
@@ -56,10 +57,6 @@ int main(int argc, char **argv)
     exit(1);
   }
   p = input_stl(file);
-  if (fclose(file) != 0) {
-    fprintf(stderr, "distance: fail to close '%s'\n", *argv);
-    exit(1);
-  }
   bounding_box (p, &min, &max);
   double maxl = -HUGE;
   foreach_dimension()
@@ -75,7 +72,6 @@ int main(int argc, char **argv)
   origin ((max.x + min.x)/2. - L0/2,
 	  (max.y + min.y)/2. - L0/2,
 	  (max.z + min.z)/2. - L0/2);
-  scalar d[];
   distance (d, p);
   if (Refine)
     while (adapt_wavelet ({d}, (double[]){5e-4*L0}, 10).nf);
@@ -91,4 +87,8 @@ int main(int argc, char **argv)
   draw_vof ("f", "s");
   draw_vof ("f", "s", edges = true, lw = 0.5);
   save ("vof.png");
+  if (fclose(file) != 0) {
+    fprintf(stderr, "distance: fail to close '%s'\n", *argv);
+    exit(1);
+  }
 }

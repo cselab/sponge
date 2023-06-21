@@ -107,8 +107,10 @@ event init(t = 0) {
     exit(1);
   }
   p = input_stl (fp);
-  fclose(fp);
-  MPI_Barrier(MPI_COMM_WORLD);
+  if (fclose(file) != 0) {
+    fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
+    exit(1);
+  }
   bounding_box (p, &min, &max);
   fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
   fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
