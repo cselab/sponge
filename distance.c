@@ -11,13 +11,14 @@ int main(int argc, char **argv)
   FILE *file;
   char *end;
   coord *p, min, max;
-  
+
   Verbose = 0;
   Refine = 0;
   LevelFlag = 0;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
+      fprintf(stderr, "distance [-v] [-r] -l INT file.stl\n");
       exit(1);
     case 'v':
       Verbose = 1;
