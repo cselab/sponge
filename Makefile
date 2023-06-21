@@ -10,7 +10,7 @@ CFLAGS = -O2 -g
 V_LIBS = $(BASILISK)/gl/libglutils.a $(BASILISK)/gl/libfb_osmesa.a -lm $(BASILISK_VIEW_FLAGS)
 
 QCC = qcc
-all: 3 distance stl sphere
+all: 3 distance stl_mpi stl_single sphere
 
 _3.c: 3.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
 3: _3.c; $(MPICC) -o $@ $(MPICCFLAGS) _3.c -lm
@@ -18,7 +18,15 @@ _3.c: 3.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
 _distance.c: distance.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 distance.c -source
 distance: _distance.c; $(MPICC) -o $@ $(MPICCFLAGS) _distance.c $(V_LIBS)
 
-_stl.c: stl.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) stl.c -source
+stl_mpi: stl.c
+	CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source && \
+	$(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
+
+stl_single: stl.c
+	CC99=$(MPICC) $(QCC) $(QCCFLAGS) stl.c -source && \
+	$(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
+
+_stl.c: stl.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source
 stl: _stl.c; $(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS)
 
 _sphere.c: sphere.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 sphere.c -source

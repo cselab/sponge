@@ -101,6 +101,7 @@ event init(t = 0) {
   coord * p;
   FILE * fp;
   scalar d[];
+  int rank;
   if (!restore (file = "restart")) {
     if ((fp = fopen (stl_path, "r")) == NULL) {
       fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
@@ -111,9 +112,12 @@ event init(t = 0) {
       fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
       exit(1);
     }
-    bounding_box(p, &min, &max);
-    fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
-    fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if (rank == 0) {
+      bounding_box(p, &min, &max);
+      fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
+      fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
+    }
     distance (d, p);
     foreach_vertex() {
       double p0, s0;
@@ -128,27 +132,21 @@ event init(t = 0) {
     fractions (phi, cs, fs);
     fractions_cleanup (cs, fs);
   }
-  
   view (fov = 20, width = 640, height = 480, bg = {1,1,1});
   draw_vof ("cs", "fs");
   draw_vof ("cs", "fs", edges = true, lw = 0.5);
   save ("vof.png");
 }
 
-/*
-event velocity (i++) {
-  foreach()
-    foreach_dimension()
-      u.x[] = stl[]*u.x[];
-}
-*/
-
 event dump(i ++; t <= 100) {
   static long iframe = 0;
+  int rank;
   char hdg[FILENAME_MAX];
   char path[]=".";
   if (iframe % period == 0) {
-    fields_stats();
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    if (rank == 0)
+      fields_stats();
     vorticity(u, omega);
     sprintf(hdg, "h.%09ld", iframe);
     output_htg({p, cs, phi, omega}, {u}, path, hdg, iframe, t);
@@ -158,9 +156,7 @@ event dump(i ++; t <= 100) {
 
 event snapshot(i += 100)
 {
-  char path[FILENAME_MAX];
-  sprintf(path, "dump-%d", i);
-  dump(file = path);
+  dump(file = "restart");
 }
 
 /*
