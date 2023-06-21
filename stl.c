@@ -156,6 +156,13 @@ event dump(i ++; t <= 100) {
   iframe++;
 }
 
+event snapshot(i += 100)
+{
+  char path[FILENAME_MAX];
+  sprintf(path, "dump-%d", i);
+  dump(file = path);
+}
+
 /*
 event adapt (i++) {
   astats s = adapt_wavelet ({cs,u}, (double[]){1e-2, 0.02, 0.02, 0.02},
