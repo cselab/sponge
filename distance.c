@@ -10,6 +10,8 @@ int main(int argc, char **argv)
   long level;
   FILE *file;
   char *end;
+  coord *p, min, max;
+  
   Verbose = 0;
   Refine = 0;
   LevelFlag = 0;
@@ -52,12 +54,11 @@ int main(int argc, char **argv)
     fprintf(stderr, "distance: error: '%s': no suck file\n", *argv);
     exit(1);
   }
-  coord * p = input_stl(file);
+  p = input_stl(file);
   if (fclose(file) != 0) {
     fprintf(stderr, "distance: fail to close '%s'\n", *argv);
     exit(1);
   }
-  coord min, max;
   bounding_box (p, &min, &max);
   double maxl = -HUGE;
   foreach_dimension()

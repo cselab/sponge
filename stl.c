@@ -5,7 +5,9 @@
 #include "distance.h"
 #include "embed.h"
 #include "view.h"
+#include <mpi.h>
 #include <stdint.h>
+#include <stdbool.h>
 #include "output_htg.h"
 
 static const double diameter = 0.3733333285861546;
@@ -106,6 +108,7 @@ event init(t = 0) {
   }
   p = input_stl (fp);
   fclose(fp);
+  MPI_Barrier(MPI_COMM_WORLD);
   bounding_box (p, &min, &max);
   fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
   fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);

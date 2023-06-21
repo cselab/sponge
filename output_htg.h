@@ -13,11 +13,17 @@
 
 #if _MPI
 void output_pvd_mpiio(char *name, double t, MPI_File fp,
-		      bool firstTimeWritten) {
+                      bool firstTimeWritten) {
+  int flag;
   char head[] = "<VTKFile type=\"Collection\" version=\"0.1\" "
-		"byte_order=\"LittleEndian\">\n\t<Collection>\n";
+                "byte_order=\"LittleEndian\">\n\t<Collection>\n";
   char tail[] = "\t</Collection>\n</VTKFile>\n";
 
+  MPI_Initialized(&flag);
+  if (flag != 1) {
+    fprintf(stderr, "output_htg: error: MPI_Init was not called\n");
+    exit(1);
+  }
   if (firstTimeWritten == true)
     MPI_File_write(fp, &head, strlen(head), MPI_CHAR, MPI_STATUS_IGNORE);
   else
@@ -25,8 +31,8 @@ void output_pvd_mpiio(char *name, double t, MPI_File fp,
 
   char buffer[100];
   snprintf(buffer, sizeof(buffer),
-	   "\t\t<DataSet timestep=\"%g\" group=\"\" part=\"0\" file=\"%s\"/>\n",
-	   t, name);
+           "\t\t<DataSet timestep=\"%g\" group=\"\" part=\"0\" file=\"%s\"/>\n",
+           t, name);
 
   MPI_File_write(fp, &buffer, strlen(buffer), MPI_CHAR, MPI_STATUS_IGNORE);
   MPI_File_write(fp, &tail, strlen(tail), MPI_CHAR, MPI_STATUS_IGNORE);
@@ -35,7 +41,7 @@ void output_pvd_mpiio(char *name, double t, MPI_File fp,
 
 void output_pvd(char *name, double t, FILE *fp, bool firstTimeWritten) {
   char head[] = "<VTKFile type=\"Collection\" version=\"0.1\" "
-		"byte_order=\"LittleEndian\">\n\t<Collection>\n";
+                "byte_order=\"LittleEndian\">\n\t<Collection>\n";
   char tail[] = "\t</Collection>\n</VTKFile>\n";
 
   if (firstTimeWritten == true)
@@ -44,13 +50,13 @@ void output_pvd(char *name, double t, FILE *fp, bool firstTimeWritten) {
     fseek(fp, -strlen(tail), SEEK_END);
 
   fprintf(fp,
-	  "\t\t<DataSet timestep=\"%g\" group=\"\" part=\"0\" file=\"%s\"/>\n",
-	  t, name);
+          "\t\t<DataSet timestep=\"%g\" group=\"\" part=\"0\" file=\"%s\"/>\n",
+          t, name);
   fprintf(fp, "%s", tail);
 }
 
 void output_htg(scalar *list, vector *vlist, const char *path, char *prefix,
-		int i, double t);
+                int i, double t);
 
 #if _MPI
 void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp);
@@ -60,7 +66,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp);
 
 #if _MPI
 void output_htg(scalar *list, vector *vlist, const char *path, char *prefix,
-		int i, double t) {
+                int i, double t) {
   MPI_File fp;
 
   int ec;
@@ -68,19 +74,19 @@ void output_htg(scalar *list, vector *vlist, const char *path, char *prefix,
   sprintf(htg_name, "%s/%s.htg", path, prefix);
 
   ec = MPI_File_open(MPI_COMM_WORLD, htg_name,
-		     MPI_MODE_WRONLY | MPI_MODE_CREATE, MPI_INFO_NULL, &fp);
+                     MPI_MODE_WRONLY | MPI_MODE_CREATE, MPI_INFO_NULL, &fp);
 
   if (ec == MPI_ERR_FILE_EXISTS) {
     printf("ERR, htg_name exists!\n");
 
     MPI_File_open(MPI_COMM_WORLD, htg_name, MPI_MODE_WRONLY | MPI_MODE_CREATE,
-		  MPI_INFO_NULL, &fp);
+                  MPI_INFO_NULL, &fp);
     MPI_File_set_size(fp, 0);
   }
 
   if (ec != MPI_SUCCESS) {
     printf("output_htg.h : %s could not be opened\n Does the Folder exist?\n",
-	   htg_name);
+           htg_name);
     MPI_Abort(MPI_COMM_WORLD, 2);
   }
 
@@ -94,12 +100,12 @@ void output_htg(scalar *list, vector *vlist, const char *path, char *prefix,
     sprintf(pvd_name, "output_%s.pvd", path);
 
     ec = MPI_File_open(MPI_COMM_SELF, pvd_name, MPI_MODE_RDWR, MPI_INFO_NULL,
-		       &fp);
+                       &fp);
 
     if ((i == 0) || (ec == MPI_ERR_NO_SUCH_FILE)) {
 
       MPI_File_open(MPI_COMM_SELF, pvd_name, MPI_MODE_WRONLY | MPI_MODE_CREATE,
-		    MPI_INFO_NULL, &fp);
+                    MPI_INFO_NULL, &fp);
       MPI_File_set_size(fp, 0);
       firstTimeWritten = true;
     }
@@ -113,7 +119,7 @@ void output_htg(scalar *list, vector *vlist, const char *path, char *prefix,
 #else
 
 void output_htg(scalar *list, vector *vlist, const char *path, char *prefix,
-		int i, double t) {
+                int i, double t) {
   FILE *fp;
 
   char htg_name[80];
@@ -122,7 +128,7 @@ void output_htg(scalar *list, vector *vlist, const char *path, char *prefix,
   fp = fopen(htg_name, "w");
   if (!fp) {
     printf("output_htg.h : %s could not be opened\n Does the Folder exist?\n",
-	   htg_name);
+           htg_name);
     exit(1);
   }
 
@@ -176,7 +182,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
   descBits_local = vertices_local - vertices_local_pL[grid->maxdepth];
 
   MPI_Reduce(&vertices_local_pL[0], &vertices_pL[0], grid->maxdepth + 1,
-	     MPI_UNSIGNED, MPI_SUM, 0, MPI_COMM_WORLD);
+             MPI_UNSIGNED, MPI_SUM, 0, MPI_COMM_WORLD);
 
 #if HTG_SPEED_STATS
   MPI_Barrier(MPI_COMM_WORLD);
@@ -189,7 +195,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
   unsigned int carryover = 0;
   for (int lvl = 0; lvl <= grid->maxdepth; ++lvl) {
     MPI_Exscan(&vertices_local_pL[lvl], &vertices_global_offset[lvl], 1,
-	       MPI_UNSIGNED, MPI_SUM, MPI_COMM_WORLD);
+               MPI_UNSIGNED, MPI_SUM, MPI_COMM_WORLD);
 
     if (pid() == (npe() - 1)) {
       unsigned int next_offset;
@@ -202,15 +208,15 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
       vertices_local_pL[lvl] -= carryover;
 
       MPI_Recv(&carryover, 1, MPI_UNSIGNED, npe() - 1, 0, MPI_COMM_WORLD,
-	       MPI_STATUS_IGNORE);
+               MPI_STATUS_IGNORE);
 
       if (lvl < grid->maxdepth) {
-	vertices_local_pL[lvl + 1] += carryover;
-	vertices_global_offset[lvl + 1] = carryover;
+        vertices_local_pL[lvl + 1] += carryover;
+        vertices_global_offset[lvl + 1] = carryover;
       } else
-	vertices = carryover;
+        vertices = carryover;
       if (lvl == grid->maxdepth - 1)
-	descBits = carryover;
+        descBits = carryover;
     }
   }
 
@@ -246,9 +252,9 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
       min_val_v[i] = HUGE;
       max_val_v[i] = -HUGE;
       foreach_dimension() {
-	stats stat = statsf(v.x);
-	min_val_v[i] = min(stat.min, min_val_v[i]);
-	max_val_v[i] = max(stat.max, max_val_v[i]);
+        stats stat = statsf(v.x);
+        min_val_v[i] = min(stat.min, min_val_v[i]);
+        max_val_v[i] = max(stat.max, max_val_v[i]);
       }
 #else
       min_val_v[i] = 0.;
@@ -269,65 +275,65 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     int maj_v = VTK_FILE_VERSION / 10, min_v = VTK_FILE_VERSION % 10;
 
     Write2File(sprintf(buffer, "<VTKFile %s version=\"%i.%i\" %s %s>\n",
-		       "type=\"HyperTreeGrid\"", maj_v, min_v,
-		       "byte_order=\"LittleEndian\" ",
-		       "header_type=\"UInt32\""));
+                       "type=\"HyperTreeGrid\"", maj_v, min_v,
+                       "byte_order=\"LittleEndian\" ",
+                       "header_type=\"UInt32\""));
 
 #if dimension == 2
     Write2File(
-	sprintf(buffer,
-		"\t<HyperTreeGrid BranchFactor=\"2\" "
-		"TransposedRootIndexing=\"0\" Dimensions=\"%d %d %d\">\n",
-		2, 2, 1));
+        sprintf(buffer,
+                "\t<HyperTreeGrid BranchFactor=\"2\" "
+                "TransposedRootIndexing=\"0\" Dimensions=\"%d %d %d\">\n",
+                2, 2, 1));
 #elif dimension == 3
     Write2File(
-	sprintf(buffer,
-		"\t<HyperTreeGrid BranchFactor=\"2\" "
-		"TransposedRootIndexing=\"0\" Dimensions=\"%d %d %d\">\n",
-		2, 2, 2));
+        sprintf(buffer,
+                "\t<HyperTreeGrid BranchFactor=\"2\" "
+                "TransposedRootIndexing=\"0\" Dimensions=\"%d %d %d\">\n",
+                2, 2, 2));
 #endif
     Write2File(sprintf(buffer, "\t\t<Grid>\n"));
 #if dimension == 2
     Write2File(sprintf(buffer,
-		       "\t\t\t<DataArray type=\"Float64\" "
-		       "Name=\"XCoordinates\" NumberOfTuples=\"2\" "
-		       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
-		       Y0, Y0 + L0));
+                       "\t\t\t<DataArray type=\"Float64\" "
+                       "Name=\"XCoordinates\" NumberOfTuples=\"2\" "
+                       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
+                       Y0, Y0 + L0));
     Write2File(sprintf(buffer, "\t\t\t\t%g %g", Y0, Y0 + L0));
     Write2File(sprintf(buffer, "\n\t\t\t</DataArray>\n"));
     Write2File(sprintf(buffer,
-		       "\t\t\t<DataArray type=\"Float64\" "
-		       "Name=\"YCoordinates\" NumberOfTuples=\"2\" "
-		       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
-		       X0, X0 + L0));
+                       "\t\t\t<DataArray type=\"Float64\" "
+                       "Name=\"YCoordinates\" NumberOfTuples=\"2\" "
+                       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
+                       X0, X0 + L0));
     Write2File(sprintf(buffer, "\t\t\t\t%g %g", X0, X0 + L0));
     Write2File(sprintf(buffer, "\n\t\t\t</DataArray>\n"));
     Write2File(sprintf(buffer,
-		       "\t\t\t<DataArray type=\"Float64\" "
-		       "Name=\"ZCoordinates\" NumberOfTuples=\"2\" "
-		       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
-		       Z0, Z0 + L0));
+                       "\t\t\t<DataArray type=\"Float64\" "
+                       "Name=\"ZCoordinates\" NumberOfTuples=\"2\" "
+                       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
+                       Z0, Z0 + L0));
     Write2File(sprintf(buffer, "\t\t\t\t%g %g", 0., 0.));
 #elif dimension == 3
     Write2File(sprintf(buffer,
-		       "\t\t\t<DataArray type=\"Float64\" "
-		       "Name=\"XCoordinates\" NumberOfTuples=\"2\" "
-		       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
-		       Z0, Z0 + L0));
+                       "\t\t\t<DataArray type=\"Float64\" "
+                       "Name=\"XCoordinates\" NumberOfTuples=\"2\" "
+                       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
+                       Z0, Z0 + L0));
     Write2File(sprintf(buffer, "\t\t\t\t%g %g", Z0, Z0 + L0));
     Write2File(sprintf(buffer, "\n\t\t\t</DataArray>\n"));
     Write2File(sprintf(buffer,
-		       "\t\t\t<DataArray type=\"Float64\" "
-		       "Name=\"YCoordinates\" NumberOfTuples=\"2\" "
-		       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
-		       Y0, Y0 + L0));
+                       "\t\t\t<DataArray type=\"Float64\" "
+                       "Name=\"YCoordinates\" NumberOfTuples=\"2\" "
+                       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
+                       Y0, Y0 + L0));
     Write2File(sprintf(buffer, "\t\t\t\t%g %g", Y0, Y0 + L0));
     Write2File(sprintf(buffer, "\n\t\t\t</DataArray>\n"));
     Write2File(sprintf(buffer,
-		       "\t\t\t<DataArray type=\"Float64\" "
-		       "Name=\"ZCoordinates\" NumberOfTuples=\"2\" "
-		       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
-		       X0, X0 + L0));
+                       "\t\t\t<DataArray type=\"Float64\" "
+                       "Name=\"ZCoordinates\" NumberOfTuples=\"2\" "
+                       "format=\"ascii\" RangeMin=\"%g\" RangeMax=\"%g\">\n",
+                       X0, X0 + L0));
     Write2File(sprintf(buffer, "\t\t\t\t%g %g", X0, X0 + L0));
 #endif
     Write2File(sprintf(buffer, "\n\t\t\t</DataArray>\n"));
@@ -337,23 +343,23 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     unsigned int byte_offset = 0;
 #if VTK_FILE_VERSION == 10
     Write2File(sprintf(buffer,
-		       "\t\t\t<Tree Index=\"0\" NumberOfLevels=\"%d\" "
-		       "NumberOfVertices=\"%u\">\n",
-		       grid->maxdepth + 1, vertices));
+                       "\t\t\t<Tree Index=\"0\" NumberOfLevels=\"%d\" "
+                       "NumberOfVertices=\"%u\">\n",
+                       grid->maxdepth + 1, vertices));
 
     Write2File(sprintf(buffer,
-		       "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptor\" "
-		       "NumberOfTuples=\"%u\" format=\"appended\" "
-		       "RangeMin=\"0\" RangeMax=\"1\" offset=\"%u\"/>\n",
-		       descBits, byte_offset));
+                       "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptor\" "
+                       "NumberOfTuples=\"%u\" format=\"appended\" "
+                       "RangeMin=\"0\" RangeMax=\"1\" offset=\"%u\"/>\n",
+                       descBits, byte_offset));
     byte_offset += (descBits / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
     Write2File(
-	sprintf(buffer,
-		"\t\t\t\t<DataArray type=\"Int64\" Name=\"NbVerticesByLevel\" "
-		"NumberOfTuples=\"%d\" format=\"ascii\" RangeMin=\"1\" "
-		"RangeMax=\"%u\" >\n\t\t\t\t\t",
-		grid->maxdepth + 1, vertices_pL[grid->maxdepth]));
+        sprintf(buffer,
+                "\t\t\t\t<DataArray type=\"Int64\" Name=\"NbVerticesByLevel\" "
+                "NumberOfTuples=\"%d\" format=\"ascii\" RangeMin=\"1\" "
+                "RangeMax=\"%u\" >\n\t\t\t\t\t",
+                grid->maxdepth + 1, vertices_pL[grid->maxdepth]));
 
     for (int lvl = 0; lvl <= grid->maxdepth; lvl++) {
       Write2File(sprintf(buffer, "%u ", vertices_pL[lvl]));
@@ -364,36 +370,36 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 #if VTK_FILE_VERSION == 20
 
     Write2File(sprintf(buffer,
-		       "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptors\" "
-		       "NumberOfTuples=\"%u\" format=\"appended\" "
-		       "RangeMin=\"0\" RangeMax=\"1\" offset=\"%u\"/>\n",
-		       descBits, byte_offset));
+                       "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptors\" "
+                       "NumberOfTuples=\"%u\" format=\"appended\" "
+                       "RangeMin=\"0\" RangeMax=\"1\" offset=\"%u\"/>\n",
+                       descBits, byte_offset));
     byte_offset += (descBits / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
     Write2File(
-	sprintf(buffer,
-		"\t\t\t\t<DataArray type=\"Int64\" "
-		"Name=\"NumberOfVerticesPerDepth\" NumberOfTuples=\"%d\" "
-		"format=\"ascii\" RangeMin=\"1\" RangeMax=\"%u\" >\n\t\t\t\t\t",
-		grid->maxdepth + 1, vertices_pL[grid->maxdepth]));
+        sprintf(buffer,
+                "\t\t\t\t<DataArray type=\"Int64\" "
+                "Name=\"NumberOfVerticesPerDepth\" NumberOfTuples=\"%d\" "
+                "format=\"ascii\" RangeMin=\"1\" RangeMax=\"%u\" >\n\t\t\t\t\t",
+                grid->maxdepth + 1, vertices_pL[grid->maxdepth]));
 
     for (int lvl = 0; lvl <= grid->maxdepth; lvl++) {
       Write2File(sprintf(buffer, "%u ", vertices_pL[lvl]));
     }
     Write2File(sprintf(buffer, "\n\t\t\t\t</DataArray>\n"));
 
-    Write2File(
-	sprintf(buffer, "\t\t\t\t<DataArray type=\"Int64\" Name=\"TreeIds\" "
-			"NumberOfTuples=\"1\" format=\"ascii\" RangeMin=\"0\" "
-			"RangeMax=\"0\" >\n"));
+    Write2File(sprintf(buffer,
+                       "\t\t\t\t<DataArray type=\"Int64\" Name=\"TreeIds\" "
+                       "NumberOfTuples=\"1\" format=\"ascii\" RangeMin=\"0\" "
+                       "RangeMax=\"0\" >\n"));
     Write2File(sprintf(buffer, "\t\t\t\t\t%i\n", 0));
     Write2File(sprintf(buffer, "\t\t\t\t</DataArray>\n"));
 
     Write2File(sprintf(buffer,
-		       "\t\t\t\t<DataArray type=\"UInt32\" "
-		       "Name=\"DepthPerTree\" NumberOfTuples=\"1\" "
-		       "format=\"ascii\" RangeMin=\"%i\" RangeMax=\"%i\" >\n",
-		       grid->maxdepth + 1, grid->maxdepth + 1));
+                       "\t\t\t\t<DataArray type=\"UInt32\" "
+                       "Name=\"DepthPerTree\" NumberOfTuples=\"1\" "
+                       "format=\"ascii\" RangeMin=\"%i\" RangeMax=\"%i\" >\n",
+                       grid->maxdepth + 1, grid->maxdepth + 1));
     Write2File(sprintf(buffer, "\t\t\t\t\t%i\n", grid->maxdepth + 1));
     Write2File(sprintf(buffer, "\t\t\t\t</DataArray>\n"));
 
@@ -404,37 +410,37 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 
 #if WRITE_HTG_LEVEL
     Write2File(sprintf(buffer,
-		       "\t\t\t\t\t<DataArray type=\"UInt8\" Name=\"Level\" "
-		       "NumberOfTuples=\"%u\" format=\"appended\" "
-		       "RangeMin=\"0\" RangeMax=\"%i\" offset=\"%u\"/>\n",
-		       vertices, grid->maxdepth, byte_offset));
+                       "\t\t\t\t\t<DataArray type=\"UInt8\" Name=\"Level\" "
+                       "NumberOfTuples=\"%u\" format=\"appended\" "
+                       "RangeMin=\"0\" RangeMax=\"%i\" offset=\"%u\"/>\n",
+                       vertices, grid->maxdepth, byte_offset));
     byte_offset += vertices * sizeof(uint8_t) + sizeof(uint32_t);
 #endif
     {
       int i = 0;
       for (scalar s in list) {
-	Write2File(sprintf(buffer,
-			   "\t\t\t\t\t<DataArray type=\"Float32\" Name=\"%s\" "
-			   "NumberOfTuples=\"%u\" format=\"appended\" "
-			   "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
-			   s.name, vertices, min_val[i], max_val[i],
-			   byte_offset));
-	byte_offset += vertices * sizeof(float) + sizeof(uint32_t);
-	i++;
+        Write2File(sprintf(buffer,
+                           "\t\t\t\t\t<DataArray type=\"Float32\" Name=\"%s\" "
+                           "NumberOfTuples=\"%u\" format=\"appended\" "
+                           "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
+                           s.name, vertices, min_val[i], max_val[i],
+                           byte_offset));
+        byte_offset += vertices * sizeof(float) + sizeof(uint32_t);
+        i++;
       }
     }
     {
       int i = 0;
       for (vector v in vlist) {
-	char *vname = strtok(v.x.name, ".");
-	Write2File(sprintf(
-	    buffer,
-	    "\t\t\t\t\t<DataArray type=\"Float32\" NumberOfComponents=\"%i\" "
-	    "Name=\"%s\" NumberOfTuples=\"%u\" format=\"appended\"  "
-	    "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
-	    3, vname, vertices, min_val_v[i], max_val_v[i], byte_offset));
-	byte_offset += vertices * 3 * sizeof(float) + sizeof(uint32_t);
-	i++;
+        char *vname = strtok(v.x.name, ".");
+        Write2File(sprintf(
+            buffer,
+            "\t\t\t\t\t<DataArray type=\"Float32\" NumberOfComponents=\"%i\" "
+            "Name=\"%s\" NumberOfTuples=\"%u\" format=\"appended\"  "
+            "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
+            3, vname, vertices, min_val_v[i], max_val_v[i], byte_offset));
+        byte_offset += vertices * 3 * sizeof(float) + sizeof(uint32_t);
+        i++;
       }
     }
 
@@ -444,7 +450,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 #endif
 
     Write2File(sprintf(
-	buffer, "\t</HyperTreeGrid>\n\t<AppendedData encoding=\"raw\">\n_"));
+        buffer, "\t</HyperTreeGrid>\n\t<AppendedData encoding=\"raw\">\n_"));
     MPI_Offset offset_tmp;
     MPI_File_get_position(fp, &offset_tmp);
     offset += offset_tmp;
@@ -468,9 +474,9 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     for (int lvl = 0; lvl < grid->maxdepth; ++lvl) {
       vertices_local_pL_offset[lvl] = index;
       foreach_level(lvl, serial) {
-	if (is_local(cell)) {
-	  mask[index++] = (uint8_t)(!is_leaf(cell));
-	}
+        if (is_local(cell)) {
+          mask[index++] = (uint8_t)(!is_leaf(cell));
+        }
       }
       index += 7;
     }
@@ -491,42 +497,42 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     uint8_t tmp[7];
     for (int lvl = 0; lvl < grid->maxdepth; ++lvl) {
       for (int pe = 0; pe < npe(); ++pe) {
-	int send_rank = pe;
-	int recv_rank = (pe + 1) % npe();
+        int send_rank = pe;
+        int recv_rank = (pe + 1) % npe();
 
-	if (pid() == send_rank) {
+        if (pid() == send_rank) {
 
-	  vertices_local_pL_corr[lvl] += num_from_prev;
-	  int trg_position = vertices_local_pL_offset[lvl] - num_from_prev;
-	  vertices_local_pL_offset_corr[lvl] = trg_position;
-	  for (int tmp_cnt = 0; tmp_cnt < num_from_prev; ++tmp_cnt) {
+          vertices_local_pL_corr[lvl] += num_from_prev;
+          int trg_position = vertices_local_pL_offset[lvl] - num_from_prev;
+          vertices_local_pL_offset_corr[lvl] = trg_position;
+          for (int tmp_cnt = 0; tmp_cnt < num_from_prev; ++tmp_cnt) {
 
-	    mask[trg_position + tmp_cnt] = tmp[tmp_cnt];
-	  }
-	  int num_to_next = (vertices_local_pL_corr[lvl] % 8);
+            mask[trg_position + tmp_cnt] = tmp[tmp_cnt];
+          }
+          int num_to_next = (vertices_local_pL_corr[lvl] % 8);
 
-	  vertices_local_pL_corr[lvl] -= num_to_next;
+          vertices_local_pL_corr[lvl] -= num_to_next;
 
-	  if ((lvl == grid->maxdepth - 1) && (pid() == npe() - 1)) {
-	    vertices_local_pL_corr[lvl] += 8;
-	  }
+          if ((lvl == grid->maxdepth - 1) && (pid() == npe() - 1)) {
+            vertices_local_pL_corr[lvl] += 8;
+          }
 
-	  vertices_local_corr += vertices_local_pL_corr[lvl];
+          vertices_local_corr += vertices_local_pL_corr[lvl];
 
-	  MPI_Send(&num_to_next, 1, MPI_INT, recv_rank, 0, MPI_COMM_WORLD);
+          MPI_Send(&num_to_next, 1, MPI_INT, recv_rank, 0, MPI_COMM_WORLD);
 
-	  int src_position =
-	      vertices_local_pL_offset[lvl + 1] - 7 - num_to_next;
+          int src_position =
+              vertices_local_pL_offset[lvl + 1] - 7 - num_to_next;
 
-	  MPI_Send(&mask[src_position], num_to_next, MPI_UINT8_T, recv_rank, 1,
-		   MPI_COMM_WORLD);
-	}
-	if (pid() == recv_rank) {
-	  MPI_Recv(&num_from_prev, 1, MPI_INT, send_rank, 0, MPI_COMM_WORLD,
-		   MPI_STATUS_IGNORE);
-	  MPI_Recv(&tmp[0], num_from_prev, MPI_UINT8_T, send_rank, 1,
-		   MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-	}
+          MPI_Send(&mask[src_position], num_to_next, MPI_UINT8_T, recv_rank, 1,
+                   MPI_COMM_WORLD);
+        }
+        if (pid() == recv_rank) {
+          MPI_Recv(&num_from_prev, 1, MPI_INT, send_rank, 0, MPI_COMM_WORLD,
+                   MPI_STATUS_IGNORE);
+          MPI_Recv(&tmp[0], num_from_prev, MPI_UINT8_T, send_rank, 1,
+                   MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
       }
     }
 
@@ -551,11 +557,11 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
       int displacement = vertices_local_pL_offset_corr[lvl];
       int count = vertices_local_pL_corr[lvl];
       for (int c = 0; c < count; ++c) {
-	mask[i] |= mask[displacement + c] << (7 - cnt);
-	if (++cnt % 8 == 0) {
-	  mask[++i] = 0;
-	  cnt = 0;
-	}
+        mask[i] |= mask[displacement + c] << (7 - cnt);
+        if (++cnt % 8 == 0) {
+          mask[++i] = 0;
+          cnt = 0;
+        }
       }
     }
 
@@ -564,24 +570,24 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     unsigned int carryover = 0;
     for (int lvl = 0; lvl < grid->maxdepth; ++lvl) {
       MPI_Exscan(&vertices_local_pL_corr[lvl],
-		 &vertices_global_offset_corr[lvl], 1, MPI_INT, MPI_SUM,
-		 MPI_COMM_WORLD);
+                 &vertices_global_offset_corr[lvl], 1, MPI_INT, MPI_SUM,
+                 MPI_COMM_WORLD);
 
       if (pid() == (npe() - 1)) {
-	unsigned int next_offset;
-	next_offset =
-	    vertices_global_offset_corr[lvl] + vertices_local_pL_corr[lvl];
-	MPI_Ssend(&next_offset, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        unsigned int next_offset;
+        next_offset =
+            vertices_global_offset_corr[lvl] + vertices_local_pL_corr[lvl];
+        MPI_Ssend(&next_offset, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
       }
       if (pid() == 0) {
-	vertices_local_pL_corr[lvl] -= carryover;
+        vertices_local_pL_corr[lvl] -= carryover;
 
-	MPI_Recv(&carryover, 1, MPI_INT, npe() - 1, 0, MPI_COMM_WORLD,
-		 MPI_STATUS_IGNORE);
-	if (lvl + 1 < grid->maxdepth) {
-	  vertices_local_pL_corr[lvl + 1] += carryover;
-	  vertices_global_offset_corr[lvl + 1] = carryover;
-	}
+        MPI_Recv(&carryover, 1, MPI_INT, npe() - 1, 0, MPI_COMM_WORLD,
+                 MPI_STATUS_IGNORE);
+        if (lvl + 1 < grid->maxdepth) {
+          vertices_local_pL_corr[lvl + 1] += carryover;
+          vertices_global_offset_corr[lvl + 1] = carryover;
+        }
       }
     }
 
@@ -619,7 +625,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
 
     MPI_Datatype tree_type_descBit;
     MPI_Type_indexed(grid->maxdepth, lengths, displacements, MPI_BYTE,
-		     &tree_type_descBit);
+                     &tree_type_descBit);
     MPI_Type_commit(&tree_type_descBit);
 
     MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
@@ -679,7 +685,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     }
     MPI_Datatype tree_type_level;
     MPI_Type_indexed(grid->maxdepth + 1, lengths, displacements, MPI_UINT8_T,
-		     &tree_type_level);
+                     &tree_type_level);
     MPI_Type_commit(&tree_type_level);
 
     MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
@@ -693,7 +699,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     long index = 0;
     for (int lvl = 0; lvl <= grid->maxdepth; ++lvl)
       foreach_level(lvl, serial) if (is_local(cell))
-	  level_struct.data[index++] = (uint8_t)lvl;
+          level_struct.data[index++] = (uint8_t)lvl;
 
     MPI_File_set_view(fp, offset, f_view, f_view, "native", MPI_INFO_NULL);
     MPI_File_write_all(fp, &level_struct, 1, m_view, MPI_STATUS_IGNORE);
@@ -740,7 +746,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     }
     MPI_Datatype tree_type_scalar;
     MPI_Type_indexed(grid->maxdepth + 1, lengths, displacements, MPI_FLOAT,
-		     &tree_type_scalar);
+                     &tree_type_scalar);
     MPI_Type_commit(&tree_type_scalar);
 
     MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
@@ -754,8 +760,8 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     for (scalar s in list) {
       long index = 0;
       for (int lvl = 0; lvl <= grid->maxdepth; ++lvl)
-	foreach_level(lvl, serial) if (is_local(cell))
-	    scalar_struct.data[index++] = (float)val(s);
+        foreach_level(lvl, serial) if (is_local(cell))
+            scalar_struct.data[index++] = (float)val(s);
 
       MPI_File_set_view(fp, offset, f_view, f_view, "native", MPI_INFO_NULL);
       MPI_File_write_all(fp, &scalar_struct, 1, m_view, MPI_STATUS_IGNORE);
@@ -800,7 +806,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     }
     MPI_Datatype tree_type_vector;
     MPI_Type_indexed(grid->maxdepth + 1, lengths, displacements, MPI_FLOAT,
-		     &tree_type_vector);
+                     &tree_type_vector);
     MPI_Type_commit(&tree_type_vector);
 
     MPI_Aint f_displacements[2] = {0, sizeof(uint32_t)};
@@ -814,19 +820,19 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     for (vector v in vlist) {
       long index = 0;
       for (int lvl = 0; lvl <= grid->maxdepth; ++lvl)
-	foreach_level(lvl, serial) if (is_local(cell)) {
+        foreach_level(lvl, serial) if (is_local(cell)) {
 #if dimension == 2
-	  vector_struct.data[index] = (float)val(v.y);
-	  vector_struct.data[index + 1] = (float)val(v.x);
-	  vector_struct.data[index + 2] = (float)0.;
-	  index += 3;
+          vector_struct.data[index] = (float)val(v.y);
+          vector_struct.data[index + 1] = (float)val(v.x);
+          vector_struct.data[index + 2] = (float)0.;
+          index += 3;
 #elif dimension == 3
-	  vector_struct.data[index] = (float)val(v.z);
-	  vector_struct.data[index + 1] = (float)val(v.y);
-	  vector_struct.data[index + 2] = (float)val(v.x);
-	  index += 3;
+          vector_struct.data[index] = (float)val(v.z);
+          vector_struct.data[index + 1] = (float)val(v.y);
+          vector_struct.data[index + 2] = (float)val(v.x);
+          index += 3;
 #endif
-	}
+        }
       MPI_File_set_view(fp, offset, f_view, f_view, "native", MPI_INFO_NULL);
       MPI_File_write_all(fp, &vector_struct, 1, m_view, MPI_STATUS_IGNORE);
       offset += vertices * cell_size + sizeof(uint32_t);
@@ -847,11 +853,11 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
   MPI_Barrier(MPI_COMM_WORLD);
   double end = MPI_Wtime();
   fprintf(stdout,
-	  "Write Time Taken: %f ms, Throughput: %.2f MB/s, Stats %.2f%%, "
-	  "Header: %.2f%%\n",
-	  (end - start) * 1000.,
-	  (double)(offset + strlen(buffer)) / (end - start) / (double)sq(1024),
-	  t_stats / (end - start) * 100., t_header / (end - start) * 100.);
+          "Write Time Taken: %f ms, Throughput: %.2f MB/s, Stats %.2f%%, "
+          "Header: %.2f%%\n",
+          (end - start) * 1000.,
+          (double)(offset + strlen(buffer)) / (end - start) / (double)sq(1024),
+          t_stats / (end - start) * 100., t_header / (end - start) * 100.);
   fflush(stdout);
 #endif
   MPI_File_sync(fp);
@@ -919,9 +925,9 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
       min_val_v[i] = HUGE;
       max_val_v[i] = -HUGE;
       foreach_dimension() {
-	stats stat = statsf(v.x);
-	min_val_v[i] = min(stat.min, min_val_v[i]);
-	max_val_v[i] = max(stat.max, max_val_v[i]);
+        stats stat = statsf(v.x);
+        min_val_v[i] = min(stat.min, min_val_v[i]);
+        max_val_v[i] = max(stat.max, max_val_v[i]);
       }
 #else
       min_val_v[i] = 0.;
@@ -937,8 +943,8 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   }
 
   double t_stats = (t_stats_stop.tv_sec - t_stats_start.tv_sec) +
-		   (double)(t_stats_stop.tv_nsec - t_stats_start.tv_nsec) /
-		       (double)1000000000L;
+                   (double)(t_stats_stop.tv_nsec - t_stats_start.tv_nsec) /
+                       (double)1000000000L;
 
   struct timespec t_header_start;
   if (clock_gettime(CLOCK_REALTIME, &t_header_start) == -1) {
@@ -949,62 +955,62 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   int maj_v = VTK_FILE_VERSION / 10, min_v = VTK_FILE_VERSION % 10;
 
   fprintf(fp, "<VTKFile %s version=\"%i.%i\" %s %s>\n",
-	  "type=\"HyperTreeGrid\"", maj_v, min_v,
-	  "byte_order=\"LittleEndian\" ", "header_type=\"UInt32\"");
+          "type=\"HyperTreeGrid\"", maj_v, min_v,
+          "byte_order=\"LittleEndian\" ", "header_type=\"UInt32\"");
 
 #if dimension == 2
   fprintf(fp,
-	  "\t<HyperTreeGrid BranchFactor=\"2\" TransposedRootIndexing=\"0\" "
-	  "Dimensions=\"%d %d %d\">\n",
-	  2, 2, 1);
+          "\t<HyperTreeGrid BranchFactor=\"2\" TransposedRootIndexing=\"0\" "
+          "Dimensions=\"%d %d %d\">\n",
+          2, 2, 1);
 #elif dimension == 3
   fprintf(fp,
-	  "\t<HyperTreeGrid BranchFactor=\"2\" TransposedRootIndexing=\"0\" "
-	  "Dimensions=\"%d %d %d\">\n",
-	  2, 2, 2);
+          "\t<HyperTreeGrid BranchFactor=\"2\" TransposedRootIndexing=\"0\" "
+          "Dimensions=\"%d %d %d\">\n",
+          2, 2, 2);
 #endif
   fprintf(fp, "\t\t<Grid>\n");
 #if dimension == 2
   fprintf(fp,
-	  "\t\t\t<DataArray type=\"Float64\" Name=\"XCoordinates\" "
-	  "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
-	  "RangeMax=\"%g\">\n",
-	  Y0, Y0 + L0);
+          "\t\t\t<DataArray type=\"Float64\" Name=\"XCoordinates\" "
+          "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
+          "RangeMax=\"%g\">\n",
+          Y0, Y0 + L0);
   fprintf(fp, "\t\t\t\t%g %g", Y0, Y0 + L0);
   fprintf(fp, "\n\t\t\t</DataArray>\n");
   fprintf(fp,
-	  "\t\t\t<DataArray type=\"Float64\" Name=\"YCoordinates\" "
-	  "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
-	  "RangeMax=\"%g\">\n",
-	  X0, X0 + L0);
+          "\t\t\t<DataArray type=\"Float64\" Name=\"YCoordinates\" "
+          "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
+          "RangeMax=\"%g\">\n",
+          X0, X0 + L0);
   fprintf(fp, "\t\t\t\t%g %g", X0, X0 + L0);
   fprintf(fp, "\n\t\t\t</DataArray>\n");
   fprintf(fp,
-	  "\t\t\t<DataArray type=\"Float64\" Name=\"ZCoordinates\" "
-	  "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
-	  "RangeMax=\"%g\">\n",
-	  Z0, Z0 + L0);
+          "\t\t\t<DataArray type=\"Float64\" Name=\"ZCoordinates\" "
+          "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
+          "RangeMax=\"%g\">\n",
+          Z0, Z0 + L0);
   fprintf(fp, "\t\t\t\t%g %g", 0., 0.);
 #elif dimension == 3
   fprintf(fp,
-	  "\t\t\t<DataArray type=\"Float64\" Name=\"XCoordinates\" "
-	  "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
-	  "RangeMax=\"%g\">\n",
-	  Z0, Z0 + L0);
+          "\t\t\t<DataArray type=\"Float64\" Name=\"XCoordinates\" "
+          "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
+          "RangeMax=\"%g\">\n",
+          Z0, Z0 + L0);
   fprintf(fp, "\t\t\t\t%g %g", Z0, Z0 + L0);
   fprintf(fp, "\n\t\t\t</DataArray>\n");
   fprintf(fp,
-	  "\t\t\t<DataArray type=\"Float64\" Name=\"YCoordinates\" "
-	  "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
-	  "RangeMax=\"%g\">\n",
-	  Y0, Y0 + L0);
+          "\t\t\t<DataArray type=\"Float64\" Name=\"YCoordinates\" "
+          "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
+          "RangeMax=\"%g\">\n",
+          Y0, Y0 + L0);
   fprintf(fp, "\t\t\t\t%g %g", Y0, Y0 + L0);
   fprintf(fp, "\n\t\t\t</DataArray>\n");
   fprintf(fp,
-	  "\t\t\t<DataArray type=\"Float64\" Name=\"ZCoordinates\" "
-	  "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
-	  "RangeMax=\"%g\">\n",
-	  X0, X0 + L0);
+          "\t\t\t<DataArray type=\"Float64\" Name=\"ZCoordinates\" "
+          "NumberOfTuples=\"2\" format=\"ascii\" RangeMin=\"%g\" "
+          "RangeMax=\"%g\">\n",
+          X0, X0 + L0);
   fprintf(fp, "\t\t\t\t%g %g", X0, X0 + L0);
 #endif
   fprintf(fp, "\n\t\t\t</DataArray>\n");
@@ -1014,23 +1020,22 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   unsigned int byte_offset = 0;
 #if VTK_FILE_VERSION == 10
   fprintf(fp,
-	  "\t\t\t<Tree Index=\"0\" NumberOfLevels=\"%d\" "
-	  "NumberOfVertices=\"%u\">\n",
-	  grid->maxdepth + 1, vertices_local);
+          "\t\t\t<Tree Index=\"0\" NumberOfLevels=\"%d\" "
+          "NumberOfVertices=\"%u\">\n",
+          grid->maxdepth + 1, vertices_local);
 
   fprintf(fp,
-	  "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptor\" "
-	  "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"0\" "
-	  "RangeMax=\"1\" offset=\"%u\"/>\n",
-	  descBits_local, byte_offset);
-  byte_offset +=
-      (descBits_local / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
+          "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptor\" "
+          "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"0\" "
+          "RangeMax=\"1\" offset=\"%u\"/>\n",
+          descBits_local, byte_offset);
+  byte_offset += (descBits_local / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
   fprintf(fp,
-	  "\t\t\t\t<DataArray type=\"Int64\" Name=\"NbVerticesByLevel\" "
-	  "NumberOfTuples=\"%d\" format=\"ascii\" RangeMin=\"1\" "
-	  "RangeMax=\"%u\" >\n\t\t\t\t\t",
-	  grid->maxdepth + 1, vertices_local_pL[grid->maxdepth]);
+          "\t\t\t\t<DataArray type=\"Int64\" Name=\"NbVerticesByLevel\" "
+          "NumberOfTuples=\"%d\" format=\"ascii\" RangeMin=\"1\" "
+          "RangeMax=\"%u\" >\n\t\t\t\t\t",
+          grid->maxdepth + 1, vertices_local_pL[grid->maxdepth]);
 
   for (int lvl = 0; lvl <= grid->maxdepth; lvl++) {
     fprintf(fp, "%u ", vertices_local_pL[lvl]);
@@ -1041,18 +1046,17 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 #if VTK_FILE_VERSION == 20
 
   fprintf(fp,
-	  "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptors\" "
-	  "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"0\" "
-	  "RangeMax=\"1\" offset=\"%u\"/>\n",
-	  descBits_local, byte_offset);
-  byte_offset +=
-      (descBits_local / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
+          "\t\t\t\t<DataArray type=\"Bit\" Name=\"Descriptors\" "
+          "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"0\" "
+          "RangeMax=\"1\" offset=\"%u\"/>\n",
+          descBits_local, byte_offset);
+  byte_offset += (descBits_local / 8 + 1) * sizeof(uint8_t) + sizeof(uint32_t);
 
   fprintf(fp,
-	  "\t\t\t\t<DataArray type=\"Int64\" Name=\"NumberOfVerticesPerDepth\" "
-	  "NumberOfTuples=\"%d\" format=\"ascii\" RangeMin=\"1\" "
-	  "RangeMax=\"%u\" >\n\t\t\t\t\t",
-	  grid->maxdepth + 1, vertices_local_pL[grid->maxdepth]);
+          "\t\t\t\t<DataArray type=\"Int64\" Name=\"NumberOfVerticesPerDepth\" "
+          "NumberOfTuples=\"%d\" format=\"ascii\" RangeMin=\"1\" "
+          "RangeMax=\"%u\" >\n\t\t\t\t\t",
+          grid->maxdepth + 1, vertices_local_pL[grid->maxdepth]);
 
   for (int lvl = 0; lvl <= grid->maxdepth; lvl++) {
     fprintf(fp, "%u ", vertices_local_pL[lvl]);
@@ -1067,10 +1071,10 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   fprintf(fp, "\t\t\t\t</DataArray>\n");
 
   fprintf(fp,
-	  "\t\t\t\t<DataArray type=\"UInt32\" Name=\"DepthPerTree\" "
-	  "NumberOfTuples=\"1\" format=\"ascii\" RangeMin=\"%i\" "
-	  "RangeMax=\"%i\" >\n",
-	  grid->maxdepth + 1, grid->maxdepth + 1);
+          "\t\t\t\t<DataArray type=\"UInt32\" Name=\"DepthPerTree\" "
+          "NumberOfTuples=\"1\" format=\"ascii\" RangeMin=\"%i\" "
+          "RangeMax=\"%i\" >\n",
+          grid->maxdepth + 1, grid->maxdepth + 1);
   fprintf(fp, "\t\t\t\t\t%i\n", grid->maxdepth + 1);
   fprintf(fp, "\t\t\t\t</DataArray>\n");
 
@@ -1081,20 +1085,20 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 
 #if WRITE_HTG_LEVEL
   fprintf(fp,
-	  "\t\t\t\t\t<DataArray type=\"UInt8\" Name=\"Level\" "
-	  "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"0\" "
-	  "RangeMax=\"%i\" offset=\"%u\"/>\n",
-	  vertices_local, grid->maxdepth, byte_offset);
+          "\t\t\t\t\t<DataArray type=\"UInt8\" Name=\"Level\" "
+          "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"0\" "
+          "RangeMax=\"%i\" offset=\"%u\"/>\n",
+          vertices_local, grid->maxdepth, byte_offset);
   byte_offset += vertices_local * sizeof(uint8_t) + sizeof(uint32_t);
 #endif
   {
     int i = 0;
     for (scalar s in list) {
       fprintf(fp,
-	      "\t\t\t\t\t<DataArray type=\"Float32\" Name=\"%s\" "
-	      "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"%g\" "
-	      "RangeMax=\"%g\" offset=\"%u\"/>\n",
-	      s.name, vertices_local, min_val[i], max_val[i], byte_offset);
+              "\t\t\t\t\t<DataArray type=\"Float32\" Name=\"%s\" "
+              "NumberOfTuples=\"%u\" format=\"appended\" RangeMin=\"%g\" "
+              "RangeMax=\"%g\" offset=\"%u\"/>\n",
+              s.name, vertices_local, min_val[i], max_val[i], byte_offset);
       byte_offset += vertices_local * sizeof(float) + sizeof(uint32_t);
       i++;
     }
@@ -1104,11 +1108,11 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
     for (vector v in vlist) {
       char *vname = strtok(v.x.name, ".");
       fprintf(fp,
-	      "\t\t\t\t\t<DataArray type=\"Float32\" NumberOfComponents=\"%i\" "
-	      "Name=\"%s\" NumberOfTuples=\"%u\" format=\"appended\"  "
-	      "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
-	      3, vname, vertices_local, min_val_v[i], max_val_v[i],
-	      byte_offset);
+              "\t\t\t\t\t<DataArray type=\"Float32\" NumberOfComponents=\"%i\" "
+              "Name=\"%s\" NumberOfTuples=\"%u\" format=\"appended\"  "
+              "RangeMin=\"%g\" RangeMax=\"%g\" offset=\"%u\"/>\n",
+              3, vname, vertices_local, min_val_v[i], max_val_v[i],
+              byte_offset);
       byte_offset += vertices_local * 3 * sizeof(float) + sizeof(uint32_t);
       i++;
     }
@@ -1127,8 +1131,8 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   }
 
   double t_header = (t_header_stop.tv_sec - t_header_start.tv_sec) +
-		    (double)(t_header_stop.tv_nsec - t_header_start.tv_nsec) /
-			(double)1000000000L;
+                    (double)(t_header_stop.tv_nsec - t_header_start.tv_nsec) /
+                        (double)1000000000L;
 #endif
 
   int cell_size;
@@ -1144,9 +1148,9 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   for (int lvl = 0; lvl < grid->maxdepth; ++lvl) {
     foreach_level(lvl, serial) if (is_local(cell)) {
       if (is_leaf(cell)) {
-	write_cache[index++] = 0;
+        write_cache[index++] = 0;
       } else {
-	write_cache[index++] = 1;
+        write_cache[index++] = 1;
       }
     }
   }
@@ -1155,7 +1159,7 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
     for (int j = 0; j < 8; ++j) {
       write_cache[i] |= write_cache[(8 * i + j) + 1] << (7 - j);
       if ((j + 1) == 8) {
-	write_cache[i + 1] = 0;
+        write_cache[i + 1] = 0;
       }
     }
   }
@@ -1172,11 +1176,10 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   fwrite(&prepend_size, sizeof(uint32_t), 1, fp);
 
   for (int lvl = 0; lvl <= grid->maxdepth; ++lvl) {
-    uint8_t *write_cache =
-	malloc(vertices_local_pL[lvl] * sizeof(uint8_t));
+    uint8_t *write_cache = malloc(vertices_local_pL[lvl] * sizeof(uint8_t));
     long index = 0;
     foreach_level(lvl, serial) if (is_local(cell)) write_cache[index++] =
-	(uint8_t)lvl;
+        (uint8_t)lvl;
 
     fwrite(&write_cache[0], cell_size, vertices_local_pL[lvl], fp);
     free(write_cache);
@@ -1193,12 +1196,11 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 
     for (int lvl = 0; lvl < grid->maxdepth + 1; ++lvl) {
 
-      float *write_cache =
-	  malloc(vertices_local_pL[lvl] * cell_size);
+      float *write_cache = malloc(vertices_local_pL[lvl] * cell_size);
       long index = 0;
 
       foreach_level(lvl, serial) if (is_local(cell)) write_cache[index++] =
-	  val(s);
+          val(s);
 
       fwrite(&write_cache[0], cell_size, vertices_local_pL[lvl], fp);
       free(write_cache);
@@ -1214,22 +1216,21 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
 
     for (int lvl = 0; lvl <= grid->maxdepth; ++lvl) {
 
-      float *write_cache =
-	  malloc(vertices_local_pL[lvl] * cell_size);
+      float *write_cache = malloc(vertices_local_pL[lvl] * cell_size);
       long index = 0;
       foreach_level(lvl, serial) if (is_local(cell)) {
 #if dimension == 2
 
-	write_cache[index] = val(v.y);
-	write_cache[index + 1] = val(v.x);
-	write_cache[index + 2] = 0.;
-	index += 3;
+        write_cache[index] = val(v.y);
+        write_cache[index + 1] = val(v.x);
+        write_cache[index + 2] = 0.;
+        index += 3;
 #elif dimension == 3
 
-	write_cache[index] = val(v.z);
-	write_cache[index + 1] = val(v.y);
-	write_cache[index + 2] = val(v.x);
-	index += 3;
+        write_cache[index] = val(v.z);
+        write_cache[index + 1] = val(v.y);
+        write_cache[index + 2] = val(v.x);
+        index += 3;
 #endif
       }
       fwrite(&write_cache[0], cell_size, vertices_local_pL[lvl], fp);
@@ -1249,12 +1250,12 @@ void output_htg_data(scalar *list, vector *vlist, FILE *fp) {
   long offset = ftell(fp);
 
   double t_file = (stop.tv_sec - start.tv_sec) +
-		  (double)(stop.tv_nsec - start.tv_nsec) / (double)1000000000L;
+                  (double)(stop.tv_nsec - start.tv_nsec) / (double)1000000000L;
   fprintf(stdout,
-	  "Write Time Taken: %lf ms, Throughput: %.2f MB/s, Stats %.2f%%, "
-	  "Header: %.2f%%\n",
-	  t_file * 1000., (double)offset / t_file / (double)sq(1024),
-	  t_stats / t_file * 100., t_header / t_file * 100.);
+          "Write Time Taken: %lf ms, Throughput: %.2f MB/s, Stats %.2f%%, "
+          "Header: %.2f%%\n",
+          t_file * 1000., (double)offset / t_file / (double)sq(1024),
+          t_stats / t_file * 100., t_header / t_file * 100.);
   fflush(stdout);
 #endif
   fflush(fp);
