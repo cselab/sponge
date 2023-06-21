@@ -101,32 +101,34 @@ event init(t = 0) {
   coord * p;
   FILE * fp;
   scalar d[];
-
-  if ((fp = fopen (stl_path, "r")) == NULL) {
-    fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
-    exit(1);
+  if (!restore (file = "restart")) {
+    if ((fp = fopen (stl_path, "r")) == NULL) {
+      fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
+      exit(1);
+    }
+    p = input_stl (fp);
+    if (fclose(fp) != 0) {
+      fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
+      exit(1);
+    }
+    bounding_box(p, &min, &max);
+    fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
+    fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
+    distance (d, p);
+    foreach_vertex() {
+      double p0, s0;
+      /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
+	 d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
+	 p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2)); */
+      p0 = sq(x) + sq(y) - sq(diameter / 2);
+      p0 = max(p0, z - 0.4);
+      p0 = max(p0, - 0.4 - z);
+      phi[] = p0;
+    }
+    fractions (phi, cs, fs);
+    fractions_cleanup (cs, fs);
   }
-  p = input_stl (fp);
-  if (fclose(file) != 0) {
-    fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
-    exit(1);
-  }
-  bounding_box (p, &min, &max);
-  fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
-  fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
-  distance (d, p);
-  foreach_vertex() {
-    double p0, s0;
-    /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
-       d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
-       p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2)); */
-    p0 = sq(x) + sq(y) - sq(diameter / 2);
-    p0 = max(p0, z - 0.4);
-    p0 = max(p0, - 0.4 - z);
-    phi[] = p0;
-  }
-  fractions (phi, cs, fs);
-  fractions_cleanup (cs, fs);
+  
   view (fov = 20, width = 640, height = 480, bg = {1,1,1});
   draw_vof ("cs", "fs");
   draw_vof ("cs", "fs", edges = true, lw = 0.5);
