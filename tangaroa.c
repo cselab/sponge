@@ -90,6 +90,10 @@ event velocity (i++) {
     foreach_dimension()
       u.x[] = (1. - tangaroa[])*u.x[];
 }
+
+event dump(i++) {
+  fields_stats();
+}
 	      
 event movie (t += 0.01; t <= 10)
 {

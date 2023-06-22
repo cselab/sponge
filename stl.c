@@ -3,7 +3,6 @@
 #include "fractions.h"
 #include "two-phase.h"
 #include "distance.h"
-//#include "embed.h"
 #include "view.h"
 #include <stdint.h>
 #include <stdbool.h>
@@ -24,12 +23,41 @@ u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right]  = dirichlet(0.);
 
-//u.n[embed] = dirichlet(0.);
-//u.t[embed] = dirichlet(0.);
-//u.r[embed] = dirichlet(0.);
 face vector muv[];
-scalar cs[];
-face vector fs[];
+scalar omega[];
+scalar tangaroa[];
+
+void fraction_from_stl(scalar f) {
+  coord min, max;
+  coord * p;
+  FILE *fp;
+  scalar d[];
+  vertex scalar phi[];
+  if ((fp = fopen (stl_path, "r")) == NULL) {
+      fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
+      exit(1);
+    }
+    p = input_stl (fp);
+    if (fclose(fp) != 0) {
+      fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
+      exit(1);
+    }
+    bounding_box(p, &min, &max);
+    fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
+    fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
+    distance (d, p);
+    foreach_vertex() {
+      double p0, s0;
+      /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
+	 d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
+	 p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2)); */
+      p0 = sq(x) + sq(y) - sq(diameter / 2);
+      p0 = max(p0, z - 0.4);
+      p0 = max(p0, - 0.4 - z);
+      phi[] = p0;
+    }
+    fractions(phi, f);
+}
 
 int main(int argc, char **argv) {
   int LevelFlag;
@@ -97,41 +125,18 @@ event properties(i++) {
 }
 
 event init(t = 0) {
-  coord min, max;
-  coord * p;
-  FILE * fp;
-  vertex scalar phi[];
-  scalar omega[], d[];
   if (!restore (file = "restart")) {
     if (npe() > 1) {
       fprintf(stderr, "stl: not compatible with MPI\n");
       exit(1);
     }
-    if ((fp = fopen (stl_path, "r")) == NULL) {
-      fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
-      exit(1);
+    fraction_from_stl(tangaroa);
+    foreach() {
+      u.x[] = 1;
+      u.y[] = 0;
+      u.z[] = 0;
     }
-    p = input_stl (fp);
-    if (fclose(fp) != 0) {
-      fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
-      exit(1);
-    }
-    bounding_box(p, &min, &max);
-    fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
-    fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
-    distance (d, p);
-    foreach_vertex() {
-      double p0, s0;
-      /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
-	 d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
-	 p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2)); */
-      p0 = sq(x) + sq(y) - sq(diameter / 2);
-      p0 = max(p0, z - 0.4);
-      p0 = max(p0, - 0.4 - z);
-      phi[] = p0;
-    }
-    fractions (phi, cs, fs);
-    //fractions_cleanup (cs, fs);
+    fields_stats();
     dump(file = "restart");
     exit(0);
   } else {
@@ -139,9 +144,14 @@ event init(t = 0) {
       fprintf(stderr, "stl: reading restart\n");
   }
   view(fov = 20, width = 640, height = 480, bg = {1,1,1});
-  draw_vof("cs", "fs");
-  draw_vof("cs", "fs", edges = true, lw = 0.5);
+  draw_vof("tangaroa", edges = true, lw = 0.5);
   save("vof.png");
+}
+
+event velocity (i++) {
+  foreach()
+    foreach_dimension()
+      u.x[] = tangaroa[]*u.x[];
 }
 
 event dump(i ++; t <= 100) {
@@ -149,11 +159,11 @@ event dump(i ++; t <= 100) {
   int rank;
   char hdg[FILENAME_MAX];
   char path[]=".";
-  //scalar omega[];
   if (iframe % period == 0) {
-    //vorticity(u, omega);
+    vorticity(u, omega);
     sprintf(hdg, "h.%09ld", iframe);
-    output_htg({p, cs}, {u}, path, hdg, iframe, t);
+    output_htg({p, omega, tangaroa}, {u}, path, hdg, iframe, t);
+    stats ss = statsf (u.x);
     fields_stats();
   }
   iframe++;
