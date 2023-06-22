@@ -134,7 +134,6 @@ event init(t = 0) {
       u.y[] = 0;
       u.z[] = 0;
     }
-    fields_stats();
     dump(file = "restart");
     exit(0);
   } else {
