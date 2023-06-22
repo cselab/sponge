@@ -7,7 +7,6 @@
 #include "view.h"
 #include "lambda2.h"
 #include "maxruntime.h"
-#include "navier-stokes/perfs.h"
 
 void fraction_from_stl (scalar f, FILE * fp, double eps, int maxlevel)
 {
@@ -64,12 +63,14 @@ uf.n[right] = 0.;
 	      
 event init (t = 0) {
   if (!restore (file = "restart")) {
-    FILE * fp = fopen ("tangaroa.stl", "r");
+    FILE * fp;
+    if ((fp = fopen ("tangaroa.stl", "r")) == NULL) {
+      fprintf(stderr, "tangaroa: fail to open stl file\n");
+      exit(1);
+    }
     fraction_from_stl (tangaroa, fp, 5e-4, LEVEL);
     fclose (fp);
-    
     fraction (f0, - z);
-
     foreach() {
       f[] = f0[];
       u.y[] = 1.;
