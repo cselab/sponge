@@ -75,6 +75,8 @@ event init (t = 0) {
       f[] = f0[];
       u.y[] = 1.;
     }
+    dump (file = "restart");
+    exit(0);
   }
 
   display ("view (quat = {0.542,0.150,0.209,0.799},"
@@ -113,13 +115,6 @@ event movie (t += 0.01; t <= 10)
   lambda2 (u, l2);
   isosurface ("l2", -100);
   save ("l2.mp4");
-}
-
-event snapshot (i += 100)
-{
-  scalar l2[];
-  lambda2 (u, l2);
-  dump (file = "restart");
 }
 
 event adapt (i++) {
