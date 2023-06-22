@@ -9,7 +9,7 @@
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
-static int maxlevel = 10;
+static int maxlevel = 9;
 static char *stl_path;
 static int period;
 static long level;
