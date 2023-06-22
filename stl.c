@@ -101,6 +101,10 @@ event init(t = 0) {
   vertex scalar phi[];
   scalar omega[], d[];
   if (!restore (file = "restart")) {
+    if (npe() > 1) {
+      fprintf(stderr, "stl: not compatible with MPI\n");
+      exit(1);
+    }
     if ((fp = fopen (stl_path, "r")) == NULL) {
       fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
       exit(1);
@@ -110,11 +114,9 @@ event init(t = 0) {
       fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
       exit(1);
     }
-    if (pid() == 0) {
-      bounding_box(p, &min, &max);
-      fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
-      fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
-    }
+    bounding_box(p, &min, &max);
+    fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
+    fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
     distance (d, p);
     foreach_vertex() {
       double p0, s0;
@@ -128,8 +130,8 @@ event init(t = 0) {
     }
     fractions (phi, cs, fs);
     fractions_cleanup (cs, fs);
-    boundary(all);
     dump(file = "restart");
+    exit(0);
   } else {
     if (pid() == 0)
       fprintf(stderr, "stl: reading restart\n");
@@ -145,11 +147,11 @@ event dump(i ++; t <= 100) {
   int rank;
   char hdg[FILENAME_MAX];
   char path[]=".";
-  scalar omega[];
+  //scalar omega[];
   if (iframe % period == 0) {
-    vorticity(u, omega);
+    //vorticity(u, omega);
     sprintf(hdg, "h.%09ld", iframe);
-    output_htg({p, cs, omega}, {u}, path, hdg, iframe, t);
+    output_htg({p, cs}, {u}, path, hdg, iframe, t);
     fields_stats();
   }
   iframe++;
