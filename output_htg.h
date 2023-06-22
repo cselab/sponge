@@ -200,9 +200,7 @@ void output_htg_data_mpiio(scalar *list, vector *vlist, MPI_File fp) {
     if (pid() == (npe() - 1)) {
       unsigned int next_offset;
       next_offset = vertices_global_offset[lvl] + vertices_local_pL[lvl];
-      fprintf(stderr, "pid: %d\n", pid());
       MPI_Ssend(&next_offset, 1, MPI_UNSIGNED, 0, 0, MPI_COMM_WORLD);
-      fprintf(stderr, "npe: %d\n", npe());
     }
     if (pid() == 0) {
       vertices_local_pL[lvl] -= carryover;

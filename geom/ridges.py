@@ -27,5 +27,11 @@ mesh.points[:, 0] = x
 mesh.points[:, 1] = y
 mesh.points[:, 2] = z
 mesh.write("scaled.stl", binary=True)
+
+mesh.points[:, 0] = z
+mesh.points[:, 1] = y
+mesh.points[:, 2] = x
+mesh.write("transpose.stl", binary=True)
+
 print(diameter, diameter * s, 40 * s, s)
 

@@ -3,14 +3,13 @@
 #include "fractions.h"
 #include "two-phase.h"
 #include "distance.h"
-#include "view.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include "output_htg.h"
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
-static int maxlevel = 7;
+static int maxlevel = 10;
 static char *stl_path;
 static int period;
 static long level;
@@ -48,10 +47,9 @@ void fraction_from_stl(scalar f) {
     distance (d, p);
     foreach_vertex() {
       double p0, s0;
-      /* s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
-	 d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
-	 p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2)); */
-      p0 = sq(x) + sq(y) - sq(diameter / 2);
+      s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
+	    d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
+      p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
       p0 = max(p0, z - 0.4);
       p0 = max(p0, - 0.4 - z);
       phi[] = p0;
@@ -113,9 +111,9 @@ int main(int argc, char **argv) {
     exit(1);
   }
   stl_path = *argv;
-  size(1.0);
+  size(5.0);
   init_grid (1 << level);
-  origin(-L0/2, -L0/2, -L0/2);
+  origin(-1.0, -L0/2, -L0/2);
   mu = muv;
   run();
 }
@@ -143,9 +141,6 @@ event init(t = 0) {
     if (pid() == 0)
       fprintf(stderr, "stl: reading restart\n");
   }
-  view(fov = 20, width = 640, height = 480, bg = {1,1,1});
-  draw_vof("tangaroa", edges = true, lw = 0.5);
-  save("vof.png");
 }
 
 event velocity (i++) {
@@ -163,17 +158,16 @@ event dump(i ++; t <= 100) {
     vorticity(u, omega);
     sprintf(hdg, "h.%09ld", iframe);
     output_htg({p, omega, tangaroa}, {u}, path, hdg, iframe, t);
-    stats ss = statsf (u.x);
     fields_stats();
   }
   iframe++;
 }
 
-/*
+
 event adapt (i++) {
-  astats s = adapt_wavelet ({cs,u}, (double[]){1e-2, 0.02, 0.02, 0.02},
-			    maxlevel, 4);
+  double uemax = 0.01;
+  astats s = adapt_wavelet({tangaroa, u},
+			   (double[]){0.01,0.01, uemax, uemax, uemax},
+			   maxlevel = maxlevel, minlevel = level);
   fprintf (stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
-  fields_stats();
 }
-*/

@@ -21,11 +21,11 @@ distance: _distance.c; $(MPICC) -o $@ $(MPICCFLAGS) _distance.c $(V_LIBS)
 
 stl_mpi: stl.c
 	CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source && \
-	$(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
+	$(MPICC) -o $@ $(CFLAGS) _stl.c || rm _stl.c
 
 stl_single: stl.c
 	$(QCC) $(QCCFLAGS) stl.c -source && \
-	$(CC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
+	$(CC) -o $@ $(CFLAGS) _stl.c || rm _stl.c
 
 tangaroa_mpi: tangaroa.c
 	CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 tangaroa.c -source && \
