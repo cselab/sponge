@@ -9,7 +9,7 @@
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
-static int maxlevel = 9;
+static int maxlevel = 10;
 static char *stl_path;
 static int period;
 static long level;
@@ -45,6 +45,11 @@ void fraction_from_stl(scalar f) {
     fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
     fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
     distance (d, p);
+    for (;;) {
+      astats s = adapt_wavelet ({d}, (double[]){0.0}, maxlevel, level);
+      fprintf(stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
+      if (s.nf == 0) break;
+    }
     foreach_vertex() {
       double p0, s0;
       s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
