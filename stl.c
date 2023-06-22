@@ -3,7 +3,7 @@
 #include "fractions.h"
 #include "two-phase.h"
 #include "distance.h"
-#include "embed.h"
+//#include "embed.h"
 #include "view.h"
 #include <stdint.h>
 #include <stdbool.h>
@@ -24,10 +24,12 @@ u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right]  = dirichlet(0.);
 
-u.n[embed] = dirichlet(0.);
-u.t[embed] = dirichlet(0.);
-u.r[embed] = dirichlet(0.);
+//u.n[embed] = dirichlet(0.);
+//u.t[embed] = dirichlet(0.);
+//u.r[embed] = dirichlet(0.);
 face vector muv[];
+scalar cs[];
+face vector fs[];
 
 int main(int argc, char **argv) {
   int LevelFlag;
@@ -129,7 +131,7 @@ event init(t = 0) {
       phi[] = p0;
     }
     fractions (phi, cs, fs);
-    fractions_cleanup (cs, fs);
+    //fractions_cleanup (cs, fs);
     dump(file = "restart");
     exit(0);
   } else {

@@ -27,6 +27,15 @@ stl_single: stl.c
 	$(QCC) $(QCCFLAGS) stl.c -source && \
 	$(CC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
 
+tangaroa_mpi: tangaroa.c
+	CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 tangaroa.c -source && \
+	$(MPICC) -o $@ $(CFLAGS) _tangaroa.c $(V_LIBS) || rm _tangaroa.c
+
+tangaroa_single: tangaroa.c
+	$(QCC) $(QCCFLAGS) tangaroa.c -source && \
+	$(CC) -o $@ $(CFLAGS) _tangaroa.c $(V_LIBS) || rm _tangaroa.c
+
+
 _sphere.c: sphere.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 sphere.c -source
 sphere: _sphere.c; $(MPICC) -o $@ $(MPICCFLAGS) _sphere.c $(V_LIBS)
 
