@@ -2,6 +2,7 @@
 .SUFFIX:
 .SUFFIX: .c
 
+CC = cc
 BASILISK = $(HOME)/basilisk/src
 BASILISK_VIEW_FLAGS = `pkg-config --libs osmesa glu` -lm
 MPICC = mpicc
@@ -23,11 +24,8 @@ stl_mpi: stl.c
 	$(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
 
 stl_single: stl.c
-	CC99=$(MPICC) $(QCC) $(QCCFLAGS) stl.c -source && \
-	$(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
-
-_stl.c: stl.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source
-stl: _stl.c; $(MPICC) -o $@ $(CFLAGS) _stl.c $(V_LIBS)
+	$(QCC) $(QCCFLAGS) stl.c -source && \
+	$(CC) -o $@ $(CFLAGS) _stl.c $(V_LIBS) || rm _stl.c
 
 _sphere.c: sphere.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 sphere.c -source
 sphere: _sphere.c; $(MPICC) -o $@ $(MPICCFLAGS) _sphere.c $(V_LIBS)

@@ -5,19 +5,16 @@
 #include "distance.h"
 #include "embed.h"
 #include "view.h"
-#include <mpi.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include "output_htg.h"
 
 static const double diameter = 0.3733333285861546;
-static double Reynolds = 400;
+static double Reynolds = 2000;
 static int maxlevel = 7;
 static char *stl_path;
 static int period;
 static long level;
-vertex scalar phi[];
-scalar omega[];
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
@@ -100,8 +97,8 @@ event init(t = 0) {
   coord min, max;
   coord * p;
   FILE * fp;
-  scalar d[];
-  int rank;
+  vertex scalar phi[];
+  scalar omega[], d[];
   if (!restore (file = "restart")) {
     if ((fp = fopen (stl_path, "r")) == NULL) {
       fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
@@ -112,8 +109,7 @@ event init(t = 0) {
       fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
       exit(1);
     }
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0) {
+    if (pid() == 0) {
       bounding_box(p, &min, &max);
       fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
       fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
@@ -131,11 +127,16 @@ event init(t = 0) {
     }
     fractions (phi, cs, fs);
     fractions_cleanup (cs, fs);
+    boundary(all);
+    dump(file = "restart");
+  } else {
+    if (pid() == 0)
+      fprintf(stderr, "stl: reading restart\n");
   }
-  view (fov = 20, width = 640, height = 480, bg = {1,1,1});
-  draw_vof ("cs", "fs");
-  draw_vof ("cs", "fs", edges = true, lw = 0.5);
-  save ("vof.png");
+  view(fov = 20, width = 640, height = 480, bg = {1,1,1});
+  draw_vof("cs", "fs");
+  draw_vof("cs", "fs", edges = true, lw = 0.5);
+  save("vof.png");
 }
 
 event dump(i ++; t <= 100) {
@@ -143,20 +144,14 @@ event dump(i ++; t <= 100) {
   int rank;
   char hdg[FILENAME_MAX];
   char path[]=".";
+  scalar omega[];
   if (iframe % period == 0) {
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    if (rank == 0)
-      fields_stats();
     vorticity(u, omega);
     sprintf(hdg, "h.%09ld", iframe);
-    output_htg({p, cs, phi, omega}, {u}, path, hdg, iframe, t);
+    output_htg({p, cs, omega}, {u}, path, hdg, iframe, t);
+    fields_stats();
   }
   iframe++;
-}
-
-event snapshot(i += 100)
-{
-  dump(file = "restart");
 }
 
 /*
