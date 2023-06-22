@@ -38,16 +38,17 @@ int main(int argc, char **argv) {
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
+      fprintf(stderr, "stl -l INT -p INT file.stl\n");
       exit(1);
     case 'l':
       argv++;
       if (*argv == NULL) {
-	fprintf(stderr, "distance: -l needs an argument\n");
+	fprintf(stderr, "stl: -l needs an argument\n");
 	exit(1);
       }
       level = strtol(*argv, &end, 10);
       if (*end != '\0' || level <= 0) {
-	fprintf(stderr, "distance: '%s' is not a positive integer\n", *argv);
+	fprintf(stderr, "stl: '%s' is not a positive integer\n", *argv);
 	exit(1);
       }
       LevelFlag = 1;
@@ -70,11 +71,11 @@ int main(int argc, char **argv) {
       exit(1);
     }
   if (LevelFlag == 0) {
-    fprintf(stderr, "distance: error: -l must be set\n");
+    fprintf(stderr, "stl: error: -l must be set\n");
     exit(1);
   }
   if (!PeriodFlag) {
-    fprintf(stderr, "distance: error: -p must be set\n");
+    fprintf(stderr, "stl: error: -p must be set\n");
     exit(1);
   }
   if (*argv == NULL) {
