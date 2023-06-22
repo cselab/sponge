@@ -6,7 +6,6 @@
 #include "reduced.h"
 #include "view.h"
 #include "lambda2.h"
-#include "maxruntime.h"
 
 void fraction_from_stl (scalar f, FILE * fp, double eps, int maxlevel)
 {
@@ -32,7 +31,6 @@ double FROUDE = 0.4;
 scalar tangaroa[], f0[];
 int main (int argc, char * argv[])
 {
-  maxruntime (&argc, argv);
   if (argc > 1)
     LEVEL = atoi(argv[1]);
   if (argc > 2)
