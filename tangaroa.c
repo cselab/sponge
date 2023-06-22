@@ -114,16 +114,12 @@ event movie (t += 0.01; t <= 10)
   save ("l2.mp4");
 }
 
-#if DUMP
 event snapshot (i += 100)
 {
-  char name[80];
-  sprintf (name, "dump-%d", i);
   scalar l2[];
   lambda2 (u, l2);
-  dump (file = name);
+  dump (file = "restart");
 }
-#endif
 
 event adapt (i++) {
   double uemax = 0.1;
