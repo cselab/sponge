@@ -1,6 +1,18 @@
-# state file generated using paraview version 5.11.1
 import paraview
+import sys
 Sponge = False
+while True:
+    sys.argv.pop(0)
+    if len(sys.argv) and len(sys.argv[0]) > 1 and sys.argv[0][0] == '-':
+        if sys.argv[0][1] == 's':
+            Sponge = 1
+        else:
+            sys.stderr.write("%s: unknown option '%s'\n" % (me, sys.argv[0]))
+            sys.exit(2)
+    else:
+        break
+
+
 paraview.compatibility.major = 5
 paraview.compatibility.minor = 11
 from paraview.simple import *
