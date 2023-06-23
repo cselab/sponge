@@ -153,7 +153,7 @@ event velocity (i++) {
       u.x[] = tangaroa[]*u.x[];
 }
 
-event dump(i ++; t <= 100) {
+event dump(i ++; t <= 10000) {
   static long iframe = 0;
   int rank;
   char hdg[FILENAME_MAX];
