@@ -1,7 +1,7 @@
 import math
 
 Transpose = True
-n = 20
+n = 100
 r0 = r1 = 0.3733333285861546 / 2
 z0 = -0.4
 z1 = 0.4
