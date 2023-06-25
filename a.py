@@ -46,7 +46,6 @@ field.SliceType = 'Plane'
 field.HyperTreeGridSlicer = 'Plane'
 field.SliceOffsetValues = [0.0]
 field.SliceType.Origin = [0.0, 0.0, 1.5]
-transposestl = STLReader(registrationName='transpose.stl', FileNames=['/u/transpose.stl'])
 cylinderply = PLYReader(registrationName='cylinder.ply', FileNames=['/u/cylinder.ply'])
 cylinderplyDisplay = Show(cylinderply, renderView1, 'GeometryRepresentation')
 cylinderplyDisplay.Representation = 'Surface'
@@ -73,6 +72,7 @@ cylinderplyDisplay.OSPRayScaleFunction.Points = [-124.4246826171875, 0.0, 0.5, 0
 cylinderplyDisplay.ScaleTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 0.6635220224576285, 0.02717391401529312, 0.5, 0.0, 1.0, 1.0, 0.5, 0.0]
 cylinderplyDisplay.OpacityTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 0.6635220224576285, 0.02717391401529312, 0.5, 0.0, 1.0, 1.0, 0.5, 0.0]
 if Sponge:
+    transposestl = STLReader(registrationName='transpose.stl', FileNames=['/u/transpose.stl'])
     sponge = Slice(registrationName='sponge', Input=transposestl)
     sponge.SliceType = 'Plane'
     sponge.HyperTreeGridSlicer = 'Plane'
