@@ -1,3 +1,4 @@
+import os
 import paraview
 import sys
 Sponge = False
@@ -6,12 +7,13 @@ while True:
     if len(sys.argv) and len(sys.argv[0]) > 1 and sys.argv[0][0] == '-':
         if sys.argv[0][1] == 's':
             Sponge = 1
+            stl_path = os.path.join(os.getenv("HOME"), ".local", "transpose.stl")
         else:
             sys.stderr.write("%s: unknown option '%s'\n" % (me, sys.argv[0]))
             sys.exit(2)
     else:
         break
-
+cylinder_path = os.path.join(os.getenv("HOME"), ".local", "cylinder.ply")
 
 paraview.compatibility.major = 5
 paraview.compatibility.minor = 11
@@ -46,7 +48,7 @@ field.SliceType = 'Plane'
 field.HyperTreeGridSlicer = 'Plane'
 field.SliceOffsetValues = [0.0]
 field.SliceType.Origin = [0.0, 0.0, 1.5]
-cylinderply = PLYReader(registrationName='cylinder.ply', FileNames=['/u/cylinder.ply'])
+cylinderply = PLYReader(registrationName='cylinder.ply', FileNames=[cylinder_path])
 cylinderplyDisplay = Show(cylinderply, renderView1, 'GeometryRepresentation')
 cylinderplyDisplay.Representation = 'Surface'
 cylinderplyDisplay.ColorArrayName = ['POINTS', '']
@@ -72,7 +74,7 @@ cylinderplyDisplay.OSPRayScaleFunction.Points = [-124.4246826171875, 0.0, 0.5, 0
 cylinderplyDisplay.ScaleTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 0.6635220224576285, 0.02717391401529312, 0.5, 0.0, 1.0, 1.0, 0.5, 0.0]
 cylinderplyDisplay.OpacityTransferFunction.Points = [0.0, 0.0, 0.5, 0.0, 0.6635220224576285, 0.02717391401529312, 0.5, 0.0, 1.0, 1.0, 0.5, 0.0]
 if Sponge:
-    transposestl = STLReader(registrationName='transpose.stl', FileNames=['/u/transpose.stl'])
+    transposestl = STLReader(registrationName='transpose.stl', FileNames=[stl_path])
     sponge = Slice(registrationName='sponge', Input=transposestl)
     sponge.SliceType = 'Plane'
     sponge.HyperTreeGridSlicer = 'Plane'
