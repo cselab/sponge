@@ -224,7 +224,7 @@ event init(t = 0) {
     exit(0);
   } else {
     if (pid() == 0)
-      fprintf(stderr, "stl: reading restart\n");
+      fprintf(stderr, "stl: rank: %d/%d: reading restart\n", pid(), npe());
   }
 }
 
