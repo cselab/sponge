@@ -6,7 +6,6 @@
 #include "two-phase.h"
 #include "distance.h"
 #include "output_htg.h"
-
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
 static int maxlevel = 10;
@@ -20,17 +19,30 @@ pf[left] = neumann(0.);
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0.);
-
 face vector muv[];
-scalar omega[];
-scalar tangaroa[];
+scalar omega[], tangaroa[];
+
+void append(Array *a, void *elem, size_t size) {
+  if (a->len + size >= a->max) {
+    a->max += max(size, 4096);
+    a->p = realloc(a->p, a->max);
+    if (a->p == NULL) {
+      fprintf(stderr, "stl: error: realloc failed\n");
+      exit(1);
+    }
+  }
+  memcpy(((char *)a->p) + a->len, elem, size);
+  a->len += size;
+}
 
 trace coord *read_stl(FILE *fp) {
   Array *a = array_new();
   char tag[6];
-  uint32_t nf;
+  uint32_t nf, i;
   char header[80];
-  unsigned i;
+  float x, y, z;
+  unsigned j;
+  uint16_t attbytecount;
 
   if (fread(header, sizeof(char), 80, fp) != 80) {
     fprintf(stderr, "Input file is not a valid STL file\n"
@@ -42,11 +54,8 @@ trace coord *read_stl(FILE *fp) {
                     "stdin: missing number of facets\n");
     exit(1);
   }
-  i = nf;
-  while (i > 0) {
-    float x, y, z;
-    unsigned j;
-    uint16_t attbytecount;
+  fprintf(stderr, "std: nf: %d\n", (int)nf);
+  for (i = 0; i < nf; i++) {
     if (fread(&x, sizeof(float), 1, fp) != 1) {
       fprintf(stderr, "Input file is not a valid STL file\n"
                       "stdin: missing normal x-coordinate\n");
@@ -79,17 +88,16 @@ trace coord *read_stl(FILE *fp) {
         exit(1);
       }
       coord p = {x, y, z};
-      array_append(a, &p, sizeof(coord));
+      append(a, &p, sizeof(coord));
     }
     if (fread(&attbytecount, sizeof(uint16_t), 1, fp) != 1) {
       fprintf(stderr, "Input file is not a valid STL file\n"
                       "stdin: missing attribute byte count\n");
       exit(1);
     }
-    i--;
   }
   coord p = {nodata};
-  array_append(a, &p, sizeof(coord));
+  append(a, &p, sizeof(coord));
   return (coord *)array_shrink(a);
 }
 
@@ -108,6 +116,7 @@ void fraction_from_stl(scalar f) {
     fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
     exit(1);
   }
+  bounding_box(p, &min, &max);
   scale = 0.8 / (max.z - min.z);
   foreach_dimension() center.x = (min.x + max.x) / 2;
   for (q = p; q->x != nodata; q++) {
