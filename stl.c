@@ -8,7 +8,7 @@
 #include "output_htg.h"
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
-static int maxlevel = 10;
+static int maxlevel;
 static char *stl_path;
 static int period;
 static long level;
@@ -137,20 +137,20 @@ void fraction_from_stl(scalar f) {
     s0 = (d[] + d[-1] + d[0, -1] + d[-1, -1] + d[0, 0, -1] + d[-1, 0, -1] +
           d[0, -1, -1] + d[-1, -1, -1]) /
          8.;
-    p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
+    /*p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
     p0 = max(p0, z - 0.4);
-    p0 = max(p0, -0.4 - z);
-    phi[] = p0;
+    p0 = max(p0, -0.4 - z); */
+    phi[] = -s0;
   }
   fractions(phi, f);
 }
 
 int main(int argc, char **argv) {
-  int LevelFlag;
-  int PeriodFlag;
+  int LevelFlag, PeriodFlag, MaxLevelFlag;
   char *end;
   LevelFlag = 0;
   PeriodFlag = 0;
+  MaxLevelFlag = 0;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
@@ -182,6 +182,19 @@ int main(int argc, char **argv) {
       }
       PeriodFlag = 1;
       break;
+    case 'm':
+      argv++;
+      if (*argv == NULL) {
+        fprintf(stderr, "cylinder: -p needs an argument\n");
+        exit(1);
+      }
+      maxlevel = strtol(*argv, &end, 10);
+      if (*end != '\0' || maxlevel <= 0) {
+        fprintf(stderr, "cylinder: '%s' is not a positive integer\n", *argv);
+        exit(1);
+      }
+      MaxLevelFlag = 1;
+      break;
     default:
       fprintf(stderr, "stl: error: unrecognized command-line option '%s'\n",
               *argv);
@@ -193,6 +206,10 @@ int main(int argc, char **argv) {
   }
   if (!PeriodFlag) {
     fprintf(stderr, "stl: error: -p must be set\n");
+    exit(1);
+  }
+  if (!MaxLevelFlag) {
+    fprintf(stderr, "stl: error: -m must be set\n");
     exit(1);
   }
   stl_path = *argv;
