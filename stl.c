@@ -1,10 +1,10 @@
+#include <stdint.h>
+#include <stdbool.h>
 #include "grid/octree.h"
 #include "navier-stokes/centered.h"
 #include "fractions.h"
 #include "two-phase.h"
 #include "distance.h"
-#include <stdint.h>
-#include <stdbool.h>
 #include "output_htg.h"
 
 static const double diameter = 0.3733333285861546;
@@ -16,11 +16,11 @@ static long level;
 
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
-pf[left]   = neumann(0.);
+pf[left] = neumann(0.);
 
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
-pf[right]  = dirichlet(0.);
+pf[right] = dirichlet(0.);
 
 face vector muv[];
 scalar omega[];
@@ -28,38 +28,40 @@ scalar tangaroa[];
 
 void fraction_from_stl(scalar f) {
   coord min, max;
-  coord * p;
+  coord *p;
   FILE *fp;
   scalar d[];
   vertex scalar phi[];
-  if ((fp = fopen (stl_path, "r")) == NULL) {
-      fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
-      exit(1);
-    }
-    p = input_stl (fp);
-    if (fclose(fp) != 0) {
-      fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
-      exit(1);
-    }
-    bounding_box(p, &min, &max);
-    fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
-    fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
-    distance (d, p);
-    for (;;) {
-      astats s = adapt_wavelet ({d}, (double[]){0.0}, maxlevel, level);
-      fprintf(stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
-      if (s.nf == 0) break;
-    }
-    foreach_vertex() {
-      double p0, s0;
-      s0 = (d[] + d[-1] + d[0,-1] + d[-1,-1] +
-	    d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.;
-      p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
-      p0 = max(p0, z - 0.4);
-      p0 = max(p0, - 0.4 - z);
-      phi[] = p0;
-    }
-    fractions(phi, f);
+  if ((fp = fopen(stl_path, "r")) == NULL) {
+    fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
+    exit(1);
+  }
+  p = input_stl(fp);
+  if (fclose(fp) != 0) {
+    fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
+    exit(1);
+  }
+  bounding_box(p, &min, &max);
+  fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
+  fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
+  distance(d, p);
+  for (;;) {
+    astats s = adapt_wavelet({d}, (double[]){0.0}, maxlevel, level);
+    fprintf(stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
+    if (s.nf == 0)
+      break;
+  }
+  foreach_vertex() {
+    double p0, s0;
+    s0 = (d[] + d[-1] + d[0, -1] + d[-1, -1] + d[0, 0, -1] + d[-1, 0, -1] +
+          d[0, -1, -1] + d[-1, -1, -1]) /
+         8.;
+    p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
+    p0 = max(p0, z - 0.4);
+    p0 = max(p0, -0.4 - z);
+    phi[] = p0;
+  }
+  fractions(phi, f);
 }
 
 int main(int argc, char **argv) {
@@ -76,31 +78,32 @@ int main(int argc, char **argv) {
     case 'l':
       argv++;
       if (*argv == NULL) {
-	fprintf(stderr, "stl: -l needs an argument\n");
-	exit(1);
+        fprintf(stderr, "stl: -l needs an argument\n");
+        exit(1);
       }
       level = strtol(*argv, &end, 10);
       if (*end != '\0' || level <= 0) {
-	fprintf(stderr, "stl: '%s' is not a positive integer\n", *argv);
-	exit(1);
+        fprintf(stderr, "stl: '%s' is not a positive integer\n", *argv);
+        exit(1);
       }
       LevelFlag = 1;
       break;
     case 'p':
       argv++;
       if (*argv == NULL) {
-	fprintf(stderr, "cylinder: -p needs an argument\n");
-	exit(1);
+        fprintf(stderr, "cylinder: -p needs an argument\n");
+        exit(1);
       }
       period = strtol(*argv, &end, 10);
       if (*end != '\0' || period <= 0) {
-	fprintf(stderr, "cylinder: '%s' is not a positive integer\n", *argv);
-	exit(1);
+        fprintf(stderr, "cylinder: '%s' is not a positive integer\n", *argv);
+        exit(1);
       }
       PeriodFlag = 1;
       break;
     default:
-      fprintf(stderr, "stl: error: unrecognized command-line option '%s'\n", *argv);
+      fprintf(stderr, "stl: error: unrecognized command-line option '%s'\n",
+              *argv);
       exit(1);
     }
   if (LevelFlag == 0) {
@@ -117,24 +120,21 @@ int main(int argc, char **argv) {
   }
   stl_path = *argv;
   size(5.0);
-  init_grid (1 << level);
-  origin(-1.0, -L0/2, -L0/2);
+  init_grid(1 << level);
+  origin(-1.0, -L0 / 2, -L0 / 2);
   mu = muv;
   run();
 }
-event properties(i++) {
-  foreach_face()
-    muv.x[] = fm.x[] * diameter / Reynolds;
-}
+event properties(i++) { foreach_face() muv.x[] = fm.x[] * diameter / Reynolds; }
 
 event init(t = 0) {
-  if (!restore (file = "restart")) {
+  if (!restore(file = "restart")) {
     if (npe() > 1) {
       fprintf(stderr, "stl: not compatible with MPI\n");
       exit(1);
     }
     fraction_from_stl(tangaroa);
-    foreach() {
+    foreach () {
       u.x[] = 1;
       u.y[] = 0;
       u.z[] = 0;
@@ -147,17 +147,16 @@ event init(t = 0) {
   }
 }
 
-event velocity (i++) {
-  foreach()
-    foreach_dimension()
-      u.x[] = tangaroa[]*u.x[];
+event velocity(i++) {
+  foreach ()
+    foreach_dimension() u.x[] = tangaroa[] * u.x[];
 }
 
-event dump(i ++; t <= 10000) {
+event dump(i++; t <= 10000) {
   static long iframe = 0;
   int rank;
   char hdg[FILENAME_MAX];
-  char path[]=".";
+  char path[] = ".";
   if (iframe % period == 0) {
     vorticity(u, omega);
     sprintf(hdg, "h.%09ld", iframe);
@@ -167,11 +166,10 @@ event dump(i ++; t <= 10000) {
   iframe++;
 }
 
-
-event adapt (i++) {
+event adapt(i++) {
   double uemax = 0.01;
-  astats s = adapt_wavelet({tangaroa, u},
-			   (double[]){0.01,0.01, uemax, uemax, uemax},
-			   maxlevel = maxlevel, minlevel = level);
-  fprintf (stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
+  astats s =
+      adapt_wavelet({tangaroa, u}, (double[]){0.01, 0.01, uemax, uemax, uemax},
+                    maxlevel = maxlevel, minlevel = level);
+  fprintf(stderr, "# refined %d cells, coarsened %d cells\n", s.nf, s.nc);
 }
