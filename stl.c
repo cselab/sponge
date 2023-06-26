@@ -195,10 +195,6 @@ int main(int argc, char **argv) {
     fprintf(stderr, "stl: error: -p must be set\n");
     exit(1);
   }
-  if (*argv == NULL) {
-    fprintf(stderr, "stl: error: not input file\n");
-    exit(1);
-  }
   stl_path = *argv;
   size(5.0);
   init_grid(1 << level);
@@ -212,6 +208,10 @@ event init(t = 0) {
   if (!restore(file = "restart")) {
     if (npe() > 1) {
       fprintf(stderr, "stl: not compatible with MPI\n");
+      exit(1);
+    }
+    if (stl_path == NULL) {
+      fprintf(stderr, "stl: error: need STL file\n");
       exit(1);
     }
     fraction_from_stl(tangaroa);
