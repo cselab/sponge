@@ -17,7 +17,6 @@ static long level;
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
 pf[left] = neumann(0.);
-
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0.);
