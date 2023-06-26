@@ -26,9 +26,77 @@ face vector muv[];
 scalar omega[];
 scalar tangaroa[];
 
+trace coord *read_stl(FILE *fp) {
+  Array *a = array_new();
+  char tag[6];
+  uint32_t nf;
+  char header[80];
+  unsigned i;
+
+  if (fread(header, sizeof(char), 80, fp) != 80) {
+    fprintf(stderr, "Input file is not a valid STL file\n"
+                    "stdin: incomplete header\n");
+    exit(1);
+  }
+  if (fread(&nf, sizeof(uint32_t), 1, fp) != 1) {
+    fprintf(stderr, "Input file is not a valid STL file\n"
+                    "stdin: missing number of facets\n");
+    exit(1);
+  }
+  i = nf;
+  while (i > 0) {
+    float x, y, z;
+    unsigned j;
+    uint16_t attbytecount;
+    if (fread(&x, sizeof(float), 1, fp) != 1) {
+      fprintf(stderr, "Input file is not a valid STL file\n"
+                      "stdin: missing normal x-coordinate\n");
+      exit(1);
+    }
+    if (fread(&y, sizeof(float), 1, fp) != 1) {
+      fprintf(stderr, "Input file is not a valid STL file\n"
+                      "stdin: missing normal y-coordinate\n");
+      exit(1);
+    }
+    if (fread(&z, sizeof(float), 1, fp) != 1) {
+      fprintf(stderr, "Input file is not a valid STL file\n"
+                      "stdin: missing normal z-coordinate\n");
+      exit(1);
+    }
+    for (j = 0; j < 3; j++) {
+      if (fread(&x, sizeof(float), 1, fp) != 1) {
+        fprintf(stderr, "Input file is not a valid STL file\n"
+                        "stdin: missing vertex x-coordinate\n");
+        exit(1);
+      }
+      if (fread(&y, sizeof(float), 1, fp) != 1) {
+        fprintf(stderr, "Input file is not a valid STL file\n"
+                        "stdin: missing vertex y-coordinate\n");
+        exit(1);
+      }
+      if (fread(&z, sizeof(float), 1, fp) != 1) {
+        fprintf(stderr, "Input file is not a valid STL file\n"
+                        "stdin: missing vertex z-coordinate\n");
+        exit(1);
+      }
+      coord p = {x, y, z};
+      array_append(a, &p, sizeof(coord));
+    }
+    if (fread(&attbytecount, sizeof(uint16_t), 1, fp) != 1) {
+      fprintf(stderr, "Input file is not a valid STL file\n"
+                      "stdin: missing attribute byte count\n");
+      exit(1);
+    }
+    i--;
+  }
+  coord p = {nodata};
+  array_append(a, &p, sizeof(coord));
+  return (coord *)array_shrink(a);
+}
+
 void fraction_from_stl(scalar f) {
-  coord min, max;
-  coord *p;
+  coord *p, *q, center, min, max;
+  double scale;
   FILE *fp;
   scalar d[];
   vertex scalar phi[];
@@ -36,10 +104,15 @@ void fraction_from_stl(scalar f) {
     fprintf(stderr, "stl: error: fail to open '%s'\n", stl_path);
     exit(1);
   }
-  p = input_stl(fp);
+  p = read_stl(fp);
   if (fclose(fp) != 0) {
     fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
     exit(1);
+  }
+  scale = 0.8 / (max.z - min.z);
+  foreach_dimension() center.x = (min.x + max.x) / 2;
+  for (q = p; q->x != nodata; q++) {
+    foreach_dimension() { (*q).x = (q->x - center.x) * scale; }
   }
   bounding_box(p, &min, &max);
   fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
