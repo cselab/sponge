@@ -6,7 +6,7 @@ while True:
     sys.argv.pop(0)
     if len(sys.argv) and len(sys.argv[0]) > 1 and sys.argv[0][0] == '-':
         if sys.argv[0][1] == 's':
-            Sponge = 1
+            Sponge = True
             stl_path = os.path.join(os.getenv("HOME"), ".local", "transpose.stl")
         else:
             sys.stderr.write("%s: unknown option '%s'\n" % (me, sys.argv[0]))
