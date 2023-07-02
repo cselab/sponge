@@ -6,6 +6,7 @@
 #include "two-phase.h"
 #include "distance.h"
 #include "output_htg.h"
+
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
 static int maxlevel;
@@ -185,7 +186,7 @@ int main(int argc, char **argv) {
     case 'm':
       argv++;
       if (*argv == NULL) {
-        fprintf(stderr, "cylinder: -p needs an argument\n");
+        fprintf(stderr, "cylinder: -m needs an argument\n");
         exit(1);
       }
       maxlevel = strtol(*argv, &end, 10);
