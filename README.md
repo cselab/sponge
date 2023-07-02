@@ -21,7 +21,7 @@ make libglutils.a libfb_osmesa.a
 ```
 (cd geom && ./center.py simplified.ply)
 make stl_single stl_mpi
-./stl_single -i -l 4 -p 1 -m 8 -r 2000 geom/center.stl
+./stl_single -i -l 4 -p 1 -m 8 -r 2000 geom/center.stl \
   && mpiexec -n 2 ./stl_mpi -l 4 -p 1 -m 8 -r 2000
 ```
 
