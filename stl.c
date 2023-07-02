@@ -6,23 +6,24 @@
 #include "two-phase.h"
 #include "distance.h"
 #include "output_htg.h"
-
 static const double diameter = 0.3733333285861546;
-static double Reynolds = 2000;
+static double Reynolds;
 static int maxlevel, period, Scale, Inside;
 static char *stl_path;
 static long level;
 
 u.n[right] = y > 0 ? neumann(0) : dirichlet(-1);
 p[right] = y > 0 ? dirichlet(0) : neumann(0);
-pf[right] = y > 0 ? dirichlet(0.) : neumann(0);
+pf[right] = y > 0 ? dirichlet(0) : neumann(0);
 
 /*
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
-pf[left] = neumann(0.);
+pf[left] = neumann(0);
+
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
+pf[right] = dirichlet(0);
 */
 
 face vector muv[];
@@ -154,17 +155,18 @@ void fraction_from_stl(scalar f) {
 }
 
 int main(int argc, char **argv) {
-  int LevelFlag, PeriodFlag, MaxLevelFlag;
+  int LevelFlag, PeriodFlag, MaxLevelFlag, ReynoldsFlag;
   char *end;
   LevelFlag = 0;
   PeriodFlag = 0;
   MaxLevelFlag = 0;
+  ReynoldsFlag = 0;
   Scale = 0;
   Inside = 0;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
-      fprintf(stderr, "stl [-s] -l INT -p INT file.stl\n");
+      fprintf(stderr, "stl [-s] [-i] -l INT -p INT -r FLOAT file.stl\n");
       exit(1);
     case 'l':
       argv++;
@@ -182,12 +184,12 @@ int main(int argc, char **argv) {
     case 'p':
       argv++;
       if (*argv == NULL) {
-        fprintf(stderr, "cylinder: -p needs an argument\n");
+        fprintf(stderr, "stl: -p needs an argument\n");
         exit(1);
       }
       period = strtol(*argv, &end, 10);
       if (*end != '\0' || period <= 0) {
-        fprintf(stderr, "cylinder: '%s' is not a positive integer\n", *argv);
+        fprintf(stderr, "stl: '%s' is not a positive integer\n", *argv);
         exit(1);
       }
       PeriodFlag = 1;
@@ -195,15 +197,28 @@ int main(int argc, char **argv) {
     case 'm':
       argv++;
       if (*argv == NULL) {
-        fprintf(stderr, "cylinder: -m needs an argument\n");
+        fprintf(stderr, "stl: -m needs an argument\n");
         exit(1);
       }
       maxlevel = strtol(*argv, &end, 10);
       if (*end != '\0' || maxlevel <= 0) {
-        fprintf(stderr, "cylinder: '%s' is not a positive integer\n", *argv);
+        fprintf(stderr, "stl: '%s' is not a positive integer\n", *argv);
         exit(1);
       }
       MaxLevelFlag = 1;
+      break;
+    case 'r':
+      argv++;
+      if (*argv == NULL) {
+        fprintf(stderr, "stl: -r needs an argument\n");
+        exit(1);
+      }
+      Reynolds = strtod(*argv, &end);
+      if (*end != '\0') {
+        fprintf(stderr, "stl: error: '%s' is not a number\n", *argv);
+        exit(1);
+      }
+      ReynoldsFlag = 1;
       break;
     case 's':
       Scale = 1;
@@ -228,12 +243,16 @@ int main(int argc, char **argv) {
     fprintf(stderr, "stl: error: -m must be set\n");
     exit(1);
   }
+  if (!ReynoldsFlag) {
+    fprintf(stderr, "stl: error: -r must be set\n");
+    exit(1);
+  }
   stl_path = *argv;
   if (Scale) {
     size(5.0);
     origin(-1.0, -L0 / 2, -L0 / 2);
   } else {
-    origin(-L0/2, -L0/2, -L0/2);
+    origin(-L0 / 2, -L0 / 2, -L0 / 2);
   }
   init_grid(1 << level);
   mu = muv;
