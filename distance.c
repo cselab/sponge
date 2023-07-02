@@ -4,6 +4,9 @@
 #include "fractions.h"
 #include "view.h"
 
+scalar f[], d[];
+face vector s[];
+
 int main(int argc, char **argv)
 {
   int Verbose, Refine, LevelFlag;
@@ -11,7 +14,7 @@ int main(int argc, char **argv)
   FILE *file;
   char *end;
   coord *p, min, max;
-  scalar d[];
+  double maxl;
 
   Verbose = 0;
   Refine = 0;
@@ -45,7 +48,7 @@ int main(int argc, char **argv)
       exit(1);
     }
   if (*argv == NULL) {
-    fprintf(stderr, "distance: error: not input file\n");
+    fprintf(stderr, "distance: error: no input file\n");
     exit(1);
   }
   if (LevelFlag == 0) {
@@ -53,12 +56,12 @@ int main(int argc, char **argv)
     exit(1);
   }
   if ((file = fopen(*argv, "r")) == NULL) {
-    fprintf(stderr, "distance: error: '%s': no suck file\n", *argv);
+    fprintf(stderr, "distance: error: '%s': no such file\n", *argv);
     exit(1);
   }
   p = input_stl(file);
   bounding_box (p, &min, &max);
-  double maxl = -HUGE;
+  maxl = -HUGE;
   foreach_dimension()
     if (max.x - min.x > maxl)
       maxl = max.x - min.x;
@@ -79,8 +82,6 @@ int main(int argc, char **argv)
 	tx = -0.045, ty = 0.015, width = 640, height = 480, bg = {1,1,1});
   isosurface ("d", 0, color = "level", min = 5, max = 10);
   save ("isosurface.png");
-  scalar f[];
-  face vector s[];
   solid (f, s, (d[] + d[-1] + d[0,-1] + d[-1,-1] +
 		d[0,0,-1] + d[-1,0,-1] + d[0,-1,-1] + d[-1,-1,-1])/8.);
   clear();

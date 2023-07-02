@@ -15,8 +15,8 @@ all: 3 distance stl_mpi stl_single sphere
 _3.c: 3.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 3.c -source
 3: _3.c; $(MPICC) -o $@ $(MPICCFLAGS) _3.c -lm
 
-_distance.c: distance.c; CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 distance.c -source
-distance: _distance.c; $(MPICC) -o $@ $(MPICCFLAGS) _distance.c $(V_LIBS)
+_distance.c: distance.c; $(QCC) $(QCCFLAGS) distance.c -source
+distance: _distance.c; $(CC) -o $@ $(CFLAGS) _distance.c -lm $(V_LIBS)
 
 stl_mpi: stl.c
 	CC99=$(MPICC) $(QCC) $(QCCFLAGS) -D_MPI=1 stl.c -source && \
