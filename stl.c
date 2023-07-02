@@ -13,12 +13,18 @@ static int maxlevel, period, Scale;
 static char *stl_path;
 static long level;
 
+u.n[right] = y > 0 ? neumann(0) : dirichlet(-1);
+p[right] = y > 0 ? dirichlet(0) : neumann(0);
+pf[right] = y > 0 ? dirichlet(0.) : neumann(0);
+
+/*
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
 pf[left] = neumann(0.);
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
-pf[right] = dirichlet(0.);
+*/
+
 face vector muv[];
 scalar omega[], tangaroa[];
 
@@ -142,7 +148,7 @@ void fraction_from_stl(scalar f) {
     /*p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
     p0 = max(p0, z - 0.4);
     p0 = max(p0, -0.4 - z); */
-    phi[] = -s0;
+    phi[] = s0;
   }
   fractions(phi, f);
 }
