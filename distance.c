@@ -94,8 +94,9 @@ int main(int argc, char **argv) {
   if (Refine)
     for (;;) {
       astats s = adapt_wavelet({d}, (double[]){0.0}, maxlevel, level);
-      fprintf(stderr, "distance: refined %d cells, coarsened %d cells\n", s.nf,
-              s.nc);
+      if (Verbose)
+	fprintf(stderr, "distance: refined %d cells, coarsened %d cells\n", s.nf,
+		s.nc);
       if (s.nf == 0)
         break;
     }
