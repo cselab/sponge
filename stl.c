@@ -9,7 +9,7 @@
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
-static int maxlevel, period, Scale;
+static int maxlevel, period, Scale, Inside;
 static char *stl_path;
 static long level;
 
@@ -148,7 +148,7 @@ void fraction_from_stl(scalar f) {
     /*p0 = min(-s0, sq(x) + sq(y) - sq(diameter / 2));
     p0 = max(p0, z - 0.4);
     p0 = max(p0, -0.4 - z); */
-    phi[] = s0;
+    phi[] = Inside ? s0 : -s0;
   }
   fractions(phi, f);
 }
@@ -160,6 +160,7 @@ int main(int argc, char **argv) {
   PeriodFlag = 0;
   MaxLevelFlag = 0;
   Scale = 0;
+  Inside = 0;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
@@ -206,6 +207,9 @@ int main(int argc, char **argv) {
       break;
     case 's':
       Scale = 1;
+      break;
+    case 'i':
+      Inside = 1;
       break;
     default:
       fprintf(stderr, "stl: error: unrecognized command-line option '%s'\n",

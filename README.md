@@ -16,6 +16,14 @@ cd basilisk/src/gl
 make libglutils.a libfb_osmesa.a
 ```
 
+# RUN
+
+```
+cd geom && ./center.py simplified.ply
+make stl_single stl_mpi
+./stl_single -l 4 -p 1 -m 8 geom/center.stl  && mpiexec -n 2 ./stl_mpi -l 4 -p 5 -m 8
+```
+
 # References
 
 1. Falcucci, G., Amati, G., Fanelli, P., Krastev, V. K., Polverino,
