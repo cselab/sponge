@@ -222,6 +222,8 @@ int main(int argc, char **argv) {
   if (Scale) {
     size(5.0);
     origin(-1.0, -L0 / 2, -L0 / 2);
+  } else {
+    origin(-L0/2, -L0/2, -L0/2);
   }
   init_grid(1 << level);
   mu = muv;
