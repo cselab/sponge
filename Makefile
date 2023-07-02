@@ -1,6 +1,5 @@
 .POSIX:
 .SUFFIX:
-.SUFFIX: .c
 
 CC = cc
 BASILISK = $(HOME)/basilisk/src
