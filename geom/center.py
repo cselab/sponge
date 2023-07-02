@@ -26,10 +26,10 @@ yc = (ylo + yhi) / 2
 zc = (zlo + zhi) / 2
 
 L = max(xhi - xlo, yhi - ylo, zhi - zlo)
-s = 0.9 / L
+s = 0.95 / L
 print(xhi - xlo, yhi - ylo, zhi - zlo, s)
 
-x = [ (x - xc) * s for x in x]
+x = [ (x - xhi) * s + 0.5 for x in x]
 y = [ (y - yc) * s for y in y]
 z = [ (z - zc) * s for z in z]
 
