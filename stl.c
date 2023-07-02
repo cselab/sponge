@@ -9,9 +9,8 @@
 
 static const double diameter = 0.3733333285861546;
 static double Reynolds = 2000;
-static int maxlevel;
+static int maxlevel, period, Scale;
 static char *stl_path;
-static int period;
 static long level;
 
 u.n[left] = dirichlet(1);
@@ -118,12 +117,14 @@ void fraction_from_stl(scalar f) {
     exit(1);
   }
   bounding_box(p, &min, &max);
-  scale = 0.8 / (max.z - min.z);
-  foreach_dimension() center.x = (min.x + max.x) / 2;
-  for (q = p; q->x != nodata; q++) {
-    foreach_dimension() { (*q).x = (q->x - center.x) * scale; }
+  if (Scale) {
+    scale = 0.8 / (max.z - min.z);
+    foreach_dimension() center.x = (min.x + max.x) / 2;
+    for (q = p; q->x != nodata; q++) {
+      foreach_dimension() { (*q).x = (q->x - center.x) * scale; }
+    }
+    bounding_box(p, &min, &max);
   }
-  bounding_box(p, &min, &max);
   fprintf(stderr, "stl: min: %g %g %g\n", min.x, min.y, min.z);
   fprintf(stderr, "stl: max: %g %g %g\n", max.x, max.y, max.z);
   distance(d, p);
@@ -152,10 +153,11 @@ int main(int argc, char **argv) {
   LevelFlag = 0;
   PeriodFlag = 0;
   MaxLevelFlag = 0;
+  Scale = 0;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
-      fprintf(stderr, "stl -l INT -p INT file.stl\n");
+      fprintf(stderr, "stl [-s] -l INT -p INT file.stl\n");
       exit(1);
     case 'l':
       argv++;
@@ -196,6 +198,9 @@ int main(int argc, char **argv) {
       }
       MaxLevelFlag = 1;
       break;
+    case 's':
+      Scale = 1;
+      break;
     default:
       fprintf(stderr, "stl: error: unrecognized command-line option '%s'\n",
               *argv);
@@ -214,9 +219,11 @@ int main(int argc, char **argv) {
     exit(1);
   }
   stl_path = *argv;
-  size(5.0);
+  if (Scale) {
+    size(5.0);
+    origin(-1.0, -L0 / 2, -L0 / 2);
+  }
   init_grid(1 << level);
-  origin(-1.0, -L0 / 2, -L0 / 2);
   mu = muv;
   run();
 }
