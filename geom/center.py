@@ -37,3 +37,8 @@ mesh.points[:, 0] = x
 mesh.points[:, 1] = y
 mesh.points[:, 2] = z
 mesh.write("center.stl", binary=True)
+
+mesh.points[:, 2] = x
+mesh.points[:, 1] = y
+mesh.points[:, 0] = z
+mesh.write("trans.stl", binary=True)

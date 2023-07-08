@@ -10,6 +10,7 @@ static const double diameter = 0.3733333285861546;
 static double Reynolds;
 static int maxlevel, period, Scale, Inside;
 static char *stl_path;
+static char *moment_path = "moment.txt";
 static long level;
 
 u.n[right] = y > 0 ? neumann(0) : dirichlet(-1);
@@ -285,13 +286,41 @@ event init(t = 0) {
 }
 
 event velocity(i++) {
+  static FILE *fp = NULL;
+  static long iframe = 0;
+  double mx;
+
+  if (iframe % period == 0) {
+    foreach (reduction(+ : mx)) {
+      double dv = (1. - tangaroa[]) * dv();
+      mx += u.x[] * dv;
+    }
+    if (pid() == 0) {
+      if (fp == NULL) {
+        if ((fp = fopen(moment_path, "w")) == NULL) {
+          fprintf(stderr, "stl: error: fail to open '%s'\n", moment_path);
+          exit(1);
+        }
+      } else {
+        if ((fp = fopen(moment_path, "a")) == NULL) {
+          fprintf(stderr, "stl: error: fail to open '%s'\n", moment_path);
+          exit(1);
+        }
+      }
+      fprintf(fp, "%.16e %.16e\n", t, mx);
+      if (fclose(fp) != 0) {
+        fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
+        exit(1);
+      }
+    }
+  }
+  iframe++;
   foreach ()
     foreach_dimension() u.x[] = tangaroa[] * u.x[];
 }
 
 event dump(i++; t <= 10000) {
   static long iframe = 0;
-  int rank;
   char hdg[FILENAME_MAX];
   char path[] = ".";
   if (iframe % period == 0) {
