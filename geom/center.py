@@ -5,7 +5,7 @@ import sys
 
 sys.argv.pop(0)
 if len(sys.argv) == 0:
-    sys.stderr.write("center.py: need an input file")
+    sys.stderr.write("center.py: need an input file\n")
     sys.exit(1)
 try:
     mesh = meshio.read(sys.argv[0])
