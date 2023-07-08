@@ -43,7 +43,10 @@ zc = (zlo + zhi) / 2
 
 L = max(xhi - xlo, yhi - ylo, zhi - zlo)
 s = 0.95 / L
-print(xhi - xlo, yhi - ylo, zhi - zlo, s)
+sys.stderr.write("center.py: lo: %g %g %g\n" % (xlo, ylo, zlo))
+sys.stderr.write("center.py: hi: %g %g %g\n" % (xhi, yhi, zhi))
+sys.stderr.write("center.py: %g %g %g %g\n" %
+                 (xhi - xlo, yhi - ylo, zhi - zlo, s))
 
 x = [(x - xhi) * s + 0.5 for x in x]
 y = [(y - yc) * s for y in y]
