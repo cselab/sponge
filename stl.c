@@ -6,6 +6,7 @@
 #include "two-phase.h"
 #include "distance.h"
 #include "output_htg.h"
+
 static const double diameter = 0.3733333285861546;
 static double Reynolds;
 static int maxlevel, period, Scale, Inside;
@@ -13,19 +14,18 @@ static char *stl_path;
 static char *moment_path = "moment.txt";
 static long level;
 
+/*
 u.n[right] = y > 0 ? neumann(0) : dirichlet(-1);
 p[right] = y > 0 ? dirichlet(0) : neumann(0);
 pf[right] = y > 0 ? dirichlet(0) : neumann(0);
+*/
 
-/*
 u.n[left] = dirichlet(1);
 p[left] = neumann(0);
 pf[left] = neumann(0);
-
 u.n[right] = neumann(0);
 p[right] = dirichlet(0);
 pf[right] = dirichlet(0);
-*/
 
 face vector muv[];
 scalar omega[], tangaroa[];
@@ -288,12 +288,17 @@ event init(t = 0) {
 event velocity(i++) {
   static FILE *fp = NULL;
   static long iframe = 0;
-  double mx;
+  double mx, my, mz;
 
   if (iframe % period == 0) {
-    foreach (reduction(+ : mx)) {
+    mx = 0;
+    my = 0;
+    mz = 0;
+    foreach (reduction(+ : mx), reduction(+ : my), reduction(+ : mz)) {
       double dv = (1. - tangaroa[]) * dv();
       mx += u.x[] * dv;
+      my += u.y[] * dv;
+      mz += u.z[] * dv;
     }
     if (pid() == 0) {
       if (fp == NULL) {
@@ -307,7 +312,7 @@ event velocity(i++) {
           exit(1);
         }
       }
-      fprintf(fp, "%.16e %.16e\n", t, mx);
+      fprintf(fp, "%.16e %.16e %.16e %.16e\n", t, mx, my, mz);
       if (fclose(fp) != 0) {
         fprintf(stderr, "stl: fail to close '%s'\n", stl_path);
         exit(1);
