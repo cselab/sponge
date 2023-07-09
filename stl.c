@@ -331,7 +331,7 @@ event dump(i++; t <= 10000) {
   if (iframe % period == 0) {
     vorticity(u, omega);
     sprintf(hdg, "h.%09ld", iframe);
-    output_htg({p, omega, tangaroa}, {u, g}, path, hdg, iframe, t);
+    output_htg({p, omega, tangaroa}, {u}, path, hdg, iframe, t);
     fields_stats();
   }
   iframe++;
