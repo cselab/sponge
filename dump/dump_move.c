@@ -25,7 +25,7 @@ struct DumpHeader {
 };
 static struct DumpHeader from_header, to_header;
 static double *values;
-static long traverse(int);
+static long traverse(int, int);
 static double X0, Y0, Z0, L0;
 static long nleaf;
 int main(int argc, char **argv) {
@@ -149,7 +149,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
   nleaf = 0;
-  traverse(0);
+  traverse(0, 0);
   fprintf(stderr, "nleaf: %ld\n", nleaf);
   for (i = 0; i < from_header.len; i++)
     free(from_names[i]);
@@ -179,12 +179,12 @@ static void process(int level, unsigned flags) {
   }
   nleaf++;
 }
-static long traverse(int level) {
+static long traverse(int level, int to_ended) {
   enum { leaf = 2 };
-  unsigned flags, i;
+  unsigned from_flags, i;
   long size, size0;
 
-  if (fread(&flags, sizeof flags, 1, from_file) != 1 ||
+  if (fread(&from_flags, sizeof from_flags, 1, from_file) != 1 ||
       fread(values, sizeof *values, from_header.len, from_file) !=
           from_header.len) {
     fprintf(stderr, "dump_move: fail to read '%s' at level '%d'\n", from_path,
@@ -194,12 +194,12 @@ static long traverse(int level) {
   size = values[0];
   size0 = 1;
   // if (flags & leaf)
-  process(level, flags);
-  if (flags & leaf) {
+  process(level, from_flags);
+  if (from_flags & leaf) {
     /* */
   } else {
     for (i = 0; i < 8; i++)
-      size0 += traverse(level + 1);
+      size0 += traverse(level + 1, to_ended);
   }
   assert(size0 == size);
   return size;
