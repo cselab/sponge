@@ -9,6 +9,7 @@
 #include "navier-stokes/centered.h"
 #include "lambda2.h"
 #include "output_xdmf.h"
+
 #if 0
 #include "embed.h"
 trace static double embed_interpolate3(Point point, scalar s, coord p) {
@@ -73,8 +74,8 @@ trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
 }
 u.n[embed] = dirichlet(0);
 u.t[embed] = dirichlet(0);
-u.r[embed] = dirichlet(0);
 #else
+
 coord Force = {0};
 scalar cs[];
 face vector fs[];
@@ -85,10 +86,13 @@ trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
     Fp->x = 0;
   }
 }
-trace static int fractions_cleanup(scalar c, face vector s, double smin = 0.,
-                                   bool opposite = false) {
-  return 0;
-}
+struct Cleanup {
+  scalar c;
+  face vector s;
+  double smin;
+  bool opposite;
+};
+trace static int fractions_cleanup(struct Cleanup u) { return 0; }
 event velocity(i++) {
   foreach_dimension() Force.x = 0;
   foreach (reduction(+ : Force)) {
@@ -124,13 +128,9 @@ static void vorticity_vector(const vector u, vector omega) {
   }
 }
 
-static int slice_z(double x, double y, double z, double Delta) {
+static int slice(double x, double y, double z, double Delta) {
   double epsilon = Delta / 10;
   return z <= -epsilon && z + Delta + epsilon >= 0;
-}
-static int slice_y(double x, double y, double z, double Delta) {
-  double epsilon = Delta / 10;
-  return y <= -epsilon && y + Delta + epsilon >= 0;
 }
 static double shape_cylinder(double x, double y, double z) {
   return sq(x) + sq(y) - sq(1.0 / 2);
@@ -142,27 +142,31 @@ static double (*Shape[])(double, double, double) = {shape_cylinder,
                                                     shape_sphere};
 static const char *shape_names[] = {"cylinder", "sphere"};
 static double (*shape)(double, double, double);
-static int boundaries_surfaces0[] = {top, front};
-static int boundaries_surfaces1[] = {bottom, back};
-static const char *boundaries_names[] = {"top", "front"};
 
-static const char *force_path, *output_prefix, *dump_path;
+static const char *force_path, *output_prefix;
+static char *dump_path;
 static const int outlevel = 5;
 static double reynolds, tend;
-static int maxlevel, minlevel, period, Verbose, FullOutput, AdaptFlag,
-    InitFileFlag;
+static int maxlevel, minlevel, period, Verbose, FullOutput, AdaptFlag;
 static face vector muv[];
 static scalar l2[];
 static vector omega[];
 static scalar phi[];
 
+u.n[left] = dirichlet(1);
+p[left] = neumann(0);
+pf[left] = neumann(0);
+
+u.n[right] = neumann(0);
+p[right] = dirichlet(0);
+pf[right] = dirichlet(0);
+
 int main(int argc, char **argv) {
   char *end;
-  const char *boundaries;
+  const char *periodic_boundaries;
   int ReynoldsFlag, MaxLevelFlag, MinLevelFlag, PeriodFlag, TendFlag,
       DomainFlag, DTFlag, i;
   double domain, dt_min;
-  InitFileFlag = 0;
   AdaptFlag = 0;
   DomainFlag = 0;
   FullOutput = 0;
@@ -177,7 +181,7 @@ int main(int argc, char **argv) {
   force_path = NULL;
   dump_path = NULL;
   shape = NULL;
-  boundaries = NULL;
+  periodic_boundaries = NULL;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
@@ -193,14 +197,10 @@ int main(int argc, char **argv) {
           "  -v          Verbose\n"
           "  -F          Output the full field\n"
           "  -a          Use adoptation\n"
-          "  -i          Initialize velocities from the dump file\n"
-          "  -b <string> the boundary condition code for top and "
-          "front surfaces. \n"
-          "              Possible values: symmetry (s), periodic (p), no-slip "
-          "wall (n). Symmetry is default.\n"
-          "              ss (all symmetry), sp (symmetry, "
-          "periodic), nn (all no-slip walls).\n"
-          "  -t <num>    time step\n"
+          "  -b <string> Periodic boundary (ft|f|t: front (f), top (t) or both,"
+          "default is symmetric boundary)\n"
+          "  -r <num>    Reynolds number\n"
+          "  -t <num>    dt\n"
           "  -l <num>    Minimum resolution level (positive integer)\n"
           "  -m <num>    Maximum resolution level (positive integer)\n"
           "  -o <string> Prefix for the output files\n"
@@ -210,12 +210,11 @@ int main(int argc, char **argv) {
           "  -S <string> Specify shape (cylinder|sphere)\n"
           "  -d <file>   Restart simulation from the dump file\n"
           "  -z <num>    Domain size\n\n"
-          "  npe: %d\n"
+	  "  npe: %d\n"
           "Example usage:\n"
           "  ./cylinder -v -r 100 -l 7 -m 10 -p 100 -e 2 -z 2.5 -S sphere\n"
           "  ./cylinder -v -r 100 -l 7 -m 10 -p 100 -e 2 -f force.dat -z 2.5 "
-          "-S cylinder -o h -b t\n",
-          npe());
+          "-S cylinder -o h -b t\n", npe());
       exit(1);
     case 'r':
       argv++;
@@ -291,9 +290,6 @@ int main(int argc, char **argv) {
     case 'a':
       AdaptFlag = 1;
       break;
-    case 'i':
-      InitFileFlag = 1;
-      break;
     case 'd':
       argv++;
       if (*argv == NULL) {
@@ -349,7 +345,7 @@ int main(int argc, char **argv) {
         fprintf(stderr, "cylinder: error: -b needs an argument\n");
         exit(1);
       }
-      boundaries = *argv;
+      periodic_boundaries = *argv;
       break;
     case 'o':
       argv++;
@@ -419,44 +415,22 @@ int main(int argc, char **argv) {
     origin(-L0 / 2.5, -L0 / 2.0, -L0 / 2.0);
   }
   mu = muv;
-  u.n[left] = dirichlet(1);
-  p[left] = neumann(0);
-  pf[left] = neumann(0);
-
-  u.n[right] = neumann(0);
-  p[right] = dirichlet(0);
-  pf[right] = dirichlet(0);
-  if (boundaries != NULL)
-    for (i = 0; boundaries[i] != '\0' &&
-                i < sizeof boundaries_surfaces0 / sizeof *boundaries_surfaces0;
-         i++)
-      switch (boundaries[i]) {
-      case 's':
+  if (periodic_boundaries != NULL)
+    for (i = 0; periodic_boundaries[i] != '\0'; i++)
+      switch (periodic_boundaries[i]) {
+      case 'f':
+        periodic(front);
         if (Verbose && pid() == 0)
-          fprintf(stderr, "cylinder: '%s' boundary is symmetry\n",
-                  boundaries_names[i]);
+          fprintf(stderr, "cylinder: front boundary is periodic\n");
         break;
-      case 'p':
-        periodic(boundaries_surfaces0[i]);
+      case 't':
+        periodic(top);
         if (Verbose && pid() == 0)
-          fprintf(stderr, "cylinder: '%s' boundary is periodic\n",
-                  boundaries_names[i]);
-        break;
-      case 'n':
-        u.n[boundaries_surfaces0[i]] = dirichlet(0);
-        u.t[boundaries_surfaces0[i]] = dirichlet(0);
-        u.r[boundaries_surfaces0[i]] = dirichlet(0);
-
-        u.n[boundaries_surfaces1[i]] = dirichlet(0);
-        u.t[boundaries_surfaces1[i]] = dirichlet(0);
-        u.r[boundaries_surfaces1[i]] = dirichlet(0);
-        if (Verbose && pid() == 0)
-          fprintf(stderr, "cylinder: '%s' boundary is no-slip\n",
-                  boundaries_names[i]);
+          fprintf(stderr, "cylinder: top boundary is periodic\n");
         break;
       default:
-        fprintf(stderr, "cylinder: unknown boundary '%c' in '%s'\n",
-                boundaries[i], boundaries);
+        fprintf(stderr, "cylinder: unknown boundary in '%s'\n",
+                periodic_boundaries);
         exit(1);
         break;
       }
@@ -489,27 +463,31 @@ event init(t = 0) {
       exit(1);
     }
     restore(fp = dump_file);
+    /*
+    if (fclose(dump_file) != 0) {
+      fprintf(stderr, "cylinder: error: failed to close '%s'\n", dump_path);
+      exit(1);
+      } */
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: starting from '%s': time: %g, step: %d\n",
               dump_path, t, i);
-    fractions(phi, cs, fs);
+    if (i == 0)
+      fractions(phi, cs, fs);
     fractions_cleanup(cs, fs);
     if (Verbose)
       fields_stats();
   }
-  if (InitFileFlag == 0) {
+  if (i == 0) {
     if (Verbose && pid() == 0)
-      fprintf(stderr, "cylinder: initialize velocity to zeros\n");
+      fprintf(stderr, "cylinder: initialize velocity\n");
     foreach () {
       u.x[] = cs[];
       u.y[] = 0;
       u.z[] = 0;
     }
-  } else {
-    if (Verbose && pid() == 0)
-      fprintf(stderr, "cylinder: initialize velocity from dump file\n");
+    //    event("defaults");
+    event("dump");
   }
-  event("dump");
 }
 
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
@@ -532,13 +510,8 @@ event dump(i++; t <= tend) {
         sprintf(path, "%s.%09d", output_prefix, i);
         output_xdmf(t, {p, l2}, {u, omega}, NULL, path);
       }
-
-      snprintf(path, sizeof path, "%s.y.%09d", output_prefix, i);
-      output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice_y, path);
-
-      snprintf(path, sizeof path, "%s.z.%09d", output_prefix, i);
-      output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice_z, path);
-
+      snprintf(path, sizeof path, "%s.slice.%09d", output_prefix, i);
+      output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice, path);
       if (i % (10 * period) == 0) {
         snprintf(path, sizeof path, "%s.%09d.dump", output_prefix, i);
         dump(path);
