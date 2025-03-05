@@ -57,14 +57,15 @@ int main(int argc, char **argv) {
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
-      fprintf(stderr, "Usage: dump2xdmf [-h] [-v] [-l int] [-s dir] file.dump output\n"
-		      "Options:\n"
-		      "  -h          print help message and exit\n"
-		      "  -v          verbose\n"
-		      "  -l <int>    maximum resolution level\n"
-		      "  -s <str>    slice over direction (xyz)\n"
-		      "  file.dump   basilisk dump\n"
-		      "  ouput       output file prefix\n");
+      fprintf(stderr,
+              "Usage: dump2xdmf [-h] [-v] [-l int] [-s dir] file.dump output\n"
+              "Options:\n"
+              "  -h          print help message and exit\n"
+              "  -v          verbose\n"
+              "  -l <int>    maximum resolution level\n"
+              "  -s <str>    slice over direction (xyz)\n"
+              "  file.dump   basilisk dump\n"
+              "  ouput       output file prefix\n");
       exit(1);
     case 'v':
       Verbose = 1;
@@ -72,30 +73,30 @@ int main(int argc, char **argv) {
     case 's':
       argv++;
       if (*argv == NULL) {
-	fprintf(stderr, "dump2xdmf: error: -s needs an argument\n");
-	exit(1);
+        fprintf(stderr, "dump2xdmf: error: -s needs an argument\n");
+        exit(1);
       }
       if (argv[0][0] == 'x' && argv[0][1] == '\0')
-	context.cond = slice_x;
+        context.cond = slice_x;
       else if (argv[0][0] == 'y' && argv[0][1] == '\0')
-	context.cond = slice_y;
+        context.cond = slice_y;
       else if (argv[0][0] == 'z' && argv[0][1] == '\0')
-	context.cond = slice_z;
+        context.cond = slice_z;
       else {
-	fprintf(stderr, "dump2xdmf: error: unknown slice code '%s'\n", *argv);
-	exit(1);
+        fprintf(stderr, "dump2xdmf: error: unknown slice code '%s'\n", *argv);
+        exit(1);
       }
       break;
     case 'l':
       argv++;
       if (*argv == NULL) {
-	fprintf(stderr, "dump2xdmf: error: -l needs an argument\n");
-	exit(1);
+        fprintf(stderr, "dump2xdmf: error: -l needs an argument\n");
+        exit(1);
       }
       context.maxlevel = strtol(*argv, &end, 10);
       if (*end != '\0' || context.maxlevel < 0) {
-	fprintf(stderr, "dump2xdmf: error: '%s' is integer >= 0\n", *argv);
-	exit(1);
+        fprintf(stderr, "dump2xdmf: error: '%s' is integer >= 0\n", *argv);
+        exit(1);
       }
       break;
     default:
@@ -115,9 +116,9 @@ int main(int argc, char **argv) {
     exit(1);
   }
   snprintf(context.xyz_path, sizeof context.xyz_path, "%s.xyz.raw",
-	   output_path);
+           output_path);
   snprintf(context.attr_path, sizeof context.attr_path, "%s.attr.raw",
-	   output_path);
+           output_path);
   snprintf(xdmf_path, sizeof xdmf_path, "%s.xdmf2", output_path);
   xyz_base = context.xyz_path;
   attr_base = context.attr_path;
@@ -130,16 +131,16 @@ int main(int argc, char **argv) {
   FREAD(&context.header, sizeof context.header, 1);
   if (Verbose)
     fprintf(stderr,
-	    "version:             dump version: %d\n"
-	    "      t:          simulation time: %.16e\n"
-	    "    len:          numer of fields: %ld\n"
-	    "    npe:     number of processors: %d\n"
-	    "  depth:          multigrid depth: %d\n"
-	    "      i:     simulation iteration: %d\n"
-	    "      n: multigrid MPI dimensions: [%g %g %g]\n",
-	    context.header.version, context.header.t, context.header.len,
-	    context.header.npe, context.header.depth, context.header.i,
-	    context.header.n.x, context.header.n.y, context.header.n.z);
+            "version:             dump version: %d\n"
+            "      t:          simulation time: %.16e\n"
+            "    len:          numer of fields: %ld\n"
+            "    npe:     number of processors: %d\n"
+            "  depth:          multigrid depth: %d\n"
+            "      i:     simulation iteration: %d\n"
+            "      n: multigrid MPI dimensions: [%g %g %g]\n",
+            context.header.version, context.header.t, context.header.len,
+            context.header.npe, context.header.depth, context.header.i,
+            context.header.n.x, context.header.n.y, context.header.n.z);
   if ((names = malloc(context.header.len * sizeof *names)) == NULL) {
     fprintf(stderr, "dump_info: error: malloc failed\n");
     exit(1);
@@ -159,9 +160,9 @@ int main(int argc, char **argv) {
   FREAD(o, sizeof o, 1);
   if (Verbose)
     fprintf(stderr,
-	    " origin: [%.16e %.16e %.16e]\n"
-	    "   size: %.16e\n",
-	    o[0], o[1], o[2], o[3]);
+            " origin: [%.16e %.16e %.16e]\n"
+            "   size: %.16e\n",
+            o[0], o[1], o[2], o[3]);
   context.X0 = o[0];
   context.Y0 = o[1];
   context.Z0 = o[2];
@@ -175,12 +176,12 @@ int main(int argc, char **argv) {
   }
   if ((context.xyz_file = fopen(context.xyz_path, "w")) == NULL) {
     fprintf(stderr, "%s:%d: fail to open '%s'\n", __FILE__, __LINE__,
-	    context.xyz_path);
+            context.xyz_path);
     exit(1);
   }
   if ((context.attr_file = fopen(context.attr_path, "w")) == NULL) {
     fprintf(stderr, "%s:%d: fail to open '%s'\n", __FILE__, __LINE__,
-	    context.attr_path);
+            context.attr_path);
     exit(1);
   }
   context.ncell_total = 0;
@@ -199,7 +200,7 @@ int main(int argc, char **argv) {
 
   if (fclose(context.attr_file) != 0) {
     fprintf(stderr, "dump2xdmf: error: fail to close '%s'\n",
-	    context.attr_path);
+            context.attr_path);
     exit(1);
   }
   free(context.index);
@@ -210,55 +211,55 @@ int main(int argc, char **argv) {
   }
   if ((file = fopen(xdmf_path, "w")) == NULL) {
     fprintf(stderr, "%s:%d: fail to open '%s'\n", __FILE__, __LINE__,
-	    xdmf_path);
+            xdmf_path);
     exit(1);
   }
   fprintf(file,
-	  "<Xdmf\n"
-	  "    Version=\"2\">\n"
-	  "  <Domain>\n"
-	  "    <Grid>\n"
-	  "      <Topology\n"
-	  "          TopologyType=\"Hexahedron\"\n"
-	  "          Order=\"0 1 3 2 4 5 7 6\"\n"
-	  "          Dimensions=\"%ld\"/>\n"
-	  "      <Geometry>\n"
-	  "        <DataItem\n"
-	  "            Dimensions=\"%ld 3\"\n"
-	  "            Format=\"Binary\">\n"
-	  "          %s\n"
-	  "        </DataItem>\n"
-	  "      </Geometry>\n",
-	  context.ncell_total, 8 * context.ncell_total, xyz_base);
+          "<Xdmf\n"
+          "    Version=\"2\">\n"
+          "  <Domain>\n"
+          "    <Grid>\n"
+          "      <Topology\n"
+          "          TopologyType=\"Hexahedron\"\n"
+          "          Order=\"0 1 3 2 4 5 7 6\"\n"
+          "          Dimensions=\"%ld\"/>\n"
+          "      <Geometry>\n"
+          "        <DataItem\n"
+          "            Dimensions=\"%ld 3\"\n"
+          "            Format=\"Binary\">\n"
+          "          %s\n"
+          "        </DataItem>\n"
+          "      </Geometry>\n",
+          context.ncell_total, 8 * context.ncell_total, xyz_base);
   j = 0;
   nvect = 0;
   nattr = context.header.len;
   for (i = 0; i < context.header.len; i++)
     fprintf(file,
-	    "      <Attribute\n"
-	    "          Name=\"%s\"\n"
-	    "          Center=\"Cell\">\n"
-	    "        <DataItem\n"
-	    "            ItemType=\"HyperSlab\"\n"
-	    "            Dimensions=\"%ld\"\n"
-	    "            Type=\"HyperSlab\">\n"
-	    "          <DataItem Dimensions=\"3 1\">\n"
-	    "            %ld %ld %ld\n"
-	    "          </DataItem>\n"
-	    "          <DataItem\n"
-	    "              Precision=\"8\"\n"
-	    "              Dimensions=\"%ld\"\n"
-	    "              Format=\"Binary\">\n"
-	    "            %s\n"
-	    "          </DataItem>\n"
-	    "         </DataItem>\n"
-	    "      </Attribute>\n",
-	    names[i], context.ncell_total, j++, nattr + 3 * nvect,
-	    context.ncell_total, (nattr + 3 * nvect) * context.ncell_total,
-	    attr_base);
+            "      <Attribute\n"
+            "          Name=\"%s\"\n"
+            "          Center=\"Cell\">\n"
+            "        <DataItem\n"
+            "            ItemType=\"HyperSlab\"\n"
+            "            Dimensions=\"%ld\"\n"
+            "            Type=\"HyperSlab\">\n"
+            "          <DataItem Dimensions=\"3 1\">\n"
+            "            %ld %ld %ld\n"
+            "          </DataItem>\n"
+            "          <DataItem\n"
+            "              Precision=\"8\"\n"
+            "              Dimensions=\"%ld\"\n"
+            "              Format=\"Binary\">\n"
+            "            %s\n"
+            "          </DataItem>\n"
+            "         </DataItem>\n"
+            "      </Attribute>\n",
+            names[i], context.ncell_total, j++, nattr + 3 * nvect,
+            context.ncell_total, (nattr + 3 * nvect) * context.ncell_total,
+            attr_base);
   fprintf(file, "    </Grid>\n"
-		"  </Domain>\n"
-		"</Xdmf>\n");
+                "  </Domain>\n"
+                "</Xdmf>\n");
   fclose(file);
   for (i = 0; i < context.header.len; i++)
     free(names[i]);
@@ -292,13 +293,13 @@ static void process(int level, void *vcontext) {
     }
     if (fwrite(xyz, sizeof xyz, 1, context->xyz_file) != 1) {
       fprintf(stderr, "dump2xdmf: failed to write coordinates: %s\n",
-	      context->xyz_path);
+              context->xyz_path);
       exit(1);
     }
     if (fwrite(context->values, sizeof *context->values, context->header.len,
-	       context->attr_file) != (size_t)context->header.len) {
+               context->attr_file) != (size_t)context->header.len) {
       fprintf(stderr, "dump2xdmf: failed to write attributes: %s\n",
-	      context->attr_path);
+              context->attr_path);
       exit(1);
     }
     context->ncell_total++;
@@ -322,14 +323,14 @@ static void traverse(int level, void *vcontext) {
     while (level + 1 >= context->m_alloc_level) {
       context->m_alloc_level = 2 * context->m_alloc_level + 1;
       context->index = realloc(context->index,
-			       context->m_alloc_level * sizeof *context->index);
+                               context->m_alloc_level * sizeof *context->index);
       if (context->index == NULL) {
-	fprintf(stderr, "dump2xdmf: realloc failed\n");
-	exit(1);
+        fprintf(stderr, "dump2xdmf: realloc failed\n");
+        exit(1);
       }
     }
     for (context->index[level + 1] = 0; context->index[level + 1] < 8;
-	 context->index[level + 1]++)
+         context->index[level + 1]++)
       traverse(level + 1, context);
   }
 }

@@ -12,6 +12,7 @@ M = \
 dump_2iso \
 dump2xdmf \
 dump_info \
+dump_move \
 dump_select \
 morton \
 stl2dump \

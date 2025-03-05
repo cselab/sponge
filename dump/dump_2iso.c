@@ -57,18 +57,19 @@ int main(int argc, char **argv) {
     switch (argv[0][1]) {
     case 'h':
       fprintf(stderr,
-	      "Usage: dump_2iso [-h] [-v] file.dump scalar_name field_name "
-	      "in.cells in.scalar in.field\n"
-	      "Options:\n"
-	      "  -h                             print help message and exit\n"
-	      "  -v                             verbose\n"
-	      "  file.dump                      Basilisk dump\n"
-	      "  scalar_name                    name of the scalar to build "
-	      "isosurface\n"
-	      "  field_name                     name of the field to output\n"
-	      "  in.cells, in.scalar, in.field  output files\n"
-	      "Examples:\n"
-	      "dump_2iso -v  basilisk.dump omega.x l2 in.cells in.scalar in.field\n");
+              "Usage: dump_2iso [-h] [-v] file.dump scalar_name field_name "
+              "in.cells in.scalar in.field\n"
+              "Options:\n"
+              "  -h                             print help message and exit\n"
+              "  -v                             verbose\n"
+              "  file.dump                      Basilisk dump\n"
+              "  scalar_name                    name of the scalar to build "
+              "isosurface\n"
+              "  field_name                     name of the field to output\n"
+              "  in.cells, in.scalar, in.field  output files\n"
+              "Examples:\n"
+              "dump_2iso -v  basilisk.dump omega.x l2 in.cells in.scalar "
+              "in.field\n");
       exit(1);
     case 'v':
       Verbose = 1;
