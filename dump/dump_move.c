@@ -41,8 +41,8 @@ int main(int argc, char **argv) {
       fprintf(stderr,
               "Usage: dump_info [-h] [-v] from.dump to.dump output.dump\n"
               "Options:\n"
-              "  -h                              Print help message and exit\n"
-              "  from.dump, to.dump, output.dump basilisk dumps");
+              "  -h                               Print help message and exit\n"
+              "  from.dump, to.dump, output.dump  basilisk dumps\n");
       exit(1);
     default:
       fprintf(stderr, "dump_move: error: unknown option '%s'\n", *argv);
