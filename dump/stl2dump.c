@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
   int32_t i, ilo[3], ihi[3];
   int64_t inv_delta, ncells, ncells_wall, x, y, z, size;
   int index, iy, iz, iv, iw, d, j;
-  size_t nbytes, nfull, nmax;
+  size_t nbytes, nfull, nmax, hash_size;
   struct Config config;
   unsigned len;
   void **work;
@@ -114,6 +114,7 @@ int main(int argc, char **argv) {
   config.Verbose = 0;
   OutletFlag = 0;
   fields = fields_full;
+  hash_size = 30;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
@@ -124,6 +125,7 @@ int main(int argc, char **argv) {
               "  -w <axis> <start> <end>    Add extra wall (e.g., -w z 0 1)\n"
               "  -o          Refine the outlet to a minimum level\n"
               "  -m          Minimal output (size and phi values only)\n"
+	      "  -s <val>    Set hash size to 2^val (default is 30)\n"
               "  -h          Display this help message and exit\n"
               "  -v          Enable verbose mode\n\n"
               "Arguments:\n"
@@ -190,6 +192,18 @@ int main(int argc, char **argv) {
       break;
     case 'm':
       fields = fields_minimal;
+      break;
+    case 's':
+      argv++;
+      if (*argv == NULL) {
+        fprintf(stderr, "stl2dump: error: -s needs an argument\n");
+        exit(1);
+      }
+      hash_size = strtol(*argv, &end, 10);
+      if (*end != '\0') {
+        fprintf(stderr, "stl2dump: error: '%s' is not an integer\n", *argv);
+        exit(1);
+      }
       break;
     case '-':
       argv++;
@@ -272,7 +286,7 @@ positional:
     fprintf(stderr, "stl2dump: error: malloc failed\n");
     exit(1);
   }
-  nmax = (1ul << 26) * sizeof *(*config.hash)->nodes;
+  nmax = (1ul << hash_size) * sizeof *(*config.hash)->nodes;
   nfull = sizeof *(*config.hash)->nodes;
   for (i = 0; i < config.maxlevel + 1; i++) {
     nbytes = nfull < nmax ? nfull : nmax;
