@@ -11,6 +11,8 @@
     fprintf(stderr, "dump2xdmf: error: fail to read from '%s'\n", input_path); \
     exit(1);                                                                   \
   }
+static int slice_y(double, double, double, double);
+static int slice_z(double, double, double, double);
 static void traverse(int, void *);
 static void process(int, void *);
 static FILE *input_file;
@@ -308,4 +310,13 @@ static void traverse(int level, void *vcontext) {
          context->index[level + 1]++)
       traverse(level + 1, context);
   }
+}
+
+static int slice_z(double x, double y, double z, double Delta) {
+  double epsilon = Delta / 10;
+  return z <= -epsilon && z + Delta + epsilon >= 0;
+}
+static int slice_y(double x, double y, double z, double Delta) {
+  double epsilon = Delta / 10;
+  return y <= -epsilon && y + Delta + epsilon >= 0;
 }
