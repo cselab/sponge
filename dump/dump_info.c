@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
       exit(1);
     }
   if ((input_path = argv[0]) == NULL) {
-    fprintf(stderr, "dump_info: error: file.dump xois not given\n");
+    fprintf(stderr, "dump_info: error: file.dump is not given\n");
     exit(1);
   }
 

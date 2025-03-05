@@ -6,14 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FREAD(ptr, size, nmemb)                                                \
-  if (fread(ptr, size, nmemb, input_file) != (uint64_t)(nmemb)) {              \
-    fprintf(stderr, "dump_move: error: fail to read from '%s'\n", input_path); \
+#define FREAD(ptr, size, nmemb, file, path)                                    \
+  if (fread(ptr, size, nmemb, file) != (uint64_t)(nmemb)) {                    \
+    fprintf(stderr, "dump_move: error: fail to read from '%s'\n", path);       \
     exit(1);                                                                   \
   }
 
-static FILE *input_file;
-static char *input_path;
+static FILE *from_file, *to_file, *output_file;
+static char *from_path, *to_path, *output_path;
 struct coord {
   double x, y, z;
 };
@@ -24,9 +24,7 @@ struct DumpHeader {
   struct coord n;
 };
 static struct DumpHeader header;
-static int *index;
 static double *values;
-static int malloc_level;
 static long traverse(int);
 static double X0, Y0, Z0, L0;
 static long nleaf;
@@ -48,16 +46,39 @@ int main(int argc, char **argv) {
       fprintf(stderr, "dump_move: error: unknown option '%s'\n", *argv);
       exit(1);
     }
-  if ((input_path = argv[0]) == NULL) {
-    fprintf(stderr, "dump_move: error: file.dump xois not given\n");
+  if ((from_path = *argv) == NULL) {
+    fprintf(stderr, "dump_move: error: from.dump is not given\n");
+    exit(1);
+  }
+  argv++;
+
+  if ((to_path = *argv) == NULL) {
+    fprintf(stderr, "dump_move: error: to.dump is not given\n");
+    exit(1);
+  }
+  argv++;
+
+  if ((output_path = *argv) == NULL) {
+    fprintf(stderr, "dump_move: error: output.dump is not given\n");
     exit(1);
   }
 
-  if ((input_file = fopen(input_path, "r")) == NULL) {
-    fprintf(stderr, "dump_move: error: fail to open '%s'\n", input_path);
+  if ((from_file = fopen(from_path, "r")) == NULL) {
+    fprintf(stderr, "dump_move: error: fail to open '%s'\n", from_path);
     exit(1);
   }
-  FREAD(&header, sizeof header, 1);
+
+  if ((to_file = fopen(to_path, "r")) == NULL) {
+    fprintf(stderr, "dump_move: error: fail to open '%s'\n", to_path);
+    exit(1);
+  }
+
+  if ((output_file = fopen(output_path, "w")) == NULL) {
+    fprintf(stderr, "dump_move: error: fail to open '%s'\n", output_path);
+    exit(1);
+  }
+
+  FREAD(&header, sizeof header, 1, from_file, from_path);
   fprintf(stderr,
           "version:             dump version: %d\n"
           "      t:          simulation time: %.16e\n"
@@ -73,13 +94,13 @@ int main(int argc, char **argv) {
     exit(1);
   }
   for (i = 0; i < header.len; i++) {
-    FREAD(&len, sizeof len, 1);
+    FREAD(&len, sizeof len, 1, from_file, from_path);
     names[i] = malloc((len + 1) * sizeof *names[i]);
-    FREAD(names[i], sizeof *names[i], len);
+    FREAD(names[i], sizeof *names[i], len, from_file, from_path);
     names[i][len] = '\0';
     fprintf(stderr, "name: %s\n", names[i]);
   }
-  FREAD(o, sizeof o, 1);
+  FREAD(o, sizeof o, 1, from_file, from_path);
   fprintf(stderr,
           " origin: [%.16e %.16e %.16e]\n"
           "   size: %.16e\n",
@@ -88,8 +109,6 @@ int main(int argc, char **argv) {
   Y0 = o[1];
   Z0 = o[2];
   L0 = o[3];
-  malloc_level = 0;
-  index = NULL;
   if ((values = malloc(header.len * sizeof *values)) == NULL) {
     fprintf(stderr, "dump_move: error: malloc failed\n");
     exit(1);
@@ -97,24 +116,31 @@ int main(int argc, char **argv) {
   nleaf = 0;
   traverse(0);
   fprintf(stderr, "nleaf: %ld\n", nleaf);
-  free(index);
   for (i = 0; i < header.len; i++)
     free(names[i]);
   free(names);
-  if (fclose(input_file) != 0) {
-    fprintf(stderr, "dump_move: error: fail to close '%s'\n", input_path);
+  if (fclose(from_file) != 0) {
+    fprintf(stderr, "dump_move: error: fail to close '%s'\n", from_path);
+    exit(1);
+  }
+  if (fclose(to_file) != 0) {
+    fprintf(stderr, "dump_move: error: fail to close '%s'\n", to_path);
+    exit(1);
+  }
+  if (fclose(output_file) != 0) {
+    fprintf(stderr, "dump_move: error: fail to close '%s'\n", output_path);
     exit(1);
   }
 }
 static void process(int level) { nleaf++; }
 static long traverse(int level) {
   enum { leaf = 2 };
-  unsigned flags;
+  unsigned flags, i;
   long size, size0;
 
-  if (fread(&flags, sizeof flags, 1, input_file) != 1 ||
-      fread(values, sizeof *values, header.len, input_file) != header.len) {
-    fprintf(stderr, "dump_move: fail to read '%s' at level '%d'\n", input_path,
+  if (fread(&flags, sizeof flags, 1, from_file) != 1 ||
+      fread(values, sizeof *values, header.len, from_file) != header.len) {
+    fprintf(stderr, "dump_move: fail to read '%s' at level '%d'\n", from_path,
             level);
     exit(1);
   }
@@ -125,11 +151,7 @@ static long traverse(int level) {
   if (flags & leaf) {
     /* */
   } else {
-    while (level + 1 >= malloc_level) {
-      malloc_level = 2 * malloc_level + 2;
-      index = realloc(index, malloc_level * sizeof *index);
-    }
-    for (index[level + 1] = 0; index[level + 1] < 8; index[level + 1]++)
+    for (i = 0; i < 8; i++)
       size0 += traverse(level + 1);
   }
   assert(size0 == size);
