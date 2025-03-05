@@ -167,7 +167,18 @@ int main(int argc, char **argv) {
     exit(1);
   }
 }
-static void process(int level) { nleaf++; }
+static void process(int level, unsigned flags) {
+  if (fwrite(&flags, sizeof flags, 1, output_file) != 1) {
+    fprintf(stderr, "dump_move: error: fail to write '%s'\n", output_path);
+    exit(1);
+  }
+  if (fwrite(values, sizeof *values, from_header.len, output_file) !=
+      from_header.len) {
+    fprintf(stderr, "dump_move: error: fail to write '%s'\n", output_path);
+    exit(1);
+  }
+  nleaf++;
+}
 static long traverse(int level) {
   enum { leaf = 2 };
   unsigned flags, i;
@@ -182,8 +193,8 @@ static long traverse(int level) {
   }
   size = values[0];
   size0 = 1;
-  if (flags & leaf)
-    process(level);
+  // if (flags & leaf)
+  process(level, flags);
   if (flags & leaf) {
     /* */
   } else {
