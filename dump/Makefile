@@ -1,6 +1,7 @@
 .POSIX:
 .SUFFIXES:
 .SUFFIXES: .c
+.PHONY: install clean all
 MPICC = mpicc
 MPICCFLAGS = -O2 -g
 QCC = qcc
