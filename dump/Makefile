@@ -24,3 +24,6 @@ tree_check: tree_check.c
 	$(QCC) $(QCC_DISABLE_DIMENSIONS) -source -D_MPI=1 $<
 	$(MPICC) $(MPICCFLAGS) _$< -o $@ -lm
 clean:; -rm $M _tree_check.c
+install: stl2dump dump2xdmf
+	mkdir -p $(HOME)/.local/bin
+	cp stl2dump dump2xdmf $(HOME)/.local/bin
