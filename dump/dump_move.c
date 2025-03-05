@@ -23,7 +23,7 @@ struct DumpHeader {
   int i, depth, npe, version;
   struct coord n;
 };
-static struct DumpHeader header;
+static struct DumpHeader from_header;
 static double *values;
 static long traverse(int);
 static double X0, Y0, Z0, L0;
@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
 
-  FREAD(&header, sizeof header, 1, from_file, from_path);
+  FREAD(&from_header, sizeof from_header, 1, from_file, from_path);
   fprintf(stderr,
           "version:             dump version: %d\n"
           "      t:          simulation time: %.16e\n"
@@ -87,13 +87,13 @@ int main(int argc, char **argv) {
           "  depth:          multigrid depth: %d\n"
           "      i:     simulation iteration: %d\n"
           "      n: multigrid MPI dimensions: [%g %g %g]\n",
-          header.version, header.t, header.len, header.npe, header.depth,
-          header.i, header.n.x, header.n.y, header.n.z);
-  if ((names = malloc(header.len * sizeof *names)) == NULL) {
+          from_header.version, from_header.t, from_header.len, from_header.npe, from_header.depth,
+          from_header.i, from_header.n.x, from_header.n.y, from_header.n.z);
+  if ((names = malloc(from_header.len * sizeof *names)) == NULL) {
     fprintf(stderr, "dump_move: error: malloc failed\n");
     exit(1);
   }
-  for (i = 0; i < header.len; i++) {
+  for (i = 0; i < from_header.len; i++) {
     FREAD(&len, sizeof len, 1, from_file, from_path);
     names[i] = malloc((len + 1) * sizeof *names[i]);
     FREAD(names[i], sizeof *names[i], len, from_file, from_path);
@@ -109,14 +109,14 @@ int main(int argc, char **argv) {
   Y0 = o[1];
   Z0 = o[2];
   L0 = o[3];
-  if ((values = malloc(header.len * sizeof *values)) == NULL) {
+  if ((values = malloc(from_header.len * sizeof *values)) == NULL) {
     fprintf(stderr, "dump_move: error: malloc failed\n");
     exit(1);
   }
   nleaf = 0;
   traverse(0);
   fprintf(stderr, "nleaf: %ld\n", nleaf);
-  for (i = 0; i < header.len; i++)
+  for (i = 0; i < from_header.len; i++)
     free(names[i]);
   free(names);
   if (fclose(from_file) != 0) {
@@ -139,7 +139,7 @@ static long traverse(int level) {
   long size, size0;
 
   if (fread(&flags, sizeof flags, 1, from_file) != 1 ||
-      fread(values, sizeof *values, header.len, from_file) != header.len) {
+      fread(values, sizeof *values, from_header.len, from_file) != from_header.len) {
     fprintf(stderr, "dump_move: fail to read '%s' at level '%d'\n", from_path,
             level);
     exit(1);
