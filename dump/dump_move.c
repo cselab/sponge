@@ -167,7 +167,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
 }
-static void process(int level, unsigned flags) {
+static void process(unsigned flags) {
   if (fwrite(&flags, sizeof flags, 1, output_file) != 1) {
     fprintf(stderr, "dump_move: error: fail to write '%s'\n", output_path);
     exit(1);
@@ -181,7 +181,7 @@ static void process(int level, unsigned flags) {
 }
 static long traverse(int level, int to_ended) {
   enum { leaf = 2 };
-  unsigned from_flags, i;
+  unsigned from_flags, to_flags, i;
   long size, size0;
 
   if (fread(&from_flags, sizeof from_flags, 1, from_file) != 1 ||
@@ -192,9 +192,18 @@ static long traverse(int level, int to_ended) {
     exit(1);
   }
   size = values[0];
+  if (!to_ended) {
+    if (fread(&to_flags, sizeof to_flags, 1, to_file) != 1 ||
+        fread(&values[0], sizeof values[0], 1, to_file) != 1 ||
+        fseek(to_file, sizeof *values * (from_header.len - 1), SEEK_CUR) != 0) {
+      fprintf(stderr, "dump_move: fail to read '%s' at level '%d'\n", to_path,
+              level);
+      exit(1);
+    }
+    process(to_flags);
+    to_ended = to_flags & leaf;
+  }
   size0 = 1;
-  // if (flags & leaf)
-  process(level, from_flags);
   if (from_flags & leaf) {
     /* */
   } else {
