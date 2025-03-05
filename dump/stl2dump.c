@@ -27,7 +27,7 @@ struct Hash {
   struct {
     int64_t key;
     void *value;
-  } * nodes;
+  } *nodes;
 };
 
 struct DumpHeader {
@@ -71,6 +71,7 @@ static uint64_t create_cell(struct Config *, int64_t, int64_t, int64_t, int,
 static double dist2_z(struct WallData *, const double[3]);
 static int inside_z(struct WallData *, int, const double[3]);
 enum { TABLE_DOUBLE, TABLE_INT, TABLE_PCHAR };
+enum { outlet_num = 9, outlet_den = 10 };
 static const struct {
   const char *name;
   int type;
@@ -101,7 +102,7 @@ int main(int argc, char **argv) {
   float *a, *b, *c;
   int OutletFlag;
   int32_t i, ilo[3], ihi[3];
-  int64_t inv_delta, ncells, ncells_wall, x, y, z, size;
+  int64_t inv_delta, min_delta, ncells, ncells_wall, x, y, z, size;
   int index, iy, iz, iv, iw, d, j;
   size_t nbytes, nfull, nmax, hash_size;
   struct Config config;
@@ -125,7 +126,7 @@ int main(int argc, char **argv) {
               "  -w <axis> <start> <end>    Add extra wall (e.g., -w z 0 1)\n"
               "  -o          Refine the outlet to a minimum level\n"
               "  -m          Minimal output (size and phi values only)\n"
-	      "  -s <val>    Set hash size to 2^val (default is 30)\n"
+              "  -s <val>    Set hash size to 2^val (default is 30)\n"
               "  -h          Display this help message and exit\n"
               "  -v          Enable verbose mode\n\n"
               "Arguments:\n"
@@ -383,12 +384,12 @@ positional:
           ncells += create_cell(&config, x, y, z, config.maxlevel, 1);
   }
 
-  inv_delta = 1ul << config.minlevel;
-  delta = config.L / inv_delta;
-  for (z = 0; z < inv_delta; z++)
-    for (y = 0; y < inv_delta; y++)
+  min_delta = 1ul << config.minlevel;
+  delta = config.L / min_delta;
+  for (z = 0; z < min_delta; z++)
+    for (y = 0; y < min_delta; y++)
       if (OutletFlag)
-        for (x = 0; 10 * x < 9 * inv_delta; x++) {
+        for (x = 0; outlet_den * x < outlet_num * min_delta; x++) {
           s[0] = config.R[0] + delta * (x + 0.5);
           s[1] = config.R[1] + delta * (y + 0.5);
           s[2] = config.R[2] + delta * (z + 0.5);
@@ -396,7 +397,7 @@ positional:
             ncells += create_cell(&config, x, y, z, config.minlevel, 1);
         }
       else
-        for (x = 0; x < inv_delta; x++)
+        for (x = 0; x < min_delta; x++)
           ncells += create_cell(&config, x, y, z, config.minlevel, 1);
 
   ncells_wall = 0;
@@ -410,7 +411,8 @@ positional:
           s[1] = config.R[1] + delta * (y + 0.5);
           s[2] = config.R[2] + delta * (z + 0.5);
           d2 = config.wall->dist2(config.wall_data, s);
-          if (d2 < delta * delta) {
+          if (d2 < delta * delta &&
+              (!OutletFlag || outlet_den * delta * x < outlet_num * config.L)) {
             ncells += create_cell(&config, x, y, z, config.wall_data->level, 1);
             ncells_wall++;
           }
