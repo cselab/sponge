@@ -14,7 +14,7 @@ dump_info \
 dump_select \
 morton \
 stl2dump \
-tree_check\
+# tree_check\
 
 all: $M
 .c:; $(CC) $< $(CFLAGS) -o $@
@@ -23,8 +23,4 @@ stl2dump: stl2dump.c
 tree_check: tree_check.c
 	$(QCC) $(QCC_DISABLE_DIMENSIONS) -source -D_MPI=1 $<
 	$(MPICC) $(MPICCFLAGS) _$< -o $@ -lm
-
 clean:; -rm $M _tree_check.c
-
-install: all
-	mkdir -p -- '$(PREFIX)/bin' && cp -- sdf2lmp split '$(PREFIX)/bin'
