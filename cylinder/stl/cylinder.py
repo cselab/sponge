@@ -23,6 +23,7 @@ def circle(z, orient):
 
 
 def write(path, ver, tri):
+    sys.stderr.write("cylinder.py: %s\n" % path)
     with open(path, "wb") as out:
         out.write(bytes(80 + 4))
         nt = 0
@@ -34,7 +35,7 @@ def write(path, ver, tri):
         out.write(struct.pack('<I', nt))
 
 
-L = 5
+L = 2.4
 R = 0.5
 n = 30
 ver = []
@@ -48,4 +49,4 @@ for i in range(n):
     d = b + (n + 1)
     tri.append((a, b, c))
     tri.append((c, b, d))
-write("center.stl", ver, tri)
+write("ver.stl", ver, tri)

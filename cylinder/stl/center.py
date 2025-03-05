@@ -4,6 +4,7 @@ import mmap
 import sys
 import struct
 import os
+import argparse
 
 
 def create(path, nt):
@@ -14,45 +15,49 @@ def create(path, nt):
         file.write(b'\0')
     with open(path, "rb+") as file:
         mm = mmap.mmap(file.fileno(), 0)
-        sys.stderr.write("center.py: %s\n" % path)
         return np.ndarray((nt, 3, 3), np.dtype("<f4"), mm, 80 + 4 + 12,
                           (36 + 12 + 2, 12, 4))
 
 
 def read(path):
     with open(path, "rb") as file:
-        mm = mmap.mmap(file.fileno(), 0, access=mmap.ACCESS_READ)
+        mm = mmap.mmap(file.fileno(), length=0, access=mmap.ACCESS_READ)
         nt, = struct.unpack('<i', mm[80:80 + 4])
         return np.ndarray((nt, 3, 3), np.dtype("<f4"), mm, 80 + 4 + 12,
                           (36 + 12 + 2, 12, 4))
 
 
-r = read(sys.argv[1])
+parser = argparse.ArgumentParser(description="Process and center an STL file.")
+parser.add_argument("-v",
+                    "--verbose",
+                    action="store_true",
+                    help="Enable verbose output")
+parser.add_argument("input", type=str, help="Path to the input STL file")
+parser.add_argument(
+    "output",
+    type=str,
+    nargs='?',
+    default="center.stl",
+    help="Path to the output centered STL file (default: center.stl)")
+args = parser.parse_args()
+
+r = read(args.input)
 nt = len(r)
-x = np.ravel(r[:, :, 0])
-y = np.ravel(r[:, :, 1])
-z = np.ravel(r[:, :, 2])
+xlo, ylo, zlo = np.min(r, axis=(0, 1))
+xhi, yhi, zhi = np.max(r, axis=(0, 1))
 
-xlo = min(x)
-xhi = max(x)
-ylo = min(y)
-yhi = max(y)
-zlo = min(z)
-zhi = max(z)
-
-xc = (xlo + xhi) / 2
-yc = (ylo + yhi) / 2
-zc = (zlo + zhi) / 2
-
+c = [(xlo + xhi) / 2, (ylo + yhi) / 2, (zlo + zhi) / 2]
 L = [xhi - xlo, yhi - ylo, zhi - zlo]
 ix, iy, iz = sorted([0, 1, 2], key=lambda i: L[i])
 scale = 1 / L[ix]
-R = [(x - xc) * scale, (y - yc) * scale, (z - zc) * scale]
-x, y, z = R[ix], R[iy], R[iz]
-sys.stderr.write("center.py: %g %g\ncenter.py: %g %g\ncenter.py: %g %g\n" %
-                 (min(x), max(x), min(y), max(y), min(z), max(z)))
-
-r = create("center.stl", nt)
-np.copyto(r[:, :, 0], np.reshape(x, (nt, -1)))
-np.copyto(r[:, :, 1], np.reshape(y, (nt, -1)))
-np.copyto(r[:, :, 2], np.reshape(z, (nt, -1)))
+x = r[:, :, ix]
+y = r[:, :, iy]
+z = r[:, :, iz]
+R = create(args.output, nt)
+np.copyto(R[:, :, 0], (x - c[ix]) * scale)
+np.copyto(R[:, :, 1], (y - c[iy]) * scale)
+np.copyto(R[:, :, 2], (z - c[iz]) * scale)
+if args.verbose:
+    sys.stderr.write("center.py: number of triangles: %d\n" % nt)
+    sys.stderr.write("center.py: scale: %.16e\n" % scale)
+    sys.stderr.write("center.py: %s\n" % args.output)
