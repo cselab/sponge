@@ -4,6 +4,7 @@ import math
 import sys
 import argparse
 
+
 def circle(z, orient):
     i0 = len(ver)
     ver.append((0, 0, z))
@@ -21,12 +22,13 @@ def circle(z, orient):
         else:
             tri.append((a, b, c))
 
+
 parser = argparse.ArgumentParser(description="Create cylindr in STL")
 parser.add_argument("-v",
                     "--verbose",
                     action="store_true",
                     help="Enable verbose output")
-parser.add_argument("output", type=str, help="Path to the output STL file")            
+parser.add_argument("output", type=str, help="Path to the output STL file")
 args = parser.parse_args()
 
 L = 2.4
