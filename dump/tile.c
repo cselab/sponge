@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
   FILE *input_attr_file, *input_tri_file, *input_xyz_file, *output_attr_file,
       *output_tri_file, *output_xyz_file, *output_xdmf_file;
   int *index, t[3], tri[3];
-  float *xyz, x, y, z, tlo[3], thi[3];
+  float *xyz, *attr, x, y, z, tlo[3], thi[3];
   float lo[3] = {FLT_MAX, FLT_MAX, FLT_MAX};
   float hi[3] = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
 
@@ -124,7 +124,12 @@ int main(int argc, char **argv) {
     fprintf(stderr, "tile: error: fail to seek '%s'\n", input_xyz_path);
     exit(1);
   }
+  nver = size / (3 * sizeof *xyz);
   if ((xyz = malloc(size)) == NULL) {
+    fprintf(stderr, "tile: error: malloc failed\n");
+    exit(1);
+  }
+  if ((attr = malloc(size)) == NULL) {
     fprintf(stderr, "tile: error: malloc failed\n");
     exit(1);
   }
@@ -132,8 +137,10 @@ int main(int argc, char **argv) {
     fprintf(stderr, "tile: error: fail to read '%s'\n", input_xyz_path);
     exit(1);
   }
-
-  nver = size / (3 * sizeof *xyz);
+  if (fread(attr, nver * sizeof *attr, 1, input_attr_file) != 1) {
+    fprintf(stderr, "tile: error: fail to read '%s'\n", input_attr_path);
+    exit(1);
+  }
   fprintf(stderr, "nver: %ld\n", nver);
   for (i = 0; i < nver; i++)
     for (d = 0; d < 3; d++) {
@@ -225,6 +232,12 @@ int main(int argc, char **argv) {
                           output_xyz_path);
                   exit(1);
                 }
+                if (fwrite(&attr[tri[d]], sizeof *attr, 1, output_attr_file) !=
+                    1) {
+                  fprintf(stderr, "tile: error: fail to write '%s'\n",
+                          output_attr_path);
+                  exit(1);
+                }
                 tile_nver++;
                 index[tri[d]] = tile_nver;
               }
@@ -262,10 +275,21 @@ int main(int argc, char **argv) {
                 "          %s\n"
                 "        </DataItem>\n"
                 "      </Geometry>\n"
+                "      <Attribute\n"
+                "          Center=\"Node\"\n"
+                "          Name=\"u\">\n"
+                "        <DataItem\n"
+                "            Dimensions=\"%ld\"\n"
+                "            Precision=\"4\"\n"
+                "            Format=\"Binary\">\n"
+                "          %s\n"
+                "        </DataItem>\n"
+                "      </Attribute>\n"
                 "    </Grid>\n"
                 "  </Domain>\n"
                 "</Xdmf>\n",
-                tile_ntri, tile_ntri, tri_base, tile_nver, xyz_base);
+                tile_ntri, tile_ntri, tri_base, tile_nver, xyz_base, tile_nver,
+                attr_base);
 
         if (fclose(output_tri_file) != 0) {
           fprintf(stderr, "dump_select: error: fail to close '%s'\n",
@@ -290,6 +314,7 @@ int main(int argc, char **argv) {
       }
   free(index);
   free(xyz);
+  free(attr);
   if (fclose(input_tri_file) != 0) {
     fprintf(stderr, "dump_select: error: fail to close '%s'\n", input_tri_path);
     exit(1);
