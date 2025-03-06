@@ -16,6 +16,7 @@ dump_move \
 dump_select \
 morton \
 stl2dump \
+tile \
 # tree_check\
 
 all: $M
