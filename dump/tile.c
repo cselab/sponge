@@ -29,7 +29,8 @@ int main(int argc, char **argv) {
   char input_attr_path[FILENAME_MAX], input_tri_path[FILENAME_MAX],
       input_xyz_path[FILENAME_MAX];
   FILE *input_attr_file, *input_tri_file, *input_xyz_file;
-  float *xyz, x, y, z;
+  int *index, t[3], tri[3];
+  float *xyz, x, y, z, tlo[3], thi[3];
   float lo[3] = {FLT_MAX, FLT_MAX, FLT_MAX};
   float hi[3] = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
 
@@ -141,6 +142,37 @@ int main(int argc, char **argv) {
   fprintf(stderr, "%g %g %g\n", lo[0], lo[1], lo[2]);
   fprintf(stderr, "%g %g %g\n", hi[0], hi[1], hi[2]);
 
+  if ((index = malloc(nver * sizeof *index)) == NULL) {
+    fprintf(stderr, "tile: error: malloc failed\n");
+    exit(1);
+  }
+  for (t[0] = 0; t[0] < config.tile[0]; t[0]++)
+    for (t[1] = 0; t[1] < config.tile[1]; t[1]++)
+      for (t[2] = 0; t[2] < config.tile[2]; t[2]++) {
+        for (d = 0; d < 3; d++) {
+          tlo[d] = lo[d] + (hi[d] - lo[d]) * t[d] / config.tile[d];
+          thi[d] = lo[d] + (hi[d] - lo[d]) * (t[d] + 1) / config.tile[d];
+        }
+        fprintf(stderr, "\n");
+        fprintf(stderr, "%g %g %g\n", tlo[0], tlo[1], tlo[2]);
+        fprintf(stderr, "%g %g %g\n", thi[0], thi[1], thi[2]);
+
+        memset(index, 0, nver * sizeof *index);
+        if (fseek(input_tri_file, 0, SEEK_SET) != 0) {
+          fprintf(stderr, "tile: error: fail to seek '%s'\n", input_tri_path);
+          exit(1);
+        }
+        for (i = 0; i < ntri; i++) {
+          if (fread(tri, sizeof tri, 1, input_tri_file) != 1) {
+            fprintf(stderr, "stl2dump: error: fail to read '%s'\n",
+                    input_tri_path);
+            exit(1);
+          }
+          if (tri[0] == 0)
+            fprintf(stderr, "%d %d %d\n", tri[0], tri[1], tri[2]);
+        }
+      }
+  free(index);
   free(xyz);
   if (fclose(input_tri_file) != 0) {
     fprintf(stderr, "dump_select: error: fail to close '%s'\n", input_tri_path);
