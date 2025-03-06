@@ -27,8 +27,12 @@ int main(int argc, char **argv) {
   long size, ntri, nver, i, n, d;
   struct Config config;
   char input_attr_path[FILENAME_MAX], input_tri_path[FILENAME_MAX],
-      input_xyz_path[FILENAME_MAX];
-  FILE *input_attr_file, *input_tri_file, *input_xyz_file;
+      input_xyz_path[FILENAME_MAX], output_attr_path[FILENAME_MAX],
+      output_tri_path[FILENAME_MAX], output_xyz_path[FILENAME_MAX],
+      output_xdmf_path[FILENAME_MAX];
+  char *xyz_base, *attr_base, *tri_base;
+  FILE *input_attr_file, *input_tri_file, *input_xyz_file, *output_attr_file,
+      *output_tri_file, *output_xyz_file, *output_xdmf_file;
   int *index, t[3], tri[3];
   float *xyz, x, y, z, tlo[3], thi[3];
   float lo[3] = {FLT_MAX, FLT_MAX, FLT_MAX};
@@ -149,6 +153,47 @@ int main(int argc, char **argv) {
   for (t[0] = 0; t[0] < config.tile[0]; t[0]++)
     for (t[1] = 0; t[1] < config.tile[1]; t[1]++)
       for (t[2] = 0; t[2] < config.tile[2]; t[2]++) {
+
+        snprintf(output_xyz_path, sizeof output_xyz_path,
+                 "%s.%03d.%03d.%03d.xyz.raw", config.output_path, t[0], t[1],
+                 t[2]);
+        snprintf(output_attr_path, sizeof output_attr_path,
+                 "%s.%03d.%03d.%03d.attr.raw", config.output_path, t[0], t[1],
+                 t[2]);
+        snprintf(output_tri_path, sizeof output_tri_path,
+                 "%s.%03d.%03d.%03d.tri.raw", config.output_path, t[0], t[1],
+                 t[2]);
+        snprintf(output_xdmf_path, sizeof output_xdmf_path,
+                 "%s.%03d.%03d.%03d.xdmf2", config.output_path, t[0], t[1],
+                 t[2]);
+
+        xyz_base = output_xyz_path;
+        attr_base = output_attr_path;
+        tri_base = output_tri_path;
+        for (i = 0; output_xyz_path[i] != '\0'; i++) {
+          if (output_xyz_path[i] == '/' && output_xyz_path[i + 1] != '\0') {
+            xyz_base = &output_xyz_path[i + 1];
+            attr_base = &output_attr_path[i + 1];
+            tri_base = &output_tri_path[i + 1];
+          }
+        }
+        if ((output_tri_file = fopen(output_tri_path, "w")) == NULL) {
+          fprintf(stderr, "tile: error: fail to open '%s'\n", output_tri_path);
+          exit(1);
+        }
+        if ((output_attr_file = fopen(output_attr_path, "w")) == NULL) {
+          fprintf(stderr, "tile: error: fail to open '%s'\n", output_attr_path);
+          exit(1);
+        }
+        if ((output_xyz_file = fopen(output_xyz_path, "w")) == NULL) {
+          fprintf(stderr, "tile: error: fail to open '%s'\n", output_xyz_path);
+          exit(1);
+        }
+        if ((output_xdmf_file = fopen(output_xdmf_path, "w")) == NULL) {
+          fprintf(stderr, "tile: error: fail to open '%s'\n", output_xdmf_path);
+          exit(1);
+        }
+
         for (d = 0; d < 3; d++) {
           tlo[d] = lo[d] + (hi[d] - lo[d]) * t[d] / config.tile[d];
           thi[d] = lo[d] + (hi[d] - lo[d]) * (t[d] + 1) / config.tile[d];
@@ -170,6 +215,27 @@ int main(int argc, char **argv) {
           }
           if (tri[0] == 0)
             fprintf(stderr, "%d %d %d\n", tri[0], tri[1], tri[2]);
+        }
+
+        if (fclose(output_tri_file) != 0) {
+          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
+                  output_tri_path);
+          exit(1);
+        }
+        if (fclose(output_attr_file) != 0) {
+          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
+                  output_attr_path);
+          exit(1);
+        }
+        if (fclose(output_xyz_file) != 0) {
+          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
+                  output_xyz_path);
+          exit(1);
+        }
+        if (fclose(output_xdmf_file) != 0) {
+          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
+                  output_xdmf_path);
+          exit(1);
         }
       }
   free(index);
