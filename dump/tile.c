@@ -24,7 +24,7 @@ static const struct {
 
 int main(int argc, char **argv) {
   char *end;
-  long size, ntri, nver, i, n, d;
+  long size, ntri, nver, tile_ntri, tile_nver, i, j, n, d;
   struct Config config;
   char input_attr_path[FILENAME_MAX], input_tri_path[FILENAME_MAX],
       input_xyz_path[FILENAME_MAX], output_attr_path[FILENAME_MAX],
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
   if (fread(xyz, size, 1, input_xyz_file) != 1) {
-    fprintf(stderr, "stl2dump: error: fail to read '%s'\n", input_xyz_path);
+    fprintf(stderr, "tile: error: fail to read '%s'\n", input_xyz_path);
     exit(1);
   }
 
@@ -207,15 +207,65 @@ int main(int argc, char **argv) {
           fprintf(stderr, "tile: error: fail to seek '%s'\n", input_tri_path);
           exit(1);
         }
+        tile_ntri = 0;
+        tile_nver = 0;
         for (i = 0; i < ntri; i++) {
           if (fread(tri, sizeof tri, 1, input_tri_file) != 1) {
-            fprintf(stderr, "stl2dump: error: fail to read '%s'\n",
-                    input_tri_path);
+            fprintf(stderr, "tile: error: fail to read '%s'\n", input_tri_path);
             exit(1);
           }
-          if (tri[0] == 0)
-            fprintf(stderr, "%d %d %d\n", tri[0], tri[1], tri[2]);
+          if (tlo[0] <= xyz[3 * tri[0] + 0] && xyz[3 * tri[0] + 0] <= thi[0] &&
+              tlo[1] <= xyz[3 * tri[0] + 1] && xyz[3 * tri[0] + 1] <= thi[1] &&
+              tlo[2] <= xyz[3 * tri[0] + 2] && xyz[3 * tri[0] + 2] <= thi[2]) {
+            for (d = 0; d < 3; d++) {
+              if (index[tri[d]] == 0) {
+                if (fwrite(&xyz[3 * tri[d]], 3 * sizeof *xyz, 1,
+                           output_xyz_file) != 1) {
+                  fprintf(stderr, "tile: error: fail to write '%s'\n",
+                          output_xyz_path);
+                  exit(1);
+                }
+                tile_nver++;
+                index[tri[d]] = tile_nver;
+              }
+              tri[d] = index[tri[d]] - 1;
+            }
+            if (fwrite(tri, sizeof tri, 1, output_tri_file) != 1) {
+              fprintf(stderr, "tile: error: fail to write '%s'\n",
+                      output_tri_path);
+              exit(1);
+            }
+            tile_ntri++;
+          }
         }
+        fprintf(stderr, "tile: %ld %ld\n", tile_ntri, tile_nver);
+        fprintf(output_xdmf_file,
+                "<Xdmf\n"
+                "    Version=\"2\">\n"
+                "  <Domain>\n"
+                "    <Grid>\n"
+                "      <Topology\n"
+                "         TopologyType=\"Triangle\"\n"
+                "         Dimensions=\"%ld\">\n"
+                "        <DataItem\n"
+                "            Dimensions=\"%ld 3\"\n"
+                "            NumberType=\"Int\"\n"
+                "            Format=\"Binary\">\n"
+                "          %s\n"
+                "        </DataItem>\n"
+                "      </Topology>\n"
+                "      <Geometry>\n"
+                "        <DataItem\n"
+                "            Dimensions=\"%ld 3\"\n"
+                "            Precision=\"4\"\n"
+                "            Format=\"Binary\">\n"
+                "          %s\n"
+                "        </DataItem>\n"
+                "      </Geometry>\n"
+                "    </Grid>\n"
+                "  </Domain>\n"
+                "</Xdmf>\n",
+                tile_ntri, tile_ntri, tri_base, tile_nver, xyz_base);
 
         if (fclose(output_tri_file) != 0) {
           fprintf(stderr, "dump_select: error: fail to close '%s'\n",
