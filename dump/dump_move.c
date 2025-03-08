@@ -132,7 +132,8 @@ int main(int argc, char **argv) {
       fprintf(stderr, "dump_move: error: fail to write '%s'\n", output_path);
       exit(1);
     }
-    assert(strcmp(to_name, from_names[i]) == 0);
+    if (strcmp(from_names[i], to_name) != 0)
+      fprintf(stderr, "dump_move: warning: field name mismatch: '%s' vs '%s'\n", from_names[i], to_name);
     free(to_name);
   }
   FREAD(o, sizeof o, 1, to_file, to_path);
