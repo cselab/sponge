@@ -5,7 +5,7 @@ CFLAGS = -O2 -g
 QCC = qcc
 QCC_DISABLE_DIMENSIONS = -disable-dimensions
 MPICC = mpicc
-BASILISK = $(HOME)/basilisk/src
+# BASILISK = $(HOME)/basilisk/src
 cylinder: _cylinder.c
 	$(MPICC) -o cylinder $(CFLAGS) -I$(BASILISK) _cylinder.c -lm
 _cylinder.c: cylinder.c
