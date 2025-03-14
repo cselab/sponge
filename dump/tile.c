@@ -94,9 +94,11 @@ int main(int argc, char **argv) {
   strcpy(&input_attr_path[i], ".attr.raw");
   strcpy(&input_tri_path[i], ".tri.raw");
   strcpy(&input_xyz_path[i], ".xyz.raw");
-  fprintf(stderr, "[%s]\n", input_xyz_path);
-  fprintf(stderr, "[%s]\n", input_attr_path);
-  fprintf(stderr, "[%s]\n", input_tri_path);
+  if (Verbose) {
+    fprintf(stderr, "tile: [%s]\n", input_xyz_path);
+    fprintf(stderr, "tile: [%s]\n", input_attr_path);
+    fprintf(stderr, "tile: [%s]\n", input_tri_path);
+  }
 
   if ((input_tri_file = fopen(input_tri_path, "r")) == NULL) {
     fprintf(stderr, "tile: error: fail to open '%s'\n", input_tri_path);
@@ -109,7 +111,8 @@ int main(int argc, char **argv) {
     exit(1);
   }
   ntri = size / (3 * sizeof(int));
-  fprintf(stderr, "ntri: %ld\n", ntri);
+  if (Verbose)
+    fprintf(stderr, "tile: ntri: %ld\n", ntri);
   if ((input_xyz_file = fopen(input_xyz_path, "r")) == NULL) {
     fprintf(stderr, "tile: error: fail to open '%s'\n", input_xyz_path);
     exit(1);
@@ -141,7 +144,8 @@ int main(int argc, char **argv) {
     fprintf(stderr, "tile: error: fail to read '%s'\n", input_attr_path);
     exit(1);
   }
-  fprintf(stderr, "nver: %ld\n", nver);
+  if (Verbose)
+    fprintf(stderr, "tile: nver: %ld\n", nver);
   for (i = 0; i < nver; i++)
     for (d = 0; d < 3; d++) {
       x = xyz[3 * i + d];
@@ -150,8 +154,10 @@ int main(int argc, char **argv) {
       if (x > hi[d])
         hi[d] = x;
     }
-  fprintf(stderr, "%g %g %g\n", lo[0], lo[1], lo[2]);
-  fprintf(stderr, "%g %g %g\n", hi[0], hi[1], hi[2]);
+  if (Verbose) {
+    fprintf(stderr, "tile: %g %g %g\n", lo[0], lo[1], lo[2]);
+    fprintf(stderr, "tile: %g %g %g\n", hi[0], hi[1], hi[2]);
+  }
 
   if ((index = malloc(nver * sizeof *index)) == NULL) {
     fprintf(stderr, "tile: error: malloc failed\n");
@@ -205,9 +211,11 @@ int main(int argc, char **argv) {
           tlo[d] = lo[d] + (hi[d] - lo[d]) * t[d] / config.tile[d];
           thi[d] = lo[d] + (hi[d] - lo[d]) * (t[d] + 1) / config.tile[d];
         }
-        fprintf(stderr, "\n");
-        fprintf(stderr, "%g %g %g\n", tlo[0], tlo[1], tlo[2]);
-        fprintf(stderr, "%g %g %g\n", thi[0], thi[1], thi[2]);
+        if (Verbose) {
+          fprintf(stderr, "\n");
+          fprintf(stderr, "tile: %g %g %g\n", tlo[0], tlo[1], tlo[2]);
+          fprintf(stderr, "tile: %g %g %g\n", thi[0], thi[1], thi[2]);
+        }
 
         memset(index, 0, nver * sizeof *index);
         if (fseek(input_tri_file, 0, SEEK_SET) != 0) {
