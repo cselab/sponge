@@ -77,9 +77,6 @@ int main(int argc, char **argv) {
     }
     argv++;
   }
-  // fprintf(stderr, "%d %d %d\n", config.tile[0], config.tile[1],
-  // config.tile[2]);
-
   strcpy(input_attr_path, config.input_path);
   strcpy(input_tri_path, config.input_path);
   strcpy(input_xyz_path, config.input_path);
@@ -94,7 +91,7 @@ int main(int argc, char **argv) {
   strcpy(&input_attr_path[i], ".attr.raw");
   strcpy(&input_tri_path[i], ".tri.raw");
   strcpy(&input_xyz_path[i], ".xyz.raw");
-  if (Verbose) {
+  if (config.Verbose) {
     fprintf(stderr, "tile: [%s]\n", input_xyz_path);
     fprintf(stderr, "tile: [%s]\n", input_attr_path);
     fprintf(stderr, "tile: [%s]\n", input_tri_path);
@@ -111,7 +108,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
   ntri = size / (3 * sizeof(int));
-  if (Verbose)
+  if (config.Verbose)
     fprintf(stderr, "tile: ntri: %ld\n", ntri);
   if ((input_xyz_file = fopen(input_xyz_path, "r")) == NULL) {
     fprintf(stderr, "tile: error: fail to open '%s'\n", input_xyz_path);
@@ -144,7 +141,7 @@ int main(int argc, char **argv) {
     fprintf(stderr, "tile: error: fail to read '%s'\n", input_attr_path);
     exit(1);
   }
-  if (Verbose)
+  if (config.Verbose)
     fprintf(stderr, "tile: nver: %ld\n", nver);
   for (i = 0; i < nver; i++)
     for (d = 0; d < 3; d++) {
@@ -154,7 +151,7 @@ int main(int argc, char **argv) {
       if (x > hi[d])
         hi[d] = x;
     }
-  if (Verbose) {
+  if (config.Verbose) {
     fprintf(stderr, "tile: %g %g %g\n", lo[0], lo[1], lo[2]);
     fprintf(stderr, "tile: %g %g %g\n", hi[0], hi[1], hi[2]);
   }
@@ -211,7 +208,7 @@ int main(int argc, char **argv) {
           tlo[d] = lo[d] + (hi[d] - lo[d]) * t[d] / config.tile[d];
           thi[d] = lo[d] + (hi[d] - lo[d]) * (t[d] + 1) / config.tile[d];
         }
-        if (Verbose) {
+        if (config.Verbose) {
           fprintf(stderr, "\n");
           fprintf(stderr, "tile: %g %g %g\n", tlo[0], tlo[1], tlo[2]);
           fprintf(stderr, "tile: %g %g %g\n", thi[0], thi[1], thi[2]);
@@ -259,7 +256,8 @@ int main(int argc, char **argv) {
             tile_ntri++;
           }
         }
-        fprintf(stderr, "tile: %ld %ld\n", tile_ntri, tile_nver);
+        if (config.Verbose)
+          fprintf(stderr, "tile: ntri, nver: %ld %ld\n", tile_ntri, tile_nver);
         fprintf(output_xdmf_file,
                 "<Xdmf\n"
                 "    Version=\"2\">\n"
