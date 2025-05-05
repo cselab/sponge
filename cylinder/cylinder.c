@@ -12,13 +12,19 @@
 coord Force = {0};
 scalar cs[];
 face vector fs[];
+static double zlim;
 event velocity(i++) {
   foreach_dimension() Force.x = 0;
   foreach (reduction(+ : Force)) {
-    foreach_dimension() {
-      u.x[] = cs[] * u.x[];
-      Force.x += u.x[] * (cs[] - 1) * Delta * Delta * Delta;
+    if (zlim != 0 || (-zlim < z && z < zlim)) {
+      double coef = (cs[] - 1) * Delta * Delta * Delta;
+      Force.x += u.x[] * coef;
+      Force.y += u.y[] * coef;
+      Force.z += u.z[] * coef;
     }
+    u.x[] = cs[] * u.x[];
+    u.y[] = cs[] * u.y[];
+    u.z[] = cs[] * u.z[];
   }
   foreach_dimension() Force.x /= dt;
 }
@@ -109,7 +115,7 @@ int main(int argc, char **argv) {
           "-l <resolution level> -m <maximum resolution level> "
           "-o <prefix> -p <dump period> -e <end time> "
           "-f <force file> -S cylinder|sphere "
-          "-z <domain size> [-b <boundaries>] [-d <dump file>]\n\n"
+          "-z <domain size> [-b <boundaries>] [-d <dump file>] [-Z <zlim>]\n\n"
           "Options:\n"
           "  -h          Display this help message\n"
           "  -v          Verbose\n"
@@ -131,7 +137,8 @@ int main(int argc, char **argv) {
           "  -f <file>   Output force file\n"
           "  -S <string> Specify shape (cylinder|sphere)\n"
           "  -d <file>   Restart simulation from the dump file\n"
-          "  -z <num>    Domain size\n\n"
+          "  -z <num>    Domain size\n"
+          "  -Z <num>    Where to exclude wall for force calculation\n\n"
           "  npe: %d\n"
           "Example usage:\n"
           "  ./cylinder -v -r 100 -l 7 -m 10 -p 100 -e 2 -z 2.5 -S sphere\n"
@@ -449,7 +456,6 @@ event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
 
 event dump(i++; t <= tend) {
   char path[FILENAME_MAX];
-  coord Fp, Fmu;
   static FILE *fp;
 
   if (i % period == 0) {
@@ -478,10 +484,6 @@ event dump(i++; t <= tend) {
       }
     }
     if (force_path) {
-      foreach_dimension() {
-	Fmu->x = Force.x;
-	Fp->x = 0;
-      }
       if (pid() == 0) {
         if (fp == NULL) {
           if ((fp = fopen(force_path, "w")) == NULL) {
@@ -494,11 +496,8 @@ event dump(i++; t <= tend) {
             exit(1);
           }
         }
-        fprintf(fp,
-                "%d %.16e %.16e %.16e %.16e %.16e %.16e %.16e %.16e %.16e "
-                "%.16e %.16e\n",
-                i, t, Fp.x + Fmu.x, Fp.y + Fmu.y, Fp.z + Fmu.z, Fp.x, Fp.y,
-                Fp.z, Fmu.x, Fmu.y, Fmu.z, dt);
+        fprintf(fp, "%d %.16e %.16e %.16e %.16e %.16e\n", i, t, dt, Force.x,
+                Force.y, Force.z);
         fflush(fp);
       }
     }
