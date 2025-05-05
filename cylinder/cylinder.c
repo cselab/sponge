@@ -16,7 +16,7 @@ static double zlim;
 event velocity(i++) {
   foreach_dimension() Force.x = 0;
   foreach (reduction(+ : Force)) {
-    if (zlim != 0 || (-zlim < z && z < zlim)) {
+    if (zlim != 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
       double coef = (cs[] - 1) * Delta * Delta * Delta;
       Force.x += u.x[] * coef;
       Force.y += u.y[] * coef;
