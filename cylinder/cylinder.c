@@ -12,17 +12,6 @@
 coord Force = {0};
 scalar cs[];
 face vector fs[];
-trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
-                               coord *Fmu) {
-  foreach_dimension() {
-    Fmu->x = Force.x;
-    Fp->x = 0;
-  }
-}
-trace static int fractions_cleanup(scalar c, face vector s, double smin = 0.,
-                                   bool opposite = false) {
-  return 0;
-}
 event velocity(i++) {
   foreach_dimension() Force.x = 0;
   foreach (reduction(+ : Force)) {
@@ -438,7 +427,6 @@ event init(t = 0) {
       fprintf(stderr, "cylinder: starting from '%s': time: %g, step: %d\n",
               dump_path, t, i);
     fractions(phi, cs, fs);
-    fractions_cleanup(cs, fs);
     if (Verbose)
       fields_stats();
   }
@@ -518,9 +506,7 @@ event dump(i++; t <= tend) {
   if (AdaptFlag) {
     astats s = adapt_wavelet((scalar *){cs, u}, (double[]){0, 0.1, 0.1, 0.1},
                              maxlevel = maxlevel, minlevel = minlevel);
-    // fractions_cleanup(cs, fs);
     unrefine(!(x < X0 + 0.9 * L0) && level > outlevel);
-    fractions_cleanup(cs, fs);
     if (Verbose && i % period == 0 && pid() == 0)
       fprintf(stderr, "cylinder: refined %d cells, coarsened %d cells\n", s.nf,
               s.nc);
