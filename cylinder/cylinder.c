@@ -9,72 +9,6 @@
 #include "navier-stokes/centered.h"
 #include "lambda2.h"
 #include "output_xdmf.h"
-#if 0
-#include "embed.h"
-trace static double embed_interpolate3(Point point, scalar s, coord p) {
-  int i = sign(p.x), j = sign(p.y), k = sign(p.z);
-  if (cs[i, 0, 0] && cs[0, j, 0] && cs[i, j, 0] && cs[0, 0, k] && cs[i, 0, k] &&
-      cs[0, j, k] && cs[i, j, k]) {
-    double val_0, val_k;
-    val_0 =
-	(s[0, 0, 0] * (1. - fabs(p.x)) + s[i, 0, 0] * fabs(p.x)) *
-	    (1. - fabs(p.y)) +
-	(s[0, j, 0] * (1. - fabs(p.x)) + s[i, j, 0] * fabs(p.x)) * fabs(p.y);
-    val_k =
-	(s[0, 0, k] * (1. - fabs(p.x)) + s[i, 0, k] * fabs(p.x)) *
-	    (1. - fabs(p.y)) +
-	(s[0, j, k] * (1. - fabs(p.x)) + s[i, j, k] * fabs(p.x)) * fabs(p.y);
-    return (val_0 * (1. - fabs(p.z)) + val_k * fabs(p.z));
-  } else {
-    double val = s[];
-    foreach_dimension() {
-      int i = sign(p.x);
-      if (cs[i])
-	val += fabs(p.x) * (s[i] - s[]);
-      else if (cs[-i])
-	val += fabs(p.x) * (s[] - s[-i]);
-    }
-    return val;
-  }
-}
-
-trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
-			       coord *Fmu) {
-  coord Fps = {0}, Fmus = {0};
-  foreach (reduction(+ : Fps) reduction(+ : Fmus)) {
-    if (cs[] > 0. && cs[] < 1.) {
-      coord n, b;
-      double area = embed_geometry(point, &b, &n);
-      area *= pow(Delta, dimension - 1);
-      double Fn = area * embed_interpolate3(point, p, b);
-      foreach_dimension() Fps.x += Fn * n.x;
-      if (constant(mu.x) != 0.) {
-	double mua = 0., fa = 0.;
-	foreach_dimension() {
-	  mua += mu.x[] + mu.x[1];
-	  fa += fs.x[] + fs.x[1];
-	}
-	mua /= fa;
-	coord dudn = embed_gradient(point, u, b, n);
-	foreach_dimension() Fmus.x -=
-	    area * mua *
-	    (dudn.x * (sq(n.x) + 1.) + dudn.y * n.x * n.y + dudn.z * n.x * n.z);
-      }
-    }
-  }
-
-  Fp->x = Fps.x;
-  Fp->y = Fps.y;
-  Fp->z = Fps.z;
-
-  Fmu->x = Fmus.x;
-  Fmu->y = Fmus.y;
-  Fmu->z = Fmus.z;
-}
-u.n[embed] = dirichlet(0);
-u.t[embed] = dirichlet(0);
-u.r[embed] = dirichlet(0);
-#else
 coord Force = {0};
 scalar cs[];
 face vector fs[];
@@ -99,7 +33,6 @@ event velocity(i++) {
   }
   foreach_dimension() Force.x /= dt;
 }
-#endif
 
 static double dot3(const double *a, const double *b) {
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
@@ -323,6 +256,18 @@ int main(int argc, char **argv) {
       }
       force_path = *argv;
       break;
+    case 'Z':
+      argv++;
+      if (*argv == NULL) {
+        fprintf(stderr, "cylinder: error: -Z needs an argument\n");
+        exit(1);
+      }
+      zlim = strtod(*argv, &end);
+      if (*end != '\0') {
+        fprintf(stderr, "cylinder: error: '%s' is not a number\n", *argv);
+        exit(1);
+      }
+      break;
     case 'F':
       FullOutput = 1;
       break;
@@ -545,7 +490,10 @@ event dump(i++; t <= tend) {
       }
     }
     if (force_path) {
-      embed_force3(p, u, mu, &Fp, &Fmu);
+      foreach_dimension() {
+	Fmu->x = Force.x;
+	Fp->x = 0;
+      }
       if (pid() == 0) {
         if (fp == NULL) {
           if ((fp = fopen(force_path, "w")) == NULL) {
