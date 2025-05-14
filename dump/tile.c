@@ -5,7 +5,7 @@
 #include <string.h>
 
 struct Config {
-  int tile[3], Verbose;
+  int tile[3], Box, Verbose;
   char *input_path, *output_path;
 };
 
@@ -29,21 +29,24 @@ int main(int argc, char **argv) {
   char input_attr_path[FILENAME_MAX], input_tri_path[FILENAME_MAX],
       input_xyz_path[FILENAME_MAX], output_attr_path[FILENAME_MAX],
       output_tri_path[FILENAME_MAX], output_xyz_path[FILENAME_MAX],
-      output_xdmf_path[FILENAME_MAX];
+      output_xdmf_path[FILENAME_MAX], box_path[FILENAME_MAX];
   char *xyz_base, *attr_base, *tri_base;
   FILE *input_attr_file, *input_tri_file, *input_xyz_file, *output_attr_file,
-      *output_tri_file, *output_xyz_file, *output_xdmf_file;
+      *output_tri_file, *output_xyz_file, *output_xdmf_file, *box_file;
   int *index, t[3], tri[3];
   float *xyz, *attr, x, y, z, tlo[3], thi[3];
   float lo[3] = {FLT_MAX, FLT_MAX, FLT_MAX};
   float hi[3] = {-FLT_MAX, -FLT_MAX, -FLT_MAX};
 
+  config.Verbose = 0;
+  config.Box = 0;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
     case 'h':
       fprintf(stderr,
-              "Usage: tile [-h] [-v] <tx> <ty> <tz> input.xdmf2 output\n\n"
+              "Usage: tile [-h] [-v] [-b] <tx> <ty> <tz> input.xdmf2 output\n\n"
               "Options:\n"
+              "  -b          Dump also a box\n"
               "  -h          Display this help message and exit\n"
               "  -v          Enable verbose mode\n\n"
               "Arguments:\n"
@@ -53,6 +56,9 @@ int main(int argc, char **argv) {
       exit(1);
     case 'v':
       config.Verbose = 1;
+      break;
+    case 'b':
+      config.Box = 1;
       break;
     default:
       fprintf(stderr, "tile: error: unknown option '%s'\n", *argv);
@@ -209,7 +215,7 @@ int main(int argc, char **argv) {
           thi[d] = lo[d] + (hi[d] - lo[d]) * (t[d] + 1) / config.tile[d];
         }
         if (config.Verbose) {
-          fprintf(stderr, "\n");
+          fprintf(stderr, "tile: %d %d %d\n", t[0], t[1], t[2]);
           fprintf(stderr, "tile: %g %g %g\n", tlo[0], tlo[1], tlo[2]);
           fprintf(stderr, "tile: %g %g %g\n", thi[0], thi[1], thi[2]);
         }
@@ -256,8 +262,10 @@ int main(int argc, char **argv) {
             tile_ntri++;
           }
         }
-        if (config.Verbose)
+        if (config.Verbose) {
+	  fprintf(stderr, "tile: writing: %s\n", output_xdmf_path);
           fprintf(stderr, "tile: ntri, nver: %ld %ld\n", tile_ntri, tile_nver);
+	}
         fprintf(output_xdmf_file,
                 "<Xdmf\n"
                 "    Version=\"2\">\n"
@@ -298,22 +306,20 @@ int main(int argc, char **argv) {
                 attr_base);
 
         if (fclose(output_tri_file) != 0) {
-          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
-                  output_tri_path);
+          fprintf(stderr, "tile: error: fail to close '%s'\n", output_tri_path);
           exit(1);
         }
         if (fclose(output_attr_file) != 0) {
-          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
+          fprintf(stderr, "tile: error: fail to close '%s'\n",
                   output_attr_path);
           exit(1);
         }
         if (fclose(output_xyz_file) != 0) {
-          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
-                  output_xyz_path);
+          fprintf(stderr, "tile: error: fail to close '%s'\n", output_xyz_path);
           exit(1);
         }
         if (fclose(output_xdmf_file) != 0) {
-          fprintf(stderr, "dump_select: error: fail to close '%s'\n",
+          fprintf(stderr, "tile: error: fail to close '%s'\n",
                   output_xdmf_path);
           exit(1);
         }
@@ -322,16 +328,56 @@ int main(int argc, char **argv) {
   free(xyz);
   free(attr);
   if (fclose(input_tri_file) != 0) {
-    fprintf(stderr, "dump_select: error: fail to close '%s'\n", input_tri_path);
+    fprintf(stderr, "tile: error: fail to close '%s'\n", input_tri_path);
     exit(1);
   }
   if (fclose(input_xyz_file) != 0) {
-    fprintf(stderr, "dump_select: error: fail to close '%s'\n", input_xyz_path);
+    fprintf(stderr, "tile: error: fail to close '%s'\n", input_xyz_path);
     exit(1);
   }
   if (fclose(input_attr_file) != 0) {
-    fprintf(stderr, "dump_select: error: fail to close '%s'\n",
-            input_attr_path);
+    fprintf(stderr, "tile: error: fail to close '%s'\n", input_attr_path);
     exit(1);
+  }
+
+  if (config.Box) {
+    snprintf(box_path, sizeof box_path, "%s.box.xdmf2", config.output_path);
+    if (config.Verbose)
+      fprintf(stderr, "tile: writing: %s\n", box_path);
+    if ((box_file = fopen(box_path, "w")) == NULL) {
+      fprintf(stderr, "tile: error: fail to open '%s'\n", box_path);
+      exit(1);
+    }
+    fprintf(box_file,
+            "<Xdmf\n"
+            "    Version=\"2\">\n"
+            "  <Domain>\n"
+            "    <Grid>\n"
+            "      <Topology\n"
+            "	  TopologyType=\"3DCoRectMesh\"\n"
+            "	  Dimensions=\"2 2 2\"/>\n"
+            "      <Geometry\n"
+            "	  GeometryType=\"ORIGIN_DXDYDZ\">\n"
+            "	<DataItem\n"
+            "	    Dimensions=\"3\">\n"
+            "	  %.16e\n"
+            "	  %.16e\n"
+            "	  %.16e\n"
+            "	</DataItem>\n"
+            "	<DataItem\n"
+            "	    Dimensions=\"3\">\n"
+            "	  %.16e\n"
+            "	  %.16e\n"
+            "	  %.16e\n"
+            "	</DataItem>\n"
+            "      </Geometry>\n"
+            "    </Grid>\n"
+            "  </Domain>\n"
+            "</Xdmf>\n",
+            lo[2], lo[1], lo[0], hi[2] - lo[2], hi[1] - lo[1], hi[0] - lo[0]);
+    if (fclose(box_file) != 0) {
+      fprintf(stderr, "tile: error: fail to close '%s'\n", box_path);
+      exit(1);
+    }
   }
 }
