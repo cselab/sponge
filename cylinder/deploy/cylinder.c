@@ -68174,7 +68174,7 @@ _stencil_val(u.x,0,0,0);
          _stencil_val(u.y,0,0,0);
           _stencil_val(u.z,0,0,0);    
 }
-                _stencil_val(cs,0,0,0); _stencil_val(u.x,0,0,0);    _stencil_val_a(u.x,0,0,0); 
+                        _stencil_val(cs,0,0,0); _stencil_val(u.x,0,0,0);    _stencil_val_a(u.x,0,0,0); 
 _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0,0);    _stencil_val_a(u.y,0,0,0); 
 _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0);    _stencil_val_a(u.z,0,0,0);  
   }
@@ -68297,7 +68297,7 @@ int level = point.level; NOT_UNUSED(level);
   parent.k = (point.k + 2)/2;
 #line 18 "cylinder.c"
 {
-    if (zlim != 0 || (-zlim < z && z < zlim)) {
+    if (zlim != 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
       double coef = (val(cs,0,0,0) - 1) * Delta * Delta * Delta;
       Force.x += val(u.x,0,0,0) * coef;
       Force.y += val(u.y,0,0,0) * coef;
