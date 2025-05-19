@@ -9,6 +9,7 @@
 #include "navier-stokes/centered.h"
 #include "lambda2.h"
 #include "output_xdmf.h"
+#include "output_force.h"
 coord Force = {0};
 scalar cs[];
 face vector fs[];
