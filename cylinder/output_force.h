@@ -44,11 +44,6 @@ static int output_force(double t, scalar cs, const char *path) {
     }
   }
 
-  if ((file = fopen(xyz_path, "w")) == NULL) {
-    fprintf(stderr, "%s:%d: fail to open '%s'\n", __FILE__, __LINE__, xyz_path);
-    return 1;
-  }
-
   MPI_Exscan(&ncell, &offset, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
   if (pid() == 0)
     offset = 0;

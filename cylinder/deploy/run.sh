@@ -1,6 +1,6 @@
 #!/bin/sh
 
-l=5 m=6
+l=6 m=8
 (cd ../../dump && make dump2xdmf stl2dump)
 ../../stl/cylinder.py ver.stl
 ../../stl/center.py ver.stl center.stl
@@ -10,4 +10,4 @@ zlim=`../../stl/size.py center.stl`
 set -- $zlim
 z=$2
 mpiexec -n 1 ./cylinder -v -i -Z $z \
-    	 -r 2000 -l $l -m $m -p 100 -e 200 -f force.dat -d basilisk.dump -o h -b pp
+    	 -r 2000 -l $l -m $m -p 10 -e 200 -f force.dat -d basilisk.dump -o h -b pp
