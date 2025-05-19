@@ -68150,7 +68150,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 83, "j == (
 #line 1 "./output_force.h"
 static int output_force(double t, scalar cs, const char *path) {
   float *xyz, *attr;
-  long j, ncell, ncell_total, nsize, offset;
+  long j, k, ncell, ncell_total, nsize, offset;
   char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
       xdmf_path[FILENAME_MAX + 10], *xyz_base, *attr_base;
   FILE *file;
@@ -68333,11 +68333,12 @@ if ((file = fopen(xyz_path, "w")) == NULL) {
                         MPI_STATUS_IGNORE);
   pfree(xyz,__func__,__FILE__,__LINE__);
   MPI_File_close(&mpi_file);
-  if ((attr = pmalloc(3 * ncell * sizeof *attr,__func__,__FILE__,__LINE__)) == NULL) {
+  if ((attr = pmalloc((3 + 2) * ncell * sizeof *attr,__func__,__FILE__,__LINE__)) == NULL) {
     fprintf(ferr, "%s:%d: malloc failed\n", "./output_force.h", 63);
     return 1;
   }
   j = 0;
+  k = 0;
 
 #line 126 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
 {
@@ -68370,7 +68371,7 @@ if ((file = fopen(xyz_path, "w")) == NULL) {
  continue;
       switch (stage) {
       case 0: { 
-#line 67 "./output_force.h"
+#line 68 "./output_force.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68429,12 +68430,15 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 67 "./output_force.h"
+#line 68 "./output_force.h"
 if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
     double coef = (val(cs,0,0,0) - 1) * Delta * Delta * Delta / dt;
     attr[j++] = val(u.x,0,0,0) * coef;
     attr[j++] = val(u.y,0,0,0) * coef;
     attr[j++] = val(u.z,0,0,0) * coef;
+    attr[3 * ncell + k] = Delta;
+    attr[4 * ncell + k] = val(cs,0,0,0);
+    k++;
   }}
 
  
@@ -68468,19 +68472,21 @@ if (point.level < grid->depth) {
 #line 137
 }
 }  
-#line 73 "./output_force.h"
-if (!(j == 3 * ncell)) qassert ("./output_force.h", 73, "j == 3 * ncell");
+#line 77 "./output_force.h"
+if (!(j == 3 * ncell)) qassert ("./output_force.h", 77, "j == 3 * ncell");
+  if (!(k == ncell)) qassert ("./output_force.h", 78, "k == ncell");
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
-  MPI_File_write_at_all(mpi_file, 3 * offset * sizeof *attr, attr,
-                        3 * ncell * sizeof *attr, MPI_BYTE, MPI_STATUS_IGNORE);
+  MPI_File_write_at_all(mpi_file, (3 + 2) * offset * sizeof *attr, attr,
+                        (3 + 2) * ncell * sizeof *attr, MPI_BYTE,
+                        MPI_STATUS_IGNORE);
   pfree(attr,__func__,__FILE__,__LINE__);
   MPI_File_close(&mpi_file);
 
   if (pid() == npe() - 1) {
     ncell_total = offset + ncell;
     if ((file = fopen(xdmf_path, "w")) == NULL) {
-      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 84,
+      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 90,
               xdmf_path);
       return 1;
     }
@@ -68511,12 +68517,34 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 73, "j == 3 * ncell");
             "            %s\n"
             "        </DataItem>\n"
             "      </Attribute>\n"
+            "      <Attribute\n"
+            "          Name=\"Delta\"\n"
+            "          Center=\"Cell\">\n"
+            "        <DataItem\n"
+            "            Format=\"Binary\"\n"
+            "            Dimensions=\"%ld\"\n"
+            "            Seek=\"%ld\">\n"
+            "            %s\n"
+            "        </DataItem>\n"
+            "      </Attribute>\n"
+            "      <Attribute\n"
+            "          Name=\"cs\"\n"
+            "          Center=\"Cell\">\n"
+            "        <DataItem\n"
+            "            Format=\"Binary\"\n"
+            "            Dimensions=\"%ld\"\n"
+            "            Seek=\"%ld\">\n"
+            "            %s\n"
+            "        </DataItem>\n"
+            "      </Attribute>\n"
             "    </Grid>\n"
             "  </Domain>\n"
             "</Xdmf>\n",
-            t, ncell_total, 8 * ncell_total, xyz_base, ncell_total, attr_base);
+            t, ncell_total, 8 * ncell_total, xyz_base, ncell_total, attr_base,
+            ncell_total, 3 * ncell_total * sizeof *attr, attr_base, ncell_total,
+            (3 + 1) * ncell_total * sizeof *attr, attr_base);
     if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 120,
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 148,
               xdmf_path);
       return 1;
     }
