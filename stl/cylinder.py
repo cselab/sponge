@@ -23,7 +23,7 @@ def circle(z, orient):
             tri.append((a, b, c))
 
 
-parser = argparse.ArgumentParser(description="Create cylindr in STL")
+parser = argparse.ArgumentParser(description="Create cylinder in STL")
 parser.add_argument("-v",
                     "--verbose",
                     action="store_true",
