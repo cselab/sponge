@@ -65,9 +65,10 @@ static int output_force(double t, scalar cs, const char *path) {
   }
   j = 0;
   foreach_cell() if (is_local(cell) && is_leaf(cell) && cs[] < 1.0) {
-    attr[j++] = 0;
-    attr[j++] = 0;
-    attr[j++] = 0;
+    double coef = (cs[] - 1) * Delta * Delta * Delta / dt;
+    attr[j++] = u.x[] * coef;
+    attr[j++] = u.y[] * coef;
+    attr[j++] = u.z[] * coef;
   }
   assert(j == 3 * ncell);
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
@@ -107,6 +108,7 @@ static int output_force(double t, scalar cs, const char *path) {
             "          Center=\"Cell\">\n"
             "        <DataItem\n"
             "            Dimensions=\"%ld 3\"\n"
+            "            Format=\"Binary\">\n"
             "            %s\n"
             "        </DataItem>\n"
             "      </Attribute>\n"

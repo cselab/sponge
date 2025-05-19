@@ -68151,8 +68151,8 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 83, "j == (
 static int output_force(double t, scalar cs, const char *path) {
   float *xyz, *attr;
   long j, ncell, ncell_total, nsize, offset;
-  char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10], xdmf_path[FILENAME_MAX + 10],
-      *xyz_base, *attr_base;
+  char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
+      xdmf_path[FILENAME_MAX + 10], *xyz_base, *attr_base;
   FILE *file;
   MPI_File mpi_file;
   const int shift[8][3] = {
@@ -68431,9 +68431,10 @@ int level = point.level; NOT_UNUSED(level);
   parent.k = (point.k + 2)/2;
 #line 67 "./output_force.h"
 if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
-    attr[j++] = 0;
-    attr[j++] = 0;
-    attr[j++] = 0;
+    double coef = (val(cs,0,0,0) - 1) * Delta * Delta * Delta;
+    attr[j++] = val(u.x,0,0,0) * coef;
+    attr[j++] = val(u.y,0,0,0) * coef;
+    attr[j++] = val(u.z,0,0,0) * coef;
   }}
 
  
@@ -68467,8 +68468,8 @@ if (point.level < grid->depth) {
 #line 137
 }
 }  
-#line 72 "./output_force.h"
-if (!(j == 3 * ncell)) qassert ("./output_force.h", 72, "j == 3 * ncell");
+#line 73 "./output_force.h"
+if (!(j == 3 * ncell)) qassert ("./output_force.h", 73, "j == 3 * ncell");
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
   MPI_File_write_at_all(mpi_file, 3 * offset * sizeof *attr, attr,
@@ -68479,7 +68480,7 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 72, "j == 3 * ncell");
   if (pid() == npe() - 1) {
     ncell_total = offset + ncell;
     if ((file = fopen(xdmf_path, "w")) == NULL) {
-      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 83,
+      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 84,
               xdmf_path);
       return 1;
     }
@@ -68514,7 +68515,7 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 72, "j == 3 * ncell");
             "</Xdmf>\n",
             t, ncell_total, 8 * ncell_total, xyz_base, ncell_total, attr_base);
     if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 118,
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 119,
               xdmf_path);
       return 1;
     }
