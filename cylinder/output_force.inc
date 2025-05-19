@@ -27,7 +27,7 @@ static int output_force(double t, const char *path) {
   ncell = 0;
   j = 0;
   xyz = NULL;
-  foreach_cell() if (is_local(cell) && is_leaf(cell)) {
+  foreach_cell() if (is_local(cell) && is_leaf(cell) && cs[] < 1.0) {
     long i;
     ncell++;
     if (ncell >= nsize) {
@@ -64,7 +64,7 @@ static int output_force(double t, const char *path) {
     return 1;
   }
   j = 0;
-  foreach_cell() if (is_local(cell) && is_leaf(cell)) {
+  foreach_cell() if (is_local(cell) && is_leaf(cell) && cs[] < 1.0) {
     attr[j++] = 0;
     attr[j++] = 0;
     attr[j++] = 0;

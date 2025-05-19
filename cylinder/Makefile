@@ -8,6 +8,6 @@ deploy/cylinder.c: _cylinder.c
 	mv _cylinder.c deploy/cylinder.c
 _cylinder.c: cylinder.c
 	CC99=$(MPICC) $(QCC) $(QCC_DISABLE_DIMENSIONS) -source $(QCCFLAGS) -D_MPI=1 cylinder.c
-_cylinder.c: output_xdmf.h
+_cylinder.c: output_xdmf.inc output_force.inc
 clean:
 	rm -f _cylinder.c

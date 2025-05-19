@@ -8,10 +8,10 @@
 #include "fractions.h"
 #include "navier-stokes/centered.h"
 #include "lambda2.h"
-#include "output_xdmf.h"
-#include "output_force.h"
-coord Force = {0};
+#include "output_xdmf.inc"
 static scalar cs[];
+#include "output_force.inc"
+coord Force = {0};
 static face vector fs[];
 static double zlim;
 event velocity(i++) {
