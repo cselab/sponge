@@ -28,12 +28,18 @@ parser.add_argument("-v",
                     "--verbose",
                     action="store_true",
                     help="Enable verbose output")
+parser.add_argument("-n",
+                    "--nsegments",
+                    type=int,
+                    required=True,
+                    help="Number of segments")
 parser.add_argument("output", type=str, help="Path to the output STL file")
+
 args = parser.parse_args()
 
 L = 2.4
 R = 0.5
-n = 30
+n = args.nsegments
 ver = []
 tri = []
 circle(-L / 2, True)

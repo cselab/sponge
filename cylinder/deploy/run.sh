@@ -1,8 +1,9 @@
 #!/bin/sh
 
-l=6 m=8
+l=6 m=10
+make
 (cd ../../dump && make dump2xdmf stl2dump)
-../../stl/cylinder.py ver.stl
+../../stl/cylinder.py -n 128 ver.stl
 ../../stl/center.py ver.stl center.stl
 zlim=`../../stl/size.py center.stl`
 ../../dump/stl2dump -o -w z $((m-1)) $zlim -- \
