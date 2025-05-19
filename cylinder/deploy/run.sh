@@ -1,11 +1,11 @@
 #!/bin/sh
 
-l=5 m=6
+l=6 m=7
 (cd ../../dump && make dump2xdmf stl2dump)
 ../../stl/cylinder.py ver.stl
 ../../stl/center.py ver.stl center.stl
 zlim=`../../stl/size.py center.stl`
-../../dump/stl2dump -o -v -w z $((m-1)) $zlim -- \
+../../dump/stl2dump -o -w z $((m-1)) $zlim -- \
 		    -5 -6.25 -6.25 12.5  $l $m  64 center.stl basilisk.dump
 set -- $zlim
 z=$2

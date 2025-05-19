@@ -68431,7 +68431,7 @@ int level = point.level; NOT_UNUSED(level);
   parent.k = (point.k + 2)/2;
 #line 67 "./output_force.h"
 if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
-    double coef = (val(cs,0,0,0) - 1) * Delta * Delta * Delta;
+    double coef = (val(cs,0,0,0) - 1) * Delta * Delta * Delta / dt;
     attr[j++] = val(u.x,0,0,0) * coef;
     attr[j++] = val(u.y,0,0,0) * coef;
     attr[j++] = val(u.z,0,0,0) * coef;
@@ -68507,6 +68507,7 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 73, "j == 3 * ncell");
             "          Center=\"Cell\">\n"
             "        <DataItem\n"
             "            Dimensions=\"%ld 3\"\n"
+            "            Format=\"Binary\">\n"
             "            %s\n"
             "        </DataItem>\n"
             "      </Attribute>\n"
@@ -68515,7 +68516,7 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 73, "j == 3 * ncell");
             "</Xdmf>\n",
             t, ncell_total, 8 * ncell_total, xyz_base, ncell_total, attr_base);
     if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 119,
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 120,
               xdmf_path);
       return 1;
     }
