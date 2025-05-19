@@ -8,13 +8,40 @@
 #include "fractions.h"
 #include "navier-stokes/centered.h"
 #include "lambda2.h"
-#include "output_xdmf.inc"
-static scalar cs[];
-#include "output_force.inc"
+#include "output_xdmf.h"
+#include "output_force.h"
 coord Force = {0};
+static double shape_cylinder(double x, double y, double z) {
+  return sq(x) + sq(y) - sq(1.0 / 2);
+}
+static double shape_sphere(double x, double y, double z) {
+  return sq(x) + sq(y) + sq(z) - sq(1.0 / 2);
+}
+static double (*Shape[])(double, double, double) = {shape_cylinder,
+                                                    shape_sphere};
+static const char *shape_names[] = {"cylinder", "sphere"};
+static double (*shape)(double, double, double);
+static int boundaries_surfaces0[] = {top, front};
+static int boundaries_surfaces1[] = {bottom, back};
+static const char *boundaries_names[] = {"top", "front"};
+static const char *force_path, *output_prefix, *dump_path;
+static const int outlevel = 5;
+static double reynolds, tend, zlim;
+static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag,
+  InitFileFlag, period;
+static face vector muv[];
+static scalar l2[];
+static vector omega[];
+static scalar phi[];
 static face vector fs[];
-static double zlim;
+static scalar cs[];
+
 event velocity(i++) {
+  char path[FILENAME_MAX];
+  if (i % period == 0) {
+    snprintf(path, sizeof path, "%s.force.%09d", output_prefix, i);
+    output_force(t, cs, path);
+  }
   foreach_dimension() Force.x = 0;
   foreach (reduction(+ : Force)) {
     if (zlim != 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
@@ -61,29 +88,6 @@ static int slice_y(double x, double y, double z, double Delta) {
   double epsilon = Delta / 10;
   return y <= -epsilon && y + Delta + epsilon >= 0;
 }
-static double shape_cylinder(double x, double y, double z) {
-  return sq(x) + sq(y) - sq(1.0 / 2);
-}
-static double shape_sphere(double x, double y, double z) {
-  return sq(x) + sq(y) + sq(z) - sq(1.0 / 2);
-}
-static double (*Shape[])(double, double, double) = {shape_cylinder,
-                                                    shape_sphere};
-static const char *shape_names[] = {"cylinder", "sphere"};
-static double (*shape)(double, double, double);
-static int boundaries_surfaces0[] = {top, front};
-static int boundaries_surfaces1[] = {bottom, back};
-static const char *boundaries_names[] = {"top", "front"};
-
-static const char *force_path, *output_prefix, *dump_path;
-static const int outlevel = 5;
-static double reynolds, tend;
-static int maxlevel, minlevel, period, Verbose, FullOutput, AdaptFlag,
-    InitFileFlag;
-static face vector muv[];
-static scalar l2[];
-static vector omega[];
-static scalar phi[];
 
 int main(int argc, char **argv) {
   char *end;

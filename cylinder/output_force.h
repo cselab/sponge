@@ -1,8 +1,8 @@
-static int output_force(double t, const char *path) {
+static int output_force(double t, scalar cs, const char *path) {
   float *xyz, *attr;
   long j, ncell, ncell_total, nsize, offset;
-  char xyz_path[FILENAME_MAX], attr_path[FILENAME_MAX], xdmf_path[FILENAME_MAX],
-      *xyz_base, *attr_base;
+  char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
+      xdmf_path[FILENAME_MAX + 10], *xyz_base, *attr_base;
   FILE *file;
   MPI_File mpi_file;
   const int shift[8][3] = {
