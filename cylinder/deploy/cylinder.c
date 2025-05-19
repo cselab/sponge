@@ -67891,12 +67891,7 @@ if (point.level < grid->depth) {
 }
 }  
 #line 50 "./output_xdmf.h"
-if ((file = fopen(xyz_path, "w")) == NULL) {
-    fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_xdmf.h", 51, xyz_path);
-    return 1;
-  }
-
-  MPI_Exscan(&ncell, &offset, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
+MPI_Exscan(&ncell, &offset, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
   if (pid() == 0)
     offset = 0;
   MPI_File_open(MPI_COMM_WORLD, xyz_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
@@ -67910,7 +67905,7 @@ if ((file = fopen(xyz_path, "w")) == NULL) {
   nattr = list_len(list);
   nvect = vectors_len(vlist);
   if ((attr = pmalloc((nattr + 3 * nvect) * ncell * sizeof *attr,__func__,__FILE__,__LINE__)) == NULL) {
-    fprintf(ferr, "%s:%d: malloc failed\n", "./output_xdmf.h", 69);
+    fprintf(ferr, "%s:%d: malloc failed\n", "./output_xdmf.h", 64);
     return 1;
   }
   j = 0;
@@ -67946,7 +67941,7 @@ if ((file = fopen(xyz_path, "w")) == NULL) {
  continue;
       switch (stage) {
       case 0: { 
-#line 73 "./output_xdmf.h"
+#line 68 "./output_xdmf.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68005,7 +68000,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 73 "./output_xdmf.h"
+#line 68 "./output_xdmf.h"
 if (is_local(cell) && is_leaf(cell) &&
                      (!cond || cond(x, y, z, Delta))) {
     {scalar*_i=(scalar*)( list);if(_i)for(scalar s=*_i;(&s)->i>=0;s=*++_i){
@@ -68048,8 +68043,8 @@ if (point.level < grid->depth) {
 #line 137
 }
 }  
-#line 83 "./output_xdmf.h"
-if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 83, "j == (nattr + 3 * nvect) * ncell");
+#line 78 "./output_xdmf.h"
+if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 78, "j == (nattr + 3 * nvect) * ncell");
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
   MPI_File_write_at_all(mpi_file, (nattr + 3 * nvect) * offset * sizeof *attr,
@@ -68061,7 +68056,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 83, "j == (
   if (pid() == npe() - 1) {
     ncell_total = offset + ncell;
     if ((file = fopen(xdmf_path, "w")) == NULL) {
-      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_xdmf.h", 95,
+      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_xdmf.h", 90,
               xdmf_path);
       return 1;
     }
@@ -68138,7 +68133,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 83, "j == (
                   "  </Domain>\n"
                   "</Xdmf>\n");
     if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_xdmf.h", 172,
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_xdmf.h", 167,
               xdmf_path);
       return 1;
     }
@@ -68149,6 +68144,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 83, "j == (
 #line 1 "output_force.h"
 #line 1 "./output_force.h"
 static int output_force(double t, scalar cs, const char *path) {
+  enum { nattr = 2, nvect = 1 };
   float *xyz, *attr;
   long j, k, ncell, ncell_total, nsize, offset;
   char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
@@ -68159,6 +68155,8 @@ static int output_force(double t, scalar cs, const char *path) {
       {0, 0, 0}, {0, 0, 1}, {0, 1, 1}, {0, 1, 0},
       {1, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0},
   };
+  const char *anames[nattr] = {"Delta", "cs"};
+  const char *vnames[nvect] = {"force"};
 
   snprintf(xyz_path, sizeof xyz_path, "%s.xyz.raw", path);
   snprintf(attr_path, sizeof attr_path, "%s.attr.raw", path);
@@ -68209,7 +68207,7 @@ static int output_force(double t, scalar cs, const char *path) {
  continue;
       switch (stage) {
       case 0: { 
-#line 30 "./output_force.h"
+#line 33 "./output_force.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68268,14 +68266,14 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 30 "./output_force.h"
+#line 33 "./output_force.h"
 if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
     long i;
     ncell++;
     if (ncell >= nsize) {
       nsize = 2 * nsize + 1;
       if ((xyz = prealloc(xyz, 8 * 3 * nsize * sizeof *xyz,__func__,__FILE__,__LINE__)) == NULL) {
-        fprintf(ferr, "%s:%d: realloc failed\n", "./output_force.h", 36);
+        fprintf(ferr, "%s:%d: realloc failed\n", "./output_force.h", 39);
         return 1;
       }
     }
@@ -68317,13 +68315,8 @@ if (point.level < grid->depth) {
 #line 137
 }
 }  
-#line 47 "./output_force.h"
-if ((file = fopen(xyz_path, "w")) == NULL) {
-    fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 48, xyz_path);
-    return 1;
-  }
-
-  MPI_Exscan(&ncell, &offset, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
+#line 50 "./output_force.h"
+MPI_Exscan(&ncell, &offset, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
   if (pid() == 0)
     offset = 0;
   MPI_File_open(MPI_COMM_WORLD, xyz_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
@@ -68333,12 +68326,11 @@ if ((file = fopen(xyz_path, "w")) == NULL) {
                         MPI_STATUS_IGNORE);
   pfree(xyz,__func__,__FILE__,__LINE__);
   MPI_File_close(&mpi_file);
-  if ((attr = pmalloc((3 + 2) * ncell * sizeof *attr,__func__,__FILE__,__LINE__)) == NULL) {
-    fprintf(ferr, "%s:%d: malloc failed\n", "./output_force.h", 63);
+  if ((attr = pmalloc((nattr + 3 * nvect) * ncell * sizeof *attr,__func__,__FILE__,__LINE__)) == NULL) {
+    fprintf(ferr, "%s:%d: malloc failed\n", "./output_force.h", 61);
     return 1;
   }
   j = 0;
-  k = 0;
 
 #line 126 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
 {
@@ -68371,7 +68363,7 @@ if ((file = fopen(xyz_path, "w")) == NULL) {
  continue;
       switch (stage) {
       case 0: { 
-#line 68 "./output_force.h"
+#line 65 "./output_force.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68430,15 +68422,14 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 68 "./output_force.h"
+#line 65 "./output_force.h"
 if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
     double coef = (val(cs,0,0,0) - 1) * Delta * Delta * Delta / dt;
+    attr[j++] = Delta;
+    attr[j++] = val(cs,0,0,0);
     attr[j++] = val(u.x,0,0,0) * coef;
     attr[j++] = val(u.y,0,0,0) * coef;
     attr[j++] = val(u.z,0,0,0) * coef;
-    attr[3 * ncell + k] = Delta;
-    attr[4 * ncell + k] = val(cs,0,0,0);
-    k++;
   }}
 
  
@@ -68472,21 +68463,19 @@ if (point.level < grid->depth) {
 #line 137
 }
 }  
-#line 77 "./output_force.h"
-if (!(j == 3 * ncell)) qassert ("./output_force.h", 77, "j == 3 * ncell");
-  if (!(k == ncell)) qassert ("./output_force.h", 78, "k == ncell");
+#line 73 "./output_force.h"
+if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_force.h", 73, "j == (nattr + 3 * nvect) * ncell");
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
-  MPI_File_write_at_all(mpi_file, (3 + 2) * offset * sizeof *attr, attr,
-                        (3 + 2) * ncell * sizeof *attr, MPI_BYTE,
-                        MPI_STATUS_IGNORE);
+  MPI_File_write_at_all(mpi_file, (nattr + 3 * nvect) * offset * sizeof *attr,
+                        attr, (nattr + 3 * nvect) * ncell * sizeof *attr,
+                        MPI_BYTE, MPI_STATUS_IGNORE);
   pfree(attr,__func__,__FILE__,__LINE__);
   MPI_File_close(&mpi_file);
-
   if (pid() == npe() - 1) {
     ncell_total = offset + ncell;
     if ((file = fopen(xdmf_path, "w")) == NULL) {
-      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 90,
+      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 84,
               xdmf_path);
       return 1;
     }
@@ -68506,45 +68495,61 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 77, "j == 3 * ncell");
             "            Format=\"Binary\">\n"
             "          %s\n"
             "        </DataItem>\n"
-            "      </Geometry>\n"
-            "      <Attribute\n"
-            "          Name=\"force\"\n"
-            "          AttributeType=\"Vector\"\n"
-            "          Center=\"Cell\">\n"
-            "        <DataItem\n"
-            "            Dimensions=\"%ld 3\"\n"
-            "            Format=\"Binary\">\n"
-            "            %s\n"
-            "        </DataItem>\n"
-            "      </Attribute>\n"
-            "      <Attribute\n"
-            "          Name=\"Delta\"\n"
-            "          Center=\"Cell\">\n"
-            "        <DataItem\n"
-            "            Format=\"Binary\"\n"
-            "            Dimensions=\"%ld\"\n"
-            "            Seek=\"%ld\">\n"
-            "            %s\n"
-            "        </DataItem>\n"
-            "      </Attribute>\n"
-            "      <Attribute\n"
-            "          Name=\"cs\"\n"
-            "          Center=\"Cell\">\n"
-            "        <DataItem\n"
-            "            Format=\"Binary\"\n"
-            "            Dimensions=\"%ld\"\n"
-            "            Seek=\"%ld\">\n"
-            "            %s\n"
-            "        </DataItem>\n"
-            "      </Attribute>\n"
-            "    </Grid>\n"
-            "  </Domain>\n"
-            "</Xdmf>\n",
-            t, ncell_total, 8 * ncell_total, xyz_base, ncell_total, attr_base,
-            ncell_total, 3 * ncell_total * sizeof *attr, attr_base, ncell_total,
-            (3 + 1) * ncell_total * sizeof *attr, attr_base);
+            "      </Geometry>\n",
+            t, ncell_total, 8 * ncell_total, xyz_base);
+    j = 0;
+    for (k = 0; k < nattr; k++)
+      fprintf(file,
+              "      <Attribute\n"
+              "          Name=\"%s\"\n"
+              "          Center=\"Cell\">\n"
+              "        <DataItem\n"
+              "            ItemType=\"HyperSlab\"\n"
+              "            Dimensions=\"%ld\"\n"
+              "            Type=\"HyperSlab\">\n"
+              "          <DataItem Dimensions=\"3 1\">\n"
+              "            %ld %ld %ld\n"
+              "          </DataItem>\n"
+              "          <DataItem\n"
+              "              Dimensions=\"%ld\"\n"
+              "              Format=\"Binary\">\n"
+              "            %s\n"
+              "          </DataItem>\n"
+              "         </DataItem>\n"
+              "      </Attribute>\n",
+              anames[k], ncell_total, j++, (long)nattr + 3 * nvect, ncell_total,
+              (nattr + 3 * nvect) * ncell_total, attr_base);
+    for (k = 0; k < nvect; k++) {
+      fprintf(file,
+              "      <Attribute\n"
+              "          Name=\"%s\"\n"
+              "          AttributeType=\"Vector\"\n"
+              "          Center=\"Cell\">\n"
+              "        <DataItem\n"
+              "            ItemType=\"HyperSlab\"\n"
+              "            Dimensions=\"%ld 3\"\n"
+              "            Type=\"HyperSlab\">\n"
+              "          <DataItem Dimensions=\"3 2\">\n"
+              "            0 %ld\n"
+              "            1 1\n"
+              "            %ld 3\n"
+              "          </DataItem>\n"
+              "          <DataItem\n"
+              "              Dimensions=\"%ld %ld\"\n"
+              "              Format=\"Binary\">\n"
+              "            %s\n"
+              "          </DataItem>\n"
+              "         </DataItem>\n"
+              "      </Attribute>\n",
+              vnames[k], ncell_total, j, ncell_total, ncell_total,
+              (long)nattr + 3 * nvect, attr_base);
+      j += 3;
+    }
+    fprintf(file, "    </Grid>\n"
+                  "  </Domain>\n"
+                  "</Xdmf>\n");
     if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 148,
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 158,
               xdmf_path);
       return 1;
     }

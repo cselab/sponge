@@ -1,4 +1,5 @@
 static int output_force(double t, scalar cs, const char *path) {
+  enum { nattr = 2, nvect = 1 };
   float *xyz, *attr;
   long j, k, ncell, ncell_total, nsize, offset;
   char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
@@ -9,6 +10,8 @@ static int output_force(double t, scalar cs, const char *path) {
       {0, 0, 0}, {0, 0, 1}, {0, 1, 1}, {0, 1, 0},
       {1, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0},
   };
+  const char *anames[nattr] = {"Delta", "cs"};
+  const char *vnames[nvect] = {"force"};
 
   snprintf(xyz_path, sizeof xyz_path, "%s.xyz.raw", path);
   snprintf(attr_path, sizeof attr_path, "%s.attr.raw", path);
@@ -54,31 +57,27 @@ static int output_force(double t, scalar cs, const char *path) {
                         MPI_STATUS_IGNORE);
   free(xyz);
   MPI_File_close(&mpi_file);
-  if ((attr = malloc((3 + 2) * ncell * sizeof *attr)) == NULL) {
+  if ((attr = malloc((nattr + 3 * nvect) * ncell * sizeof *attr)) == NULL) {
     fprintf(stderr, "%s:%d: malloc failed\n", __FILE__, __LINE__);
     return 1;
   }
   j = 0;
-  k = 0;
   foreach_cell() if (is_local(cell) && is_leaf(cell) && cs[] < 1.0) {
     double coef = (cs[] - 1) * Delta * Delta * Delta / dt;
+    attr[j++] = Delta;
+    attr[j++] = cs[];
     attr[j++] = u.x[] * coef;
     attr[j++] = u.y[] * coef;
     attr[j++] = u.z[] * coef;
-    attr[3 * ncell + k] = Delta;
-    attr[4 * ncell + k] = cs[];
-    k++;
   }
-  assert(j == 3 * ncell);
-  assert(k == ncell);
+  assert(j == (nattr + 3 * nvect) * ncell);
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
-  MPI_File_write_at_all(mpi_file, (3 + 2) * offset * sizeof *attr, attr,
-                        (3 + 2) * ncell * sizeof *attr, MPI_BYTE,
-                        MPI_STATUS_IGNORE);
+  MPI_File_write_at_all(mpi_file, (nattr + 3 * nvect) * offset * sizeof *attr,
+                        attr, (nattr + 3 * nvect) * ncell * sizeof *attr,
+                        MPI_BYTE, MPI_STATUS_IGNORE);
   free(attr);
   MPI_File_close(&mpi_file);
-
   if (pid() == npe() - 1) {
     ncell_total = offset + ncell;
     if ((file = fopen(xdmf_path, "w")) == NULL) {
@@ -102,43 +101,59 @@ static int output_force(double t, scalar cs, const char *path) {
             "            Format=\"Binary\">\n"
             "          %s\n"
             "        </DataItem>\n"
-            "      </Geometry>\n"
-            "      <Attribute\n"
-            "          Name=\"force\"\n"
-            "          AttributeType=\"Vector\"\n"
-            "          Center=\"Cell\">\n"
-            "        <DataItem\n"
-            "            Dimensions=\"%ld 3\"\n"
-            "            Format=\"Binary\">\n"
-            "            %s\n"
-            "        </DataItem>\n"
-            "      </Attribute>\n"
-            "      <Attribute\n"
-            "          Name=\"Delta\"\n"
-            "          Center=\"Cell\">\n"
-            "        <DataItem\n"
-            "            Format=\"Binary\"\n"
-            "            Dimensions=\"%ld\"\n"
-            "            Seek=\"%ld\">\n"
-            "            %s\n"
-            "        </DataItem>\n"
-            "      </Attribute>\n"
-            "      <Attribute\n"
-            "          Name=\"cs\"\n"
-            "          Center=\"Cell\">\n"
-            "        <DataItem\n"
-            "            Format=\"Binary\"\n"
-            "            Dimensions=\"%ld\"\n"
-            "            Seek=\"%ld\">\n"
-            "            %s\n"
-            "        </DataItem>\n"
-            "      </Attribute>\n"
-            "    </Grid>\n"
-            "  </Domain>\n"
-            "</Xdmf>\n",
-            t, ncell_total, 8 * ncell_total, xyz_base, ncell_total, attr_base,
-            ncell_total, 3 * ncell_total * sizeof *attr, attr_base, ncell_total,
-            (3 + 1) * ncell_total * sizeof *attr, attr_base);
+            "      </Geometry>\n",
+            t, ncell_total, 8 * ncell_total, xyz_base);
+    j = 0;
+    for (k = 0; k < nattr; k++)
+      fprintf(file,
+              "      <Attribute\n"
+              "          Name=\"%s\"\n"
+              "          Center=\"Cell\">\n"
+              "        <DataItem\n"
+              "            ItemType=\"HyperSlab\"\n"
+              "            Dimensions=\"%ld\"\n"
+              "            Type=\"HyperSlab\">\n"
+              "          <DataItem Dimensions=\"3 1\">\n"
+              "            %ld %ld %ld\n"
+              "          </DataItem>\n"
+              "          <DataItem\n"
+              "              Dimensions=\"%ld\"\n"
+              "              Format=\"Binary\">\n"
+              "            %s\n"
+              "          </DataItem>\n"
+              "         </DataItem>\n"
+              "      </Attribute>\n",
+              anames[k], ncell_total, j++, (long)nattr + 3 * nvect, ncell_total,
+              (nattr + 3 * nvect) * ncell_total, attr_base);
+    for (k = 0; k < nvect; k++) {
+      fprintf(file,
+              "      <Attribute\n"
+              "          Name=\"%s\"\n"
+              "          AttributeType=\"Vector\"\n"
+              "          Center=\"Cell\">\n"
+              "        <DataItem\n"
+              "            ItemType=\"HyperSlab\"\n"
+              "            Dimensions=\"%ld 3\"\n"
+              "            Type=\"HyperSlab\">\n"
+              "          <DataItem Dimensions=\"3 2\">\n"
+              "            0 %ld\n"
+              "            1 1\n"
+              "            %ld 3\n"
+              "          </DataItem>\n"
+              "          <DataItem\n"
+              "              Dimensions=\"%ld %ld\"\n"
+              "              Format=\"Binary\">\n"
+              "            %s\n"
+              "          </DataItem>\n"
+              "         </DataItem>\n"
+              "      </Attribute>\n",
+              vnames[k], ncell_total, j, ncell_total, ncell_total,
+              (long)nattr + 3 * nvect, attr_base);
+      j += 3;
+    }
+    fprintf(file, "    </Grid>\n"
+                  "  </Domain>\n"
+                  "</Xdmf>\n");
     if (fclose(file) != 0) {
       fprintf(stderr, "%s:%d: error: fail to close '%s'\n", __FILE__, __LINE__,
               xdmf_path);
