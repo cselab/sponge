@@ -265,7 +265,7 @@ positional:
 
   if ((config.stl_ver = malloc(9 * config.stl_nt * sizeof *config.stl_ver)) ==
       NULL) {
-    fprintf(stderr, "stl2dump: error: malloc failed\n");
+    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
     exit(1);
   }
   for (i = 0; i < config.stl_nt; i++) {
@@ -284,7 +284,7 @@ positional:
   config.hash = malloc((config.maxlevel + 1) * sizeof *config.hash);
   work = malloc((config.maxlevel + 1) * sizeof *work);
   if (config.hash == NULL || work == NULL) {
-    fprintf(stderr, "stl2dump: error: malloc failed\n");
+    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
     exit(1);
   }
   nmax = (1ul << hash_size) * sizeof *(*config.hash)->nodes;
@@ -292,11 +292,11 @@ positional:
   for (i = 0; i < config.maxlevel + 1; i++) {
     nbytes = nfull < nmax ? nfull : nmax;
     if ((work[i] = malloc(nbytes)) == NULL) {
-      fprintf(stderr, "stl2dump: error: malloc failed\n");
+      fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
       exit(1);
     }
     if ((config.hash[i] = malloc(sizeof *config.hash[i])) == NULL) {
-      fprintf(stderr, "stl2dump: error: malloc failed\n");
+      fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
       exit(1);
     }
     hash_ini(nbytes, work[i], config.hash[i]);
@@ -319,12 +319,12 @@ positional:
   config.ngrid = ceil(config.L / config.dgrid);
   config.size_grid = config.ngrid * config.ngrid;
   if ((config.grid = malloc(config.size_grid * sizeof *config.grid)) == NULL) {
-    fprintf(stderr, "stl2dump: error: malloc failed\n");
+    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
     exit(1);
   }
   if ((config.max_grid = malloc(config.size_grid * sizeof *config.max_grid)) ==
       NULL) {
-    fprintf(stderr, "stl2dump: error: malloc failed\n");
+    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
     exit(1);
   }
   for (i = 0; i < config.size_grid; i++) {
@@ -573,7 +573,7 @@ static uint64_t traverse(uint64_t x, uint64_t y, uint64_t z, int level,
   uint64_t cell_size, u, v, w;
   long pos, curr, code_ch;
   if ((values = malloc(config->header.len * sizeof *values)) == NULL) {
-    fprintf(stderr, "stl2dump: error: malloc failed\n");
+    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
     exit(1);
   }
   delta = config->L / (1ul << level);
