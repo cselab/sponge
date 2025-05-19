@@ -107,7 +107,6 @@ static int output_force(double t, const char *path) {
             "          Center=\"Cell\">\n"
             "        <DataItem\n"
             "            Dimensions=\"%ld 3\"\n"
-            "            Type=\"HyperSlab\">\n"
             "            %s\n"
             "        </DataItem>\n"
             "      </Attribute>\n"

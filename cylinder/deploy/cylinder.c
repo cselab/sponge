@@ -68471,16 +68471,15 @@ if (point.level < grid->depth) {
 if (!(j == 3 * ncell)) qassert ("./output_force.h", 72, "j == 3 * ncell");
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
-  MPI_File_write_at_all(mpi_file, 3 * offset * sizeof *attr,
-                        attr, 3 * ncell * sizeof *attr,
-                        MPI_BYTE, MPI_STATUS_IGNORE);
+  MPI_File_write_at_all(mpi_file, 3 * offset * sizeof *attr, attr,
+                        3 * ncell * sizeof *attr, MPI_BYTE, MPI_STATUS_IGNORE);
   pfree(attr,__func__,__FILE__,__LINE__);
   MPI_File_close(&mpi_file);
 
   if (pid() == npe() - 1) {
     ncell_total = offset + ncell;
     if ((file = fopen(xdmf_path, "w")) == NULL) {
-      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 84,
+      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 83,
               xdmf_path);
       return 1;
     }
@@ -68507,17 +68506,15 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 72, "j == 3 * ncell");
             "          Center=\"Cell\">\n"
             "        <DataItem\n"
             "            Dimensions=\"%ld 3\"\n"
-            "            Type=\"HyperSlab\">\n"
             "            %s\n"
             "        </DataItem>\n"
             "      </Attribute>\n"
             "    </Grid>\n"
             "  </Domain>\n"
             "</Xdmf>\n",
-            t, ncell_total, 8 * ncell_total, xyz_base,
-            ncell_total, attr_base);
+            t, ncell_total, 8 * ncell_total, xyz_base, ncell_total, attr_base);
     if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 121,
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 118,
               xdmf_path);
       return 1;
     }
@@ -68526,8 +68523,8 @@ if (!(j == 3 * ncell)) qassert ("./output_force.h", 72, "j == 3 * ncell");
 }
 #line 13 "cylinder.c"
 coord Force = {0};
-scalar  cs={11};
-vector  fs={{12},{13},{14}};
+static scalar  cs={11};
+static vector  fs={{12},{13},{14}};
 static double zlim;
 static int velocity_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int velocity(const int i,const double t,Event *_ev){tracing("velocity","cylinder.c",17); {
    Force.x = 0; Force.y = 0; Force.z = 0;

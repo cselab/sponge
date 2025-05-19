@@ -11,8 +11,8 @@
 #include "output_xdmf.h"
 #include "output_force.h"
 coord Force = {0};
-scalar cs[];
-face vector fs[];
+static scalar cs[];
+static face vector fs[];
 static double zlim;
 event velocity(i++) {
   foreach_dimension() Force.x = 0;
