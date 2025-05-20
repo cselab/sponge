@@ -68144,7 +68144,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 78, "j == (
 #line 1 "output_force.h"
 #line 1 "./output_force.h"
 static int output_force(double t, scalar cs, const char *path) {
-  enum { nattr = 2, nvect = 1 };
+  enum { nattr = 2, nvect = 2 };
   float *xyz, *attr;
   long j, k, ncell, ncell_total, nsize, offset;
   char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
@@ -68156,7 +68156,7 @@ static int output_force(double t, scalar cs, const char *path) {
       {1, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0},
   };
   const char *anames[nattr] = {"Delta", "cs"};
-  const char *vnames[nvect] = {"force"};
+  const char *vnames[nvect] = {"u", "force"};
 
   snprintf(xyz_path, sizeof xyz_path, "%s.xyz.raw", path);
   snprintf(attr_path, sizeof attr_path, "%s.attr.raw", path);
@@ -68427,6 +68427,9 @@ if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
     double coef = (val(cs,0,0,0) - 1) * Delta * Delta * Delta / dt;
     attr[j++] = Delta;
     attr[j++] = val(cs,0,0,0);
+    attr[j++] = val(u.x,0,0,0);
+    attr[j++] = val(u.y,0,0,0);
+    attr[j++] = val(u.z,0,0,0);
     attr[j++] = val(u.x,0,0,0) * coef;
     attr[j++] = val(u.y,0,0,0) * coef;
     attr[j++] = val(u.z,0,0,0) * coef;
@@ -68463,8 +68466,8 @@ if (point.level < grid->depth) {
 #line 137
 }
 }  
-#line 73 "./output_force.h"
-if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_force.h", 73, "j == (nattr + 3 * nvect) * ncell");
+#line 76 "./output_force.h"
+if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_force.h", 76, "j == (nattr + 3 * nvect) * ncell");
   MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
                 MPI_INFO_NULL, &mpi_file);
   MPI_File_write_at_all(mpi_file, (nattr + 3 * nvect) * offset * sizeof *attr,
@@ -68475,7 +68478,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_force.h", 73, "j == 
   if (pid() == npe() - 1) {
     ncell_total = offset + ncell;
     if ((file = fopen(xdmf_path, "w")) == NULL) {
-      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 84,
+      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 87,
               xdmf_path);
       return 1;
     }
@@ -68549,7 +68552,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_force.h", 73, "j == 
                   "  </Domain>\n"
                   "</Xdmf>\n");
     if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 158,
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 161,
               xdmf_path);
       return 1;
     }
