@@ -6,10 +6,11 @@
 @include <string.h>
 #include "grid/octree.h"
 #include "fractions.h"
-#include "navier-stokes/centered.h"
 #include "lambda2.h"
-#include "output_xdmf.h"
+#include "navier-stokes/centered.h"
+static const double penalty_lambda = 1e3;
 #include "output_force.h"
+#include "output_xdmf.h"
 coord Force = {0};
 static double shape_cylinder(double x, double y, double z) {
   return sq(x) + sq(y) - sq(1.0 / 2);
@@ -43,10 +44,9 @@ event velocity(i++) {
     output_force(t, cs, path);
   }
   foreach_dimension() Force.x = 0;
-  double lambda = 1e3;
-  double alpha = 1.0 / (1.0 + lambda * dt);
+  double alpha = 1.0 / (1.0 + penalty_lambda * dt);
   foreach (reduction(+ : Force)) {
-    if (zlim != 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
+    if (zlim == 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
       if (cs[] < 1.0) {
         double volume = Delta * Delta * Delta;
         double coef = volume * (1 - cs[]) * (1 - alpha);

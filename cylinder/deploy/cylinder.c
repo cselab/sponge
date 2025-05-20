@@ -32183,6 +32183,306 @@ if (val(c,0,0,0) > 1e-6 && val(c,0,0,0) < 1. - 1e-6) {
   {end_tracing("interface_area","/home/lisergey/basilisk/src/fractions.h",560);return area;}
 end_tracing("interface_area","/home/lisergey/basilisk/src/fractions.h",561);}
 #line 9 "cylinder.c"
+#line 1 "lambda2.h"
+#line 1 "/home/lisergey/basilisk/src/lambda2.h"
+static void eigsrt (double d[3],
+      double v[3][3])
+{
+  int k, j, i;
+  double p;
+
+  for (i = 0; i < 3 - 1; i++) {
+    p = d[k = i];
+
+    for (j = i + 1; j < 3; j++)
+      if (d[j] >= p)
+ p = d[k = j];
+    if (k != i) {
+      d[k] = d[i];
+      d[i] = p;
+      for (j = 0; j < 3; j++) {
+ p = v[j][i];
+ v[j][i] = v[j][k];
+ v[j][k] = p;
+      }
+    }
+  }
+}
+#line 37 "/home/lisergey/basilisk/src/lambda2.h"
+void eigenvalues (double a[3][3],
+    double d[3],
+    double v[3][3])
+{
+  int j, iq, ip, i;
+  double tresh, theta, tau, t, sm, s, h, g, c, b[3], z[3];
+
+  for (ip = 0; ip < 3; ip++) {
+    for (iq = 0; iq < 3; iq++)
+      v[ip][iq] = 0.0;
+    v[ip][ip] = 1.0;
+  }
+
+  for (ip = 0; ip < 3; ip++) {
+    b[ip] = d[ip] = a[ip][ip];
+    z[ip] = 0.0;
+  }
+
+  for (i = 1; i <= 50; i++) {
+    sm = 0.0;
+    for (ip = 0; ip < 3 - 1; ip++) {
+      for (iq = ip + 1; iq < 3; iq++)
+ sm += fabs (a[ip][iq]);
+    }
+    if (sm == 0.0) {
+      eigsrt (d, v);
+      return;
+    }
+    if (i < 4)
+      tresh = 0.2*sm/(3*3);
+    else
+      tresh = 0.0;
+    for (ip = 0; ip < 3 - 1; ip++) {
+      for (iq = ip + 1; iq < 3; iq++) {
+ g = 100.0*fabs (a[ip][iq]);
+ if (i > 4 && fabs(d[ip]) + g == fabs(d[ip]) &&
+     fabs(d[iq]) + g == fabs(d[iq]))
+   a[ip][iq] = 0.0;
+ else if (fabs (a[ip][iq]) > tresh) {
+   h = d[iq] - d[ip];
+   if (fabs(h) + g == fabs(h))
+     t = a[ip][iq]/h;
+   else {
+     theta = 0.5*h/a[ip][iq];
+     t = 1.0/(fabs (theta) + sqrt (1.0 + theta*theta));
+     if (theta < 0.0) t = -t;
+   }
+   c = 1.0/sqrt (1 + t*t);
+   s = t*c;
+   tau = s/(1.0 + c);
+   h = t*a[ip][iq];
+   z[ip] -= h;
+   z[iq] += h;
+   d[ip] -= h;
+   d[iq] += h;
+   a[ip][iq] = 0.0;
+   for (j = 0; j <= ip - 1; j++)
+     { g=a[j][ip];h=a[j][iq];a[j][ip]=g-s*(h+g*tau);a[j][iq]=h+s*(g-h*tau);};
+   for (j = ip + 1; j <= iq - 1; j++)
+     { g=a[ip][j];h=a[j][iq];a[ip][j]=g-s*(h+g*tau);a[j][iq]=h+s*(g-h*tau);};
+   for (j = iq + 1; j < 3; j++)
+     { g=a[ip][j];h=a[iq][j];a[ip][j]=g-s*(h+g*tau);a[iq][j]=h+s*(g-h*tau);};
+   for (j = 0; j < 3; j++)
+     { g=v[j][ip];h=v[j][iq];v[j][ip]=g-s*(h+g*tau);v[j][iq]=h+s*(g-h*tau);};
+ }
+      }
+    }
+    for (ip = 0; ip < 3; ip++) {
+      b[ip] += z[ip];
+      d[ip] = b[ip];
+      z[ip] = 0.0;
+    }
+  }
+
+  for (i = 0; i < 3; i++) {
+    for (j = 0; j < 3; j++)
+      fprintf (ferr, "%10.3g ", a[i][j]);
+    fprintf (ferr, "\n");
+  }
+  if (!(false)) qassert ("/home/lisergey/basilisk/src/lambda2.h", 116, "false");
+}
+
+void lambda2 (const vector u, scalar l2)
+{
+  
+  
+#line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
+{
+    static int _first = 1.;
+    ForeachData _loop = {
+      .fname = "/home/lisergey/basilisk/src/lambda2.h", .line = 121, .first = _first
+    };
+    if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
+ _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
+ _attribute[s.i].width = 0;
+      }
+    int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
+    Point point = {0}; NOT_UNUSED (point); 
+#line 121 "/home/lisergey/basilisk/src/lambda2.h"
+{ 
+    
+    scalar s = u.x;   
+    
+    
+      {_stencil_val(s,1,0,0); _stencil_val(s,-1,0,0);   }      {_stencil_val(s,0,1,0); _stencil_val(s,0,-1,0);   }      {_stencil_val(s,0,0,1); _stencil_val(s,0,0,-1);   }
+    s = u.y;   
+    
+      {_stencil_val(s,1,0,0); _stencil_val(s,-1,0,0);   }      {_stencil_val(s,0,1,0); _stencil_val(s,0,-1,0);   }      {_stencil_val(s,0,0,1); _stencil_val(s,0,0,-1);   }
+    s = u.z;   
+    
+      {_stencil_val(s,1,0,0); _stencil_val(s,-1,0,0);   }      {_stencil_val(s,0,1,0); _stencil_val(s,0,-1,0);   }      {_stencil_val(s,0,0,1); _stencil_val(s,0,0,-1);   }   
+            
+            
+       
+       
+     
+      
+       
+       
+    
+    _stencil_val_a(l2,0,0,0);  
+  }
+
+    
+#line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
+check_stencil (&_loop);
+    boundary_stencil (&_loop);
+    _first = 0;
+  } 
+#line 684 "/home/lisergey/basilisk/src/grid/tree.h"
+{
+  { if (((Tree *)grid)->dirty) update_cache_f(); };
+#line 423
+{
+  OMP_PARALLEL () {
+    int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
+    Point point = {0}; NOT_UNUSED (point);
+    point.i = 2;
+
+    point.j = 2;
+
+
+    point.k = 2;
+
+    int _k; unsigned short _flags; NOT_UNUSED(_flags);
+    OMP(omp for schedule(static))
+      for (_k = 0; _k < (
+#line 686
+((Tree *)grid)->leaves
+#line 436
+).n; _k++) {
+ point.i = (
+#line 686
+((Tree *)grid)->leaves
+#line 437
+).p[_k].i;
+
+ point.j = (
+#line 686
+((Tree *)grid)->leaves
+#line 439
+).p[_k].j;
+
+
+ point.k = (
+#line 686
+((Tree *)grid)->leaves
+#line 442
+).p[_k].k;
+
+ point.level = (
+#line 686
+((Tree *)grid)->leaves
+#line 444
+).p[_k].level;
+ _flags = (
+#line 686
+((Tree *)grid)->leaves
+#line 445
+).p[_k].flags; 
+#line 121 "/home/lisergey/basilisk/src/lambda2.h"
+{  
+#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
+double Delta = L0*(1./(1 << point.level));
+  double Delta_x = Delta;
+
+  double Delta_y = Delta;
+
+
+  double Delta_z = Delta;
+
+
+  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
+
+  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
+
+
+
+  NOT_UNUSED(y);
+
+  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
+
+
+
+  NOT_UNUSED(z);
+
+  NOT_UNUSED(Delta);
+  NOT_UNUSED(Delta_x);
+
+  NOT_UNUSED(Delta_y);
+
+
+  NOT_UNUSED(Delta_z);
+
+
+  ;
+  
+#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
+int level = point.level; NOT_UNUSED(level);
+
+
+
+
+
+
+
+  struct { int x, y, z; } child = {
+    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
+  };
+
+  NOT_UNUSED(child);
+  Point parent = point; NOT_UNUSED(parent);
+  parent.level--;
+  parent.i = (point.i + 2)/2;
+
+  parent.j = (point.j + 2)/2;
+
+
+  parent.k = (point.k + 2)/2;
+#line 121 "/home/lisergey/basilisk/src/lambda2.h"
+{
+    double JJ[3][3];
+    scalar s = u.x;
+    int i = 0;
+    
+      JJ[0][i++] = ((val(s,1,0,0) - val(s,-1,0,0))/(2.*Delta));      JJ[0][i++] = ((val(s,0,1,0) - val(s,0,-1,0))/(2.*Delta));      JJ[0][i++] = ((val(s,0,0,1) - val(s,0,0,-1))/(2.*Delta));
+    s = u.y; i = 0;
+    
+      JJ[1][i++] = ((val(s,1,0,0) - val(s,-1,0,0))/(2.*Delta));      JJ[1][i++] = ((val(s,0,1,0) - val(s,0,-1,0))/(2.*Delta));      JJ[1][i++] = ((val(s,0,0,1) - val(s,0,0,-1))/(2.*Delta));
+    s = u.z; i = 0;
+    
+      JJ[2][i++] = ((val(s,1,0,0) - val(s,-1,0,0))/(2.*Delta));      JJ[2][i++] = ((val(s,0,1,0) - val(s,0,-1,0))/(2.*Delta));      JJ[2][i++] = ((val(s,0,0,1) - val(s,0,0,-1))/(2.*Delta));
+    double S2O2[3][3];
+    for (int i = 0; i < 3; i++)
+      for (int j = 0; j < 3; j++) {
+ S2O2[i][j] = 0.;
+ for (int k = 0; k < 3; k++)
+   S2O2[i][j] += JJ[i][k]*JJ[k][j] + JJ[k][i]*JJ[j][k];
+      }
+    double lambda[3], ev[3][3];
+    eigenvalues (S2O2, lambda, ev);
+    val(l2,0,0,0) = lambda[1]/2.;
+  }}
+      
+#line 447 "/home/lisergey/basilisk/src/grid/tree.h"
+}
+  }
+}
+
+#line 688
+}
+#line 144 "/home/lisergey/basilisk/src/lambda2.h"
+}
+#line 10 "cylinder.c"
 #line 1 "navier-stokes/centered.h"
 #line 1 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
 #line 27 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
@@ -67415,214 +67715,75 @@ static int adapt_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int
 
   event ("properties");
 }{end_tracing("adapt","/home/lisergey/basilisk/src/navier-stokes/centered.h",461);return 0;}end_tracing("adapt","/home/lisergey/basilisk/src/navier-stokes/centered.h",461);}
-#line 10 "cylinder.c"
-#line 1 "lambda2.h"
-#line 1 "/home/lisergey/basilisk/src/lambda2.h"
-static void eigsrt (double d[3],
-      double v[3][3])
-{
-  int k, j, i;
-  double p;
+#line 11 "cylinder.c"
+static const double penalty_lambda = 1e3;
+#line 1 "output_force.h"
+#line 1 "./output_force.h"
+static int output_force(double t, scalar cs, const char *path) {
+  enum { nattr = 2, nvect = 2 };
+  float *xyz, *attr;
+  long j, k, ncell, ncell_total, nsize, offset;
+  char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
+      xdmf_path[FILENAME_MAX + 10], *xyz_base, *attr_base;
+  FILE *file;
+  MPI_File mpi_file;
+  const int shift[8][3] = {
+      {0, 0, 0}, {0, 0, 1}, {0, 1, 1}, {0, 1, 0},
+      {1, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0},
+  };
+  const char *anames[nattr] = {"Delta", "cs"};
+  const char *vnames[nvect] = {"u", "force"};
 
-  for (i = 0; i < 3 - 1; i++) {
-    p = d[k = i];
+  snprintf(xyz_path, sizeof xyz_path, "%s.xyz.raw", path);
+  snprintf(attr_path, sizeof attr_path, "%s.attr.raw", path);
+  snprintf(xdmf_path, sizeof xdmf_path, "%s.xdmf2", path);
 
-    for (j = i + 1; j < 3; j++)
-      if (d[j] >= p)
- p = d[k = j];
-    if (k != i) {
-      d[k] = d[i];
-      d[i] = p;
-      for (j = 0; j < 3; j++) {
- p = v[j][i];
- v[j][i] = v[j][k];
- v[j][k] = p;
-      }
-    }
-  }
-}
-#line 37 "/home/lisergey/basilisk/src/lambda2.h"
-void eigenvalues (double a[3][3],
-    double d[3],
-    double v[3][3])
-{
-  int j, iq, ip, i;
-  double tresh, theta, tau, t, sm, s, h, g, c, b[3], z[3];
-
-  for (ip = 0; ip < 3; ip++) {
-    for (iq = 0; iq < 3; iq++)
-      v[ip][iq] = 0.0;
-    v[ip][ip] = 1.0;
-  }
-
-  for (ip = 0; ip < 3; ip++) {
-    b[ip] = d[ip] = a[ip][ip];
-    z[ip] = 0.0;
-  }
-
-  for (i = 1; i <= 50; i++) {
-    sm = 0.0;
-    for (ip = 0; ip < 3 - 1; ip++) {
-      for (iq = ip + 1; iq < 3; iq++)
- sm += fabs (a[ip][iq]);
-    }
-    if (sm == 0.0) {
-      eigsrt (d, v);
-      return;
-    }
-    if (i < 4)
-      tresh = 0.2*sm/(3*3);
-    else
-      tresh = 0.0;
-    for (ip = 0; ip < 3 - 1; ip++) {
-      for (iq = ip + 1; iq < 3; iq++) {
- g = 100.0*fabs (a[ip][iq]);
- if (i > 4 && fabs(d[ip]) + g == fabs(d[ip]) &&
-     fabs(d[iq]) + g == fabs(d[iq]))
-   a[ip][iq] = 0.0;
- else if (fabs (a[ip][iq]) > tresh) {
-   h = d[iq] - d[ip];
-   if (fabs(h) + g == fabs(h))
-     t = a[ip][iq]/h;
-   else {
-     theta = 0.5*h/a[ip][iq];
-     t = 1.0/(fabs (theta) + sqrt (1.0 + theta*theta));
-     if (theta < 0.0) t = -t;
-   }
-   c = 1.0/sqrt (1 + t*t);
-   s = t*c;
-   tau = s/(1.0 + c);
-   h = t*a[ip][iq];
-   z[ip] -= h;
-   z[iq] += h;
-   d[ip] -= h;
-   d[iq] += h;
-   a[ip][iq] = 0.0;
-   for (j = 0; j <= ip - 1; j++)
-     { g=a[j][ip];h=a[j][iq];a[j][ip]=g-s*(h+g*tau);a[j][iq]=h+s*(g-h*tau);};
-   for (j = ip + 1; j <= iq - 1; j++)
-     { g=a[ip][j];h=a[j][iq];a[ip][j]=g-s*(h+g*tau);a[j][iq]=h+s*(g-h*tau);};
-   for (j = iq + 1; j < 3; j++)
-     { g=a[ip][j];h=a[iq][j];a[ip][j]=g-s*(h+g*tau);a[iq][j]=h+s*(g-h*tau);};
-   for (j = 0; j < 3; j++)
-     { g=v[j][ip];h=v[j][iq];v[j][ip]=g-s*(h+g*tau);v[j][iq]=h+s*(g-h*tau);};
- }
-      }
-    }
-    for (ip = 0; ip < 3; ip++) {
-      b[ip] += z[ip];
-      d[ip] = b[ip];
-      z[ip] = 0.0;
+  xyz_base = xyz_path;
+  attr_base = attr_path;
+  for (j = 0; xyz_path[j] != '\0'; j++) {
+    if (xyz_path[j] == '/' && xyz_path[j + 1] != '\0') {
+      xyz_base = &xyz_path[j + 1];
+      attr_base = &attr_path[j + 1];
     }
   }
 
-  for (i = 0; i < 3; i++) {
-    for (j = 0; j < 3; j++)
-      fprintf (ferr, "%10.3g ", a[i][j]);
-    fprintf (ferr, "\n");
-  }
-  if (!(false)) qassert ("/home/lisergey/basilisk/src/lambda2.h", 116, "false");
-}
+  nsize = 0;
+  ncell = 0;
+  j = 0;
+  xyz = NULL;
 
-void lambda2 (const vector u, scalar l2)
+#line 126 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
 {
-  
-  
-#line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
+  {
+
+
+
+
+
+    Point root = {2,2,2,0};
+#line 67
 {
-    static int _first = 1.;
-    ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/lambda2.h", .line = 121, .first = _first
-    };
-    if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
- _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
- _attribute[s.i].width = 0;
-      }
-    int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
-    Point point = {0}; NOT_UNUSED (point); 
-#line 121 "/home/lisergey/basilisk/src/lambda2.h"
-{ 
-    
-    scalar s = u.x;   
-    
-    
-      {_stencil_val(s,1,0,0); _stencil_val(s,-1,0,0);   }      {_stencil_val(s,0,1,0); _stencil_val(s,0,-1,0);   }      {_stencil_val(s,0,0,1); _stencil_val(s,0,0,-1);   }
-    s = u.y;   
-    
-      {_stencil_val(s,1,0,0); _stencil_val(s,-1,0,0);   }      {_stencil_val(s,0,1,0); _stencil_val(s,0,-1,0);   }      {_stencil_val(s,0,0,1); _stencil_val(s,0,0,-1);   }
-    s = u.z;   
-    
-      {_stencil_val(s,1,0,0); _stencil_val(s,-1,0,0);   }      {_stencil_val(s,0,1,0); _stencil_val(s,0,-1,0);   }      {_stencil_val(s,0,0,1); _stencil_val(s,0,0,-1);   }   
-            
-            
-       
-       
-     
-      
-       
-       
-    
-    _stencil_val_a(l2,0,0,0);  
-  }
-
-    
-#line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
-check_stencil (&_loop);
-    boundary_stencil (&_loop);
-    _first = 0;
-  } 
-#line 684 "/home/lisergey/basilisk/src/grid/tree.h"
-{
-  { if (((Tree *)grid)->dirty) update_cache_f(); };
-#line 423
-{
-  OMP_PARALLEL () {
-    int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
-    Point point = {0}; NOT_UNUSED (point);
-    point.i = 2;
-
-    point.j = 2;
+  {
+    int ig = 0, jg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg);
+    Point point = {0};
 
 
-    point.k = 2;
-
-    int _k; unsigned short _flags; NOT_UNUSED(_flags);
-    OMP(omp for schedule(static))
-      for (_k = 0; _k < (
-#line 686
-((Tree *)grid)->leaves
-#line 436
-).n; _k++) {
- point.i = (
-#line 686
-((Tree *)grid)->leaves
-#line 437
-).p[_k].i;
-
- point.j = (
-#line 686
-((Tree *)grid)->leaves
-#line 439
-).p[_k].j;
 
 
- point.k = (
-#line 686
-((Tree *)grid)->leaves
-#line 442
-).p[_k].k;
 
- point.level = (
-#line 686
-((Tree *)grid)->leaves
-#line 444
-).p[_k].level;
- _flags = (
-#line 686
-((Tree *)grid)->leaves
-#line 445
-).p[_k].flags; 
-#line 121 "/home/lisergey/basilisk/src/lambda2.h"
+    int kg = 0; NOT_UNUSED(kg);
+    struct { int l, i, j, k, stage; } stack[20];
+
+    int _s = -1;
+    { _s++; stack[_s].l = 0; stack[_s].i = root.i; stack[_s].j = root.j; stack[_s].k = root.k; stack[_s].stage = 0; };
+    while (_s >= 0) {
+      int stage;
+      { point.level = stack[_s].l; point.i = stack[_s].i; point.j = stack[_s].j; point.k = stack[_s].k; stage = stack[_s].stage; _s--; };
+      if (!allocated (0,0,0))
+ continue;
+      switch (stage) {
+      case 0: { 
+#line 33 "./output_force.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67681,41 +67842,302 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 121 "/home/lisergey/basilisk/src/lambda2.h"
-{
-    double JJ[3][3];
-    scalar s = u.x;
-    int i = 0;
-    
-      JJ[0][i++] = ((val(s,1,0,0) - val(s,-1,0,0))/(2.*Delta));      JJ[0][i++] = ((val(s,0,1,0) - val(s,0,-1,0))/(2.*Delta));      JJ[0][i++] = ((val(s,0,0,1) - val(s,0,0,-1))/(2.*Delta));
-    s = u.y; i = 0;
-    
-      JJ[1][i++] = ((val(s,1,0,0) - val(s,-1,0,0))/(2.*Delta));      JJ[1][i++] = ((val(s,0,1,0) - val(s,0,-1,0))/(2.*Delta));      JJ[1][i++] = ((val(s,0,0,1) - val(s,0,0,-1))/(2.*Delta));
-    s = u.z; i = 0;
-    
-      JJ[2][i++] = ((val(s,1,0,0) - val(s,-1,0,0))/(2.*Delta));      JJ[2][i++] = ((val(s,0,1,0) - val(s,0,-1,0))/(2.*Delta));      JJ[2][i++] = ((val(s,0,0,1) - val(s,0,0,-1))/(2.*Delta));
-    double S2O2[3][3];
-    for (int i = 0; i < 3; i++)
-      for (int j = 0; j < 3; j++) {
- S2O2[i][j] = 0.;
- for (int k = 0; k < 3; k++)
-   S2O2[i][j] += JJ[i][k]*JJ[k][j] + JJ[k][i]*JJ[j][k];
+#line 33 "./output_force.h"
+if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
+    long i;
+    ncell++;
+    if (ncell >= nsize) {
+      nsize = 2 * nsize + 1;
+      if ((xyz = prealloc(xyz, 8 * 3 * nsize * sizeof *xyz,__func__,__FILE__,__LINE__)) == NULL) {
+        fprintf(ferr, "%s:%d: realloc failed\n", "./output_force.h", 39);
+        return 1;
       }
-    double lambda[3], ev[3][3];
-    eigenvalues (S2O2, lambda, ev);
-    val(l2,0,0,0) = lambda[1]/2.;
+    }
+    for (i = 0; i < 8; i++) {
+      xyz[j++] = x + Delta * (shift[i][0] - 0.5);
+      xyz[j++] = y + Delta * (shift[i][1] - 0.5);
+      xyz[j++] = z + Delta * (shift[i][2] - 0.5);
+    }
   }}
-      
-#line 447 "/home/lisergey/basilisk/src/grid/tree.h"
-}
+
+ 
+#line 91 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
+if (point.level < grid->depth) {
+   { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 1; };
+   { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; };
+ }
+ break;
+      }
+#line 106 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
+      case 1: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 2; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+      case 2: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 3; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
+      case 3: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 4; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+      case 4: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 5; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
+      case 5: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 6; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+      case 6: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 7; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
+      case 7: { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+
+      }
+    }
   }
 }
+  
+#line 137
+}
+}  
+#line 50 "./output_force.h"
+MPI_Exscan(&ncell, &offset, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
+  if (pid() == 0)
+    offset = 0;
+  MPI_File_open(MPI_COMM_WORLD, xyz_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
+                MPI_INFO_NULL, &mpi_file);
+  MPI_File_write_at_all(mpi_file, 3 * 8 * offset * sizeof *xyz, xyz,
+                        3 * 8 * ncell * sizeof *xyz, MPI_BYTE,
+                        MPI_STATUS_IGNORE);
+  pfree(xyz,__func__,__FILE__,__LINE__);
+  MPI_File_close(&mpi_file);
+  if ((attr = pmalloc((nattr + 3 * nvect) * ncell * sizeof *attr,__func__,__FILE__,__LINE__)) == NULL) {
+    fprintf(ferr, "%s:%d: malloc failed\n", "./output_force.h", 61);
+    return 1;
+  }
+  j = 0;
+  double alpha = 1.0 / (1.0 + penalty_lambda * dt);
 
-#line 688
+#line 126 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
+{
+  {
+
+
+
+
+
+    Point root = {2,2,2,0};
+#line 67
+{
+  {
+    int ig = 0, jg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg);
+    Point point = {0};
+
+
+
+
+
+    int kg = 0; NOT_UNUSED(kg);
+    struct { int l, i, j, k, stage; } stack[20];
+
+    int _s = -1;
+    { _s++; stack[_s].l = 0; stack[_s].i = root.i; stack[_s].j = root.j; stack[_s].k = root.k; stack[_s].stage = 0; };
+    while (_s >= 0) {
+      int stage;
+      { point.level = stack[_s].l; point.i = stack[_s].i; point.j = stack[_s].j; point.k = stack[_s].k; stage = stack[_s].stage; _s--; };
+      if (!allocated (0,0,0))
+ continue;
+      switch (stage) {
+      case 0: { 
+#line 66 "./output_force.h"
+{  
+#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
+double Delta = L0*(1./(1 << point.level));
+  double Delta_x = Delta;
+
+  double Delta_y = Delta;
+
+
+  double Delta_z = Delta;
+
+
+  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
+
+  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
+
+
+
+  NOT_UNUSED(y);
+
+  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
+
+
+
+  NOT_UNUSED(z);
+
+  NOT_UNUSED(Delta);
+  NOT_UNUSED(Delta_x);
+
+  NOT_UNUSED(Delta_y);
+
+
+  NOT_UNUSED(Delta_z);
+
+
+  ;
+  
+#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
+int level = point.level; NOT_UNUSED(level);
+
+
+
+
+
+
+
+  struct { int x, y, z; } child = {
+    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
+  };
+
+  NOT_UNUSED(child);
+  Point parent = point; NOT_UNUSED(parent);
+  parent.level--;
+  parent.i = (point.i + 2)/2;
+
+  parent.j = (point.j + 2)/2;
+
+
+  parent.k = (point.k + 2)/2;
+#line 66 "./output_force.h"
+if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
+    double volume = Delta * Delta * Delta;
+    double coef = volume * (1 - val(cs,0,0,0)) * (1 - alpha);
+    attr[j++] = Delta;
+    attr[j++] = val(cs,0,0,0);
+    attr[j++] = val(u.x,0,0,0);
+    attr[j++] = val(u.y,0,0,0);
+    attr[j++] = val(u.z,0,0,0);
+    attr[j++] = val(u.x,0,0,0) * coef;
+    attr[j++] = val(u.y,0,0,0) * coef;
+    attr[j++] = val(u.z,0,0,0) * coef;
+  }}
+
+ 
+#line 91 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
+if (point.level < grid->depth) {
+   { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 1; };
+   { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; };
+ }
+ break;
+      }
+#line 106 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
+      case 1: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 2; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+      case 2: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 3; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
+      case 3: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 4; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+      case 4: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 5; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
+      case 5: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 6; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+      case 6: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 7; };
+ { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
+      case 7: { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
+
+      }
+    }
+  }
 }
-#line 144 "/home/lisergey/basilisk/src/lambda2.h"
+  
+#line 137
 }
-#line 11 "cylinder.c"
+}  
+#line 78 "./output_force.h"
+if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_force.h", 78, "j == (nattr + 3 * nvect) * ncell");
+  MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
+                MPI_INFO_NULL, &mpi_file);
+  MPI_File_write_at_all(mpi_file, (nattr + 3 * nvect) * offset * sizeof *attr,
+                        attr, (nattr + 3 * nvect) * ncell * sizeof *attr,
+                        MPI_BYTE, MPI_STATUS_IGNORE);
+  pfree(attr,__func__,__FILE__,__LINE__);
+  MPI_File_close(&mpi_file);
+  if (pid() == npe() - 1) {
+    ncell_total = offset + ncell;
+    if ((file = fopen(xdmf_path, "w")) == NULL) {
+      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 89,
+              xdmf_path);
+      return 1;
+    }
+    fprintf(file,
+            "<Xdmf\n"
+            "    Version=\"2\">\n"
+            "  <Domain>\n"
+            "    <Grid>\n"
+            "      <Time\n"
+            "          Value=\"%.16e\"/>\n"
+            "      <Topology\n"
+            "          TopologyType=\"Hexahedron\"\n"
+            "          Dimensions=\"%ld\"/>\n"
+            "      <Geometry>\n"
+            "        <DataItem\n"
+            "            Dimensions=\"%ld 3\"\n"
+            "            Format=\"Binary\">\n"
+            "          %s\n"
+            "        </DataItem>\n"
+            "      </Geometry>\n",
+            t, ncell_total, 8 * ncell_total, xyz_base);
+    j = 0;
+    for (k = 0; k < nattr; k++)
+      fprintf(file,
+              "      <Attribute\n"
+              "          Name=\"%s\"\n"
+              "          Center=\"Cell\">\n"
+              "        <DataItem\n"
+              "            ItemType=\"HyperSlab\"\n"
+              "            Dimensions=\"%ld\"\n"
+              "            Type=\"HyperSlab\">\n"
+              "          <DataItem Dimensions=\"3 1\">\n"
+              "            %ld %ld %ld\n"
+              "          </DataItem>\n"
+              "          <DataItem\n"
+              "              Dimensions=\"%ld\"\n"
+              "              Format=\"Binary\">\n"
+              "            %s\n"
+              "          </DataItem>\n"
+              "         </DataItem>\n"
+              "      </Attribute>\n",
+              anames[k], ncell_total, j++, (long)nattr + 3 * nvect, ncell_total,
+              (nattr + 3 * nvect) * ncell_total, attr_base);
+    for (k = 0; k < nvect; k++) {
+      fprintf(file,
+              "      <Attribute\n"
+              "          Name=\"%s\"\n"
+              "          AttributeType=\"Vector\"\n"
+              "          Center=\"Cell\">\n"
+              "        <DataItem\n"
+              "            ItemType=\"HyperSlab\"\n"
+              "            Dimensions=\"%ld 3\"\n"
+              "            Type=\"HyperSlab\">\n"
+              "          <DataItem Dimensions=\"3 2\">\n"
+              "            0 %ld\n"
+              "            1 1\n"
+              "            %ld 3\n"
+              "          </DataItem>\n"
+              "          <DataItem\n"
+              "              Dimensions=\"%ld %ld\"\n"
+              "              Format=\"Binary\">\n"
+              "            %s\n"
+              "          </DataItem>\n"
+              "         </DataItem>\n"
+              "      </Attribute>\n",
+              vnames[k], ncell_total, j, ncell_total, ncell_total,
+              (long)nattr + 3 * nvect, attr_base);
+      j += 3;
+    }
+    fprintf(file, "    </Grid>\n"
+                  "  </Domain>\n"
+                  "</Xdmf>\n");
+    if (fclose(file) != 0) {
+      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 163,
+              xdmf_path);
+      return 1;
+    }
+  }
+  return 0;
+}
+#line 13 "cylinder.c"
 #line 1 "output_xdmf.h"
 #line 1 "./output_xdmf.h"
 static int output_xdmf(double t, scalar *list, vector *vlist,
@@ -68140,429 +68562,7 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 78, "j == (
   }
   return 0;
 }
-#line 12 "cylinder.c"
-#line 1 "output_force.h"
-#line 1 "./output_force.h"
-static int output_force(double t, scalar cs, const char *path) {
-  enum { nattr = 2, nvect = 2 };
-  float *xyz, *attr;
-  long j, k, ncell, ncell_total, nsize, offset;
-  char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
-      xdmf_path[FILENAME_MAX + 10], *xyz_base, *attr_base;
-  FILE *file;
-  MPI_File mpi_file;
-  const int shift[8][3] = {
-      {0, 0, 0}, {0, 0, 1}, {0, 1, 1}, {0, 1, 0},
-      {1, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0},
-  };
-  const char *anames[nattr] = {"Delta", "cs"};
-  const char *vnames[nvect] = {"u", "force"};
-
-  snprintf(xyz_path, sizeof xyz_path, "%s.xyz.raw", path);
-  snprintf(attr_path, sizeof attr_path, "%s.attr.raw", path);
-  snprintf(xdmf_path, sizeof xdmf_path, "%s.xdmf2", path);
-
-  xyz_base = xyz_path;
-  attr_base = attr_path;
-  for (j = 0; xyz_path[j] != '\0'; j++) {
-    if (xyz_path[j] == '/' && xyz_path[j + 1] != '\0') {
-      xyz_base = &xyz_path[j + 1];
-      attr_base = &attr_path[j + 1];
-    }
-  }
-
-  nsize = 0;
-  ncell = 0;
-  j = 0;
-  xyz = NULL;
-
-#line 126 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
-{
-  {
-
-
-
-
-
-    Point root = {2,2,2,0};
-#line 67
-{
-  {
-    int ig = 0, jg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg);
-    Point point = {0};
-
-
-
-
-
-    int kg = 0; NOT_UNUSED(kg);
-    struct { int l, i, j, k, stage; } stack[20];
-
-    int _s = -1;
-    { _s++; stack[_s].l = 0; stack[_s].i = root.i; stack[_s].j = root.j; stack[_s].k = root.k; stack[_s].stage = 0; };
-    while (_s >= 0) {
-      int stage;
-      { point.level = stack[_s].l; point.i = stack[_s].i; point.j = stack[_s].j; point.k = stack[_s].k; stage = stack[_s].stage; _s--; };
-      if (!allocated (0,0,0))
- continue;
-      switch (stage) {
-      case 0: { 
-#line 33 "./output_force.h"
-{  
-#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
-double Delta = L0*(1./(1 << point.level));
-  double Delta_x = Delta;
-
-  double Delta_y = Delta;
-
-
-  double Delta_z = Delta;
-
-
-  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
-
-  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
-
-
-
-  NOT_UNUSED(y);
-
-  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
-
-
-
-  NOT_UNUSED(z);
-
-  NOT_UNUSED(Delta);
-  NOT_UNUSED(Delta_x);
-
-  NOT_UNUSED(Delta_y);
-
-
-  NOT_UNUSED(Delta_z);
-
-
-  ;
-  
-#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
-int level = point.level; NOT_UNUSED(level);
-
-
-
-
-
-
-
-  struct { int x, y, z; } child = {
-    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
-  };
-
-  NOT_UNUSED(child);
-  Point parent = point; NOT_UNUSED(parent);
-  parent.level--;
-  parent.i = (point.i + 2)/2;
-
-  parent.j = (point.j + 2)/2;
-
-
-  parent.k = (point.k + 2)/2;
-#line 33 "./output_force.h"
-if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
-    long i;
-    ncell++;
-    if (ncell >= nsize) {
-      nsize = 2 * nsize + 1;
-      if ((xyz = prealloc(xyz, 8 * 3 * nsize * sizeof *xyz,__func__,__FILE__,__LINE__)) == NULL) {
-        fprintf(ferr, "%s:%d: realloc failed\n", "./output_force.h", 39);
-        return 1;
-      }
-    }
-    for (i = 0; i < 8; i++) {
-      xyz[j++] = x + Delta * (shift[i][0] - 0.5);
-      xyz[j++] = y + Delta * (shift[i][1] - 0.5);
-      xyz[j++] = z + Delta * (shift[i][2] - 0.5);
-    }
-  }}
-
- 
-#line 91 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
-if (point.level < grid->depth) {
-   { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 1; };
-   { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; };
- }
- break;
-      }
-#line 106 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
-      case 1: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 2; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-      case 2: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 3; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
-      case 3: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 4; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-      case 4: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 5; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
-      case 5: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 6; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-      case 6: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 7; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
-      case 7: { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-
-      }
-    }
-  }
-}
-  
-#line 137
-}
-}  
-#line 50 "./output_force.h"
-MPI_Exscan(&ncell, &offset, 1, MPI_LONG, MPI_SUM, MPI_COMM_WORLD);
-  if (pid() == 0)
-    offset = 0;
-  MPI_File_open(MPI_COMM_WORLD, xyz_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
-                MPI_INFO_NULL, &mpi_file);
-  MPI_File_write_at_all(mpi_file, 3 * 8 * offset * sizeof *xyz, xyz,
-                        3 * 8 * ncell * sizeof *xyz, MPI_BYTE,
-                        MPI_STATUS_IGNORE);
-  pfree(xyz,__func__,__FILE__,__LINE__);
-  MPI_File_close(&mpi_file);
-  if ((attr = pmalloc((nattr + 3 * nvect) * ncell * sizeof *attr,__func__,__FILE__,__LINE__)) == NULL) {
-    fprintf(ferr, "%s:%d: malloc failed\n", "./output_force.h", 61);
-    return 1;
-  }
-  j = 0;
-  double lambda = 1e3;
-  double alpha = 1.0 / (1.0 + lambda * dt);
-
-#line 126 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
-{
-  {
-
-
-
-
-
-    Point root = {2,2,2,0};
-#line 67
-{
-  {
-    int ig = 0, jg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg);
-    Point point = {0};
-
-
-
-
-
-    int kg = 0; NOT_UNUSED(kg);
-    struct { int l, i, j, k, stage; } stack[20];
-
-    int _s = -1;
-    { _s++; stack[_s].l = 0; stack[_s].i = root.i; stack[_s].j = root.j; stack[_s].k = root.k; stack[_s].stage = 0; };
-    while (_s >= 0) {
-      int stage;
-      { point.level = stack[_s].l; point.i = stack[_s].i; point.j = stack[_s].j; point.k = stack[_s].k; stage = stack[_s].stage; _s--; };
-      if (!allocated (0,0,0))
- continue;
-      switch (stage) {
-      case 0: { 
-#line 67 "./output_force.h"
-{  
-#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
-double Delta = L0*(1./(1 << point.level));
-  double Delta_x = Delta;
-
-  double Delta_y = Delta;
-
-
-  double Delta_z = Delta;
-
-
-  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
-
-  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
-
-
-
-  NOT_UNUSED(y);
-
-  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
-
-
-
-  NOT_UNUSED(z);
-
-  NOT_UNUSED(Delta);
-  NOT_UNUSED(Delta_x);
-
-  NOT_UNUSED(Delta_y);
-
-
-  NOT_UNUSED(Delta_z);
-
-
-  ;
-  
-#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
-int level = point.level; NOT_UNUSED(level);
-
-
-
-
-
-
-
-  struct { int x, y, z; } child = {
-    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
-  };
-
-  NOT_UNUSED(child);
-  Point parent = point; NOT_UNUSED(parent);
-  parent.level--;
-  parent.i = (point.i + 2)/2;
-
-  parent.j = (point.j + 2)/2;
-
-
-  parent.k = (point.k + 2)/2;
-#line 67 "./output_force.h"
-if (is_local(cell) && is_leaf(cell) && val(cs,0,0,0) < 1.0) {
-    double volume = Delta * Delta * Delta;
-    double coef = volume * (1 - val(cs,0,0,0)) * (1 - alpha);
-    attr[j++] = Delta;
-    attr[j++] = val(cs,0,0,0);
-    attr[j++] = val(u.x,0,0,0);
-    attr[j++] = val(u.y,0,0,0);
-    attr[j++] = val(u.z,0,0,0);
-    attr[j++] = val(u.x,0,0,0) * coef;
-    attr[j++] = val(u.y,0,0,0) * coef;
-    attr[j++] = val(u.z,0,0,0) * coef;
-  }}
-
- 
-#line 91 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
-if (point.level < grid->depth) {
-   { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 1; };
-   { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; };
- }
- break;
-      }
-#line 106 "/home/lisergey/basilisk/src/grid/foreach_cell.h"
-      case 1: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 2; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-      case 2: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 3; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
-      case 3: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 4; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = (2*point.i - 2); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-      case 4: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 5; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
-      case 5: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 6; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = (2*point.j - 2); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-      case 6: { _s++; stack[_s].l = point.level; stack[_s].i = point.i; stack[_s].j = point.j; stack[_s].k = point.k; stack[_s].stage = 7; };
- { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = (2*point.k - 2); stack[_s].stage = 0; }; break;
-      case 7: { _s++; stack[_s].l = point.level + 1; stack[_s].i = ((2*point.i - 2) + 1); stack[_s].j = ((2*point.j - 2) + 1); stack[_s].k = ((2*point.k - 2) + 1); stack[_s].stage = 0; }; break;
-
-      }
-    }
-  }
-}
-  
-#line 137
-}
-}  
-#line 79 "./output_force.h"
-if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_force.h", 79, "j == (nattr + 3 * nvect) * ncell");
-  MPI_File_open(MPI_COMM_WORLD, attr_path, MPI_MODE_CREATE | MPI_MODE_WRONLY,
-                MPI_INFO_NULL, &mpi_file);
-  MPI_File_write_at_all(mpi_file, (nattr + 3 * nvect) * offset * sizeof *attr,
-                        attr, (nattr + 3 * nvect) * ncell * sizeof *attr,
-                        MPI_BYTE, MPI_STATUS_IGNORE);
-  pfree(attr,__func__,__FILE__,__LINE__);
-  MPI_File_close(&mpi_file);
-  if (pid() == npe() - 1) {
-    ncell_total = offset + ncell;
-    if ((file = fopen(xdmf_path, "w")) == NULL) {
-      fprintf(ferr, "%s:%d: fail to open '%s'\n", "./output_force.h", 90,
-              xdmf_path);
-      return 1;
-    }
-    fprintf(file,
-            "<Xdmf\n"
-            "    Version=\"2\">\n"
-            "  <Domain>\n"
-            "    <Grid>\n"
-            "      <Time\n"
-            "          Value=\"%.16e\"/>\n"
-            "      <Topology\n"
-            "          TopologyType=\"Hexahedron\"\n"
-            "          Dimensions=\"%ld\"/>\n"
-            "      <Geometry>\n"
-            "        <DataItem\n"
-            "            Dimensions=\"%ld 3\"\n"
-            "            Format=\"Binary\">\n"
-            "          %s\n"
-            "        </DataItem>\n"
-            "      </Geometry>\n",
-            t, ncell_total, 8 * ncell_total, xyz_base);
-    j = 0;
-    for (k = 0; k < nattr; k++)
-      fprintf(file,
-              "      <Attribute\n"
-              "          Name=\"%s\"\n"
-              "          Center=\"Cell\">\n"
-              "        <DataItem\n"
-              "            ItemType=\"HyperSlab\"\n"
-              "            Dimensions=\"%ld\"\n"
-              "            Type=\"HyperSlab\">\n"
-              "          <DataItem Dimensions=\"3 1\">\n"
-              "            %ld %ld %ld\n"
-              "          </DataItem>\n"
-              "          <DataItem\n"
-              "              Dimensions=\"%ld\"\n"
-              "              Format=\"Binary\">\n"
-              "            %s\n"
-              "          </DataItem>\n"
-              "         </DataItem>\n"
-              "      </Attribute>\n",
-              anames[k], ncell_total, j++, (long)nattr + 3 * nvect, ncell_total,
-              (nattr + 3 * nvect) * ncell_total, attr_base);
-    for (k = 0; k < nvect; k++) {
-      fprintf(file,
-              "      <Attribute\n"
-              "          Name=\"%s\"\n"
-              "          AttributeType=\"Vector\"\n"
-              "          Center=\"Cell\">\n"
-              "        <DataItem\n"
-              "            ItemType=\"HyperSlab\"\n"
-              "            Dimensions=\"%ld 3\"\n"
-              "            Type=\"HyperSlab\">\n"
-              "          <DataItem Dimensions=\"3 2\">\n"
-              "            0 %ld\n"
-              "            1 1\n"
-              "            %ld 3\n"
-              "          </DataItem>\n"
-              "          <DataItem\n"
-              "              Dimensions=\"%ld %ld\"\n"
-              "              Format=\"Binary\">\n"
-              "            %s\n"
-              "          </DataItem>\n"
-              "         </DataItem>\n"
-              "      </Attribute>\n",
-              vnames[k], ncell_total, j, ncell_total, ncell_total,
-              (long)nattr + 3 * nvect, attr_base);
-      j += 3;
-    }
-    fprintf(file, "    </Grid>\n"
-                  "  </Domain>\n"
-                  "</Xdmf>\n");
-    if (fclose(file) != 0) {
-      fprintf(ferr, "%s:%d: error: fail to close '%s'\n", "./output_force.h", 164,
-              xdmf_path);
-      return 1;
-    }
-  }
-  return 0;
-}
-#line 13 "cylinder.c"
+#line 14 "cylinder.c"
 coord Force = {0};
 static double shape_cylinder(double x, double y, double z) {
   return ( x*x) + ( y*y) - ( (1.0 / 2)*(1.0 / 2));
@@ -68589,15 +68589,14 @@ static scalar  phi={18};
 static vector  fs={{19},{20},{21}};
 static scalar  cs={22};
 
-static int velocity_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int velocity(const int i,const double t,Event *_ev){tracing("velocity","cylinder.c",39); {
+static int velocity_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int velocity(const int i,const double t,Event *_ev){tracing("velocity","cylinder.c",40); {
   char path[FILENAME_MAX];
   if (i % period == 0) {
     snprintf(path, sizeof path, "%s.force.%09d", output_prefix, i);
     output_force(t, cs, path);
   }
    Force.x = 0; Force.y = 0; Force.z = 0;
-  double lambda = 1e3;
-  double alpha = 1.0 / (1.0 + lambda * dt);
+  double alpha = 1.0 / (1.0 + penalty_lambda * dt);
   
   
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
@@ -68746,7 +68745,7 @@ int level = point.level; NOT_UNUSED(level);
   parent.k = (point.k + 2)/2;
 #line 48 "cylinder.c"
 {
-    if (zlim != 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
+    if (zlim == 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
       if (val(cs,0,0,0) < 1.0) {
         double volume = Delta * Delta * Delta;
         double coef = volume * (1 - val(cs,0,0,0)) * (1 - alpha);
@@ -74297,8 +74296,8 @@ event_register((Event){0,1,default_display,{default_display_expr0},((int *)0),((
 
 
 event_register((Event){0,1,init,{init_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",203,"init"});  
-#line 39 "cylinder.c"
-event_register((Event){0,1,velocity,{velocity_expr0},((int *)0),((double *)0),"cylinder.c",39,"velocity"});  
+#line 40 "cylinder.c"
+event_register((Event){0,1,velocity,{velocity_expr0},((int *)0),((double *)0),"cylinder.c",40,"velocity"});  
 #line 422
 event_register((Event){0,1,init_0,{init_0_expr0},((int *)0),((double *)0),"cylinder.c",422,"init"});  
 #line 467
