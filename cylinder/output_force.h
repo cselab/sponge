@@ -1,5 +1,5 @@
 static int output_force(double t, scalar cs, const char *path) {
-  enum { nattr = 2, nvect = 1 };
+  enum { nattr = 2, nvect = 2 };
   float *xyz, *attr;
   long j, k, ncell, ncell_total, nsize, offset;
   char xyz_path[FILENAME_MAX + 10], attr_path[FILENAME_MAX + 10],
@@ -11,7 +11,7 @@ static int output_force(double t, scalar cs, const char *path) {
       {1, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 0},
   };
   const char *anames[nattr] = {"Delta", "cs"};
-  const char *vnames[nvect] = {"force"};
+  const char *vnames[nvect] = {"u", "force"};
 
   snprintf(xyz_path, sizeof xyz_path, "%s.xyz.raw", path);
   snprintf(attr_path, sizeof attr_path, "%s.attr.raw", path);
@@ -66,6 +66,9 @@ static int output_force(double t, scalar cs, const char *path) {
     double coef = (cs[] - 1) * Delta * Delta * Delta / dt;
     attr[j++] = Delta;
     attr[j++] = cs[];
+    attr[j++] = u.x[];
+    attr[j++] = u.y[];
+    attr[j++] = u.z[];
     attr[j++] = u.x[] * coef;
     attr[j++] = u.y[] * coef;
     attr[j++] = u.z[] * coef;
