@@ -27,8 +27,8 @@ static const char *boundaries_names[] = {"top", "front"};
 static const char *force_path, *output_prefix, *dump_path;
 static const int outlevel = 5;
 static double reynolds, tend, zlim;
-static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag,
-  InitFileFlag, period;
+static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag, InitFileFlag,
+    period;
 static face vector muv[];
 static scalar l2[];
 static vector omega[];
@@ -43,16 +43,21 @@ event velocity(i++) {
     output_force(t, cs, path);
   }
   foreach_dimension() Force.x = 0;
+  double lambda = 1e3;
+  double alpha = 1.0 / (1.0 + lambda * dt);
   foreach (reduction(+ : Force)) {
     if (zlim != 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
-      double coef = (cs[] - 1) * Delta * Delta * Delta;
-      Force.x += u.x[] * coef;
-      Force.y += u.y[] * coef;
-      Force.z += u.z[] * coef;
+      if (cs[] < 1.0) {
+        double volume = Delta * Delta * Delta;
+        double coef = volume * (1 - cs[]) * (1 - alpha);
+        Force.x += u.x[] * coef;
+        Force.y += u.y[] * coef;
+        Force.z += u.z[] * coef;
+        u.x[] *= alpha;
+        u.y[] *= alpha;
+        u.z[] *= alpha;
+      }
     }
-    u.x[] = cs[] * u.x[];
-    u.y[] = cs[] * u.y[];
-    u.z[] = cs[] * u.z[];
   }
   foreach_dimension() Force.x /= dt;
 }

@@ -62,8 +62,11 @@ static int output_force(double t, scalar cs, const char *path) {
     return 1;
   }
   j = 0;
+  double lambda = 1e3;
+  double alpha = 1.0 / (1.0 + lambda * dt);
   foreach_cell() if (is_local(cell) && is_leaf(cell) && cs[] < 1.0) {
-    double coef = (cs[] - 1) * Delta * Delta * Delta / dt;
+    double volume = Delta * Delta * Delta;
+    double coef = volume * (1 - cs[]) * (1 - alpha);
     attr[j++] = Delta;
     attr[j++] = cs[];
     attr[j++] = u.x[];
