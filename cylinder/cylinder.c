@@ -8,7 +8,7 @@
 #include "fractions.h"
 #include "lambda2.h"
 #include "embed.h"
-#include "navier-stokes/centered.h"
+#include "centered.h"
 #include "output_xdmf.h"
 static double reynolds, tend, zlim;
 trace static double embed_interpolate3(Point point, scalar s, coord p) {
