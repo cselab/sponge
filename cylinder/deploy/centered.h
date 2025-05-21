@@ -443,25 +443,6 @@ timestep. */
 event end_timestep (i++, last);
 
 /**
-## Adaptivity
-
-After mesh adaptation fluid properties need to be updated. When using
-[embedded boundaries](/src/embed.h) the fluid fractions and face
-fluxes need to be checked for inconsistencies. */
-
-#if TREE
-event adapt (i++,last) {
-#if EMBED
-  fractions_cleanup (cs, fs);
-  foreach_face()
-    if (uf.x[] && !fs.x[])
-      uf.x[] = 0.;
-#endif
-  event ("properties");
-}
-#endif
-
-/**
 ## See also
 
 * [Double projection](double-projection.h)
