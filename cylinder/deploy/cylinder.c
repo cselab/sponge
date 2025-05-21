@@ -86256,108 +86256,8 @@ if (!(j == (nattr + 3 * nvect) * ncell)) qassert ("./output_xdmf.h", 78, "j == (
   return 0;
 }
 #line 13 "cylinder.c"
-      static double embed_interpolate3(Point point, scalar s, coord p) {tracing("embed_interpolate3","cylinder.c",13);int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
-#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
-double Delta = L0*(1./(1 << point.level));
-  double Delta_x = Delta;
-
-  double Delta_y = Delta;
-
-
-  double Delta_z = Delta;
-
-
-  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
-
-  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
-
-
-
-  NOT_UNUSED(y);
-
-  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
-
-
-
-  NOT_UNUSED(z);
-
-  NOT_UNUSED(Delta);
-  NOT_UNUSED(Delta_x);
-
-  NOT_UNUSED(Delta_y);
-
-
-  NOT_UNUSED(Delta_z);
-
-
-  ;
-  
-#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
-int level = point.level; NOT_UNUSED(level);
-
-
-
-
-
-
-
-  struct { int x, y, z; } child = {
-    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
-  };
-
-  NOT_UNUSED(child);
-  Point parent = point; NOT_UNUSED(parent);
-  parent.level--;
-  parent.i = (point.i + 2)/2;
-
-  parent.j = (point.j + 2)/2;
-
-
-  parent.k = (point.k + 2)/2;  
-#line 14 "cylinder.c"
-int i = ( (int)((p.x) > 0 ? 1 : -1)), j = ( (int)((p.y) > 0 ? 1 : -1)), k = ( (int)((p.z) > 0 ? 1 : -1));
-  if (val(cs,i, 0, 0) && val(cs,0, j, 0) && val(cs,i, j, 0) && val(cs,0, 0, k) && val(cs,i, 0, k) &&
-      val(cs,0, j, k) && val(cs,i, j, k)) {
-    double val_0, val_k;
-    val_0 =
-        (val(s,0, 0, 0) * (1. - fabs(p.x)) + val(s,i, 0, 0) * fabs(p.x)) *
-            (1. - fabs(p.y)) +
-        (val(s,0, j, 0) * (1. - fabs(p.x)) + val(s,i, j, 0) * fabs(p.x)) * fabs(p.y);
-    val_k =
-        (val(s,0, 0, k) * (1. - fabs(p.x)) + val(s,i, 0, k) * fabs(p.x)) *
-            (1. - fabs(p.y)) +
-        (val(s,0, j, k) * (1. - fabs(p.x)) + val(s,i, j, k) * fabs(p.x)) * fabs(p.y);
-    { double _ret= (val_0 * (1. - fabs(p.z)) + val_k * fabs(p.z));end_tracing("embed_interpolate3","cylinder.c",26);return _ret;}
-  } else {
-    double val = val(s,0,0,0);
-     {
-      int i = ( (int)((p.x) > 0 ? 1 : -1));
-      if (val(cs,i,0,0))
-        val += fabs(p.x) * (val(s,i,0,0) - val(s,0,0,0));
-      else if (val(cs,-i,0,0))
-        val += fabs(p.x) * (val(s,0,0,0) - val(s,-i,0,0));
-    } 
-#line 29
-{
-      int i = ( (int)((p.y) > 0 ? 1 : -1));
-      if (val(cs,0,i,0))
-        val += fabs(p.y) * (val(s,0,i,0) - val(s,0,0,0));
-      else if (val(cs,0,-i,0))
-        val += fabs(p.y) * (val(s,0,0,0) - val(s,0,-i,0));
-    } 
-#line 29
-{
-      int i = ( (int)((p.z) > 0 ? 1 : -1));
-      if (val(cs,0,0,i))
-        val += fabs(p.z) * (val(s,0,0,i) - val(s,0,0,0));
-      else if (val(cs,0,0,-i))
-        val += fabs(p.z) * (val(s,0,0,0) - val(s,0,0,-i));
-    }
-    {end_tracing("embed_interpolate3","cylinder.c",36);return val;}
-  }
-end_tracing("embed_interpolate3","cylinder.c",38);}
-#line 13 "cylinder.c"
-static void _stencil_embed_interpolate3(Point point, scalar s,_stencil_undefined * p) {int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
+static double reynolds, tend, zlim;
+      static double embed_interpolate3(Point point, scalar s, coord p) {tracing("embed_interpolate3","cylinder.c",14);int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
   double Delta_x = Delta;
@@ -86416,9 +86316,110 @@ int level = point.level; NOT_UNUSED(level);
 
   parent.k = (point.k + 2)/2;  
 #line 15 "cylinder.c"
+int i = ( (int)((p.x) > 0 ? 1 : -1)), j = ( (int)((p.y) > 0 ? 1 : -1)), k = ( (int)((p.z) > 0 ? 1 : -1));
+  if (val(cs,i, 0, 0) && val(cs,0, j, 0) && val(cs,i, j, 0) && val(cs,0, 0, k) && val(cs,i, 0, k) &&
+      val(cs,0, j, k) && val(cs,i, j, k)) {
+    double val_0, val_k;
+    val_0 =
+        (val(s,0, 0, 0) * (1. - fabs(p.x)) + val(s,i, 0, 0) * fabs(p.x)) *
+            (1. - fabs(p.y)) +
+        (val(s,0, j, 0) * (1. - fabs(p.x)) + val(s,i, j, 0) * fabs(p.x)) * fabs(p.y);
+    val_k =
+        (val(s,0, 0, k) * (1. - fabs(p.x)) + val(s,i, 0, k) * fabs(p.x)) *
+            (1. - fabs(p.y)) +
+        (val(s,0, j, k) * (1. - fabs(p.x)) + val(s,i, j, k) * fabs(p.x)) * fabs(p.y);
+    { double _ret= (val_0 * (1. - fabs(p.z)) + val_k * fabs(p.z));end_tracing("embed_interpolate3","cylinder.c",27);return _ret;}
+  } else {
+    double val = val(s,0,0,0);
+     {
+      int i = ( (int)((p.x) > 0 ? 1 : -1));
+      if (val(cs,i,0,0))
+        val += fabs(p.x) * (val(s,i,0,0) - val(s,0,0,0));
+      else if (val(cs,-i,0,0))
+        val += fabs(p.x) * (val(s,0,0,0) - val(s,-i,0,0));
+    } 
+#line 30
+{
+      int i = ( (int)((p.y) > 0 ? 1 : -1));
+      if (val(cs,0,i,0))
+        val += fabs(p.y) * (val(s,0,i,0) - val(s,0,0,0));
+      else if (val(cs,0,-i,0))
+        val += fabs(p.y) * (val(s,0,0,0) - val(s,0,-i,0));
+    } 
+#line 30
+{
+      int i = ( (int)((p.z) > 0 ? 1 : -1));
+      if (val(cs,0,0,i))
+        val += fabs(p.z) * (val(s,0,0,i) - val(s,0,0,0));
+      else if (val(cs,0,0,-i))
+        val += fabs(p.z) * (val(s,0,0,0) - val(s,0,0,-i));
+    }
+    {end_tracing("embed_interpolate3","cylinder.c",37);return val;}
+  }
+end_tracing("embed_interpolate3","cylinder.c",39);}
+#line 14
+static void _stencil_embed_interpolate3(Point point, scalar s,_stencil_undefined * p) {int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
+#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
+double Delta = L0*(1./(1 << point.level));
+  double Delta_x = Delta;
+
+  double Delta_y = Delta;
+
+
+  double Delta_z = Delta;
+
+
+  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
+
+  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
+
+
+
+  NOT_UNUSED(y);
+
+  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
+
+
+
+  NOT_UNUSED(z);
+
+  NOT_UNUSED(Delta);
+  NOT_UNUSED(Delta_x);
+
+  NOT_UNUSED(Delta_y);
+
+
+  NOT_UNUSED(Delta_z);
+
+
+  ;
+  
+#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
+int level = point.level; NOT_UNUSED(level);
+
+
+
+
+
+
+
+  struct { int x, y, z; } child = {
+    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
+  };
+
+  NOT_UNUSED(child);
+  Point parent = point; NOT_UNUSED(parent);
+  parent.level--;
+  parent.i = (point.i + 2)/2;
+
+  parent.j = (point.j + 2)/2;
+
+
+  parent.k = (point.k + 2)/2;  
+#line 16 "cylinder.c"
 _stencil_val(cs,o_stencil, 0, 0); _stencil_val(cs,0,o_stencil , 0); _stencil_val(cs,o_stencil,o_stencil , 0); _stencil_val(cs,0, 0,o_stencil ); _stencil_val(cs,o_stencil, 0,o_stencil );
       _stencil_val(cs,0,o_stencil, o_stencil ); _stencil_val(cs,o_stencil,o_stencil, o_stencil );
-#line 15
+#line 16
 { 
 {  
     
@@ -86440,7 +86441,7 @@ _stencil_val(cs,o_stencil,0,0);{
 {_stencil_val(cs,o_stencil,0,0);
         {_stencil_val(s,0,0,0);_stencil_val(s, o_stencil,0,0);     } }}    
 } 
-#line 29
+#line 30
 {          
       
 _stencil_val(cs,0,o_stencil,0);{
@@ -86448,7 +86449,7 @@ _stencil_val(cs,0,o_stencil,0);{
 {_stencil_val(cs,0,o_stencil,0);
         {_stencil_val(s,0,0,0);_stencil_val(s,0, o_stencil,0);     } }}    
 } 
-#line 29
+#line 30
 {          
       
 _stencil_val(cs,0,0,o_stencil);{
@@ -86460,7 +86461,7 @@ _stencil_val(cs,0,0,o_stencil);{
   }}
 }
       static void embed_force3(scalar p, vector u, vector mu, coord *Fp,
-                               coord *Fmu) {tracing("embed_force3","cylinder.c",39);
+                               coord *Fmu) {tracing("embed_force3","cylinder.c",40);
   coord Fps = {0}, Fmus = {0};
   
   
@@ -86468,7 +86469,7 @@ _stencil_val(cs,0,0,o_stencil);{
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 42, .first = _first
+      .fname = "cylinder.c", .line = 43, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -86476,37 +86477,39 @@ _stencil_val(cs,0,0,o_stencil);{
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point); 
-#line 42 "cylinder.c"
+#line 43 "cylinder.c"
+{ 
 {
 _stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0); {    
-      
-       _stencil_embed_geometry(point,NULL ,NULL );    
-           
-       _stencil_embed_interpolate3(point, p,NULL );
-           
-      if (constant(mu.x) != 0.) {      
         
-         { 
+         _stencil_embed_geometry(point,NULL ,NULL );    
+             
+         _stencil_embed_interpolate3(point, p,NULL );
+             
+        if (constant(mu.x) != 0.) {      
+          
+           { 
 _stencil_val(mu.x,0,0,0); _stencil_val(mu.x,1,0,0); 
-            _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,1,0,0);        
+              _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,1,0,0);          
 } 
-#line 51
+#line 53
 { 
 _stencil_val(mu.y,0,0,0); _stencil_val(mu.y,0,1,0); 
-            _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,1,0);        
+              _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,1,0);          
 } 
-#line 51
+#line 53
 { 
 _stencil_val(mu.z,0,0,0); _stencil_val(mu.z,0,0,1); 
-            _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,1);        
+              _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,1);          
 }  
-          
-         _stencil_embed_gradient(point, u,NULL ,NULL );
-                           
+            
+           _stencil_embed_gradient(point, u,NULL ,NULL );
+                             
                
             
-      }
-    }  
+        }
+      }    
+}  
 }
 
     
@@ -86566,7 +86569,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags; 
-#line 42 "cylinder.c"
+#line 43 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -86625,43 +86628,45 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 42 "cylinder.c"
+#line 43 "cylinder.c"
 {
-    if (val(cs,0,0,0) > 0. && val(cs,0,0,0) < 1.) {
-      coord n, b;
-      double area = embed_geometry(point, &b, &n);
-      area *= pow(Delta, 3 - 1);
-      double Fn = area * embed_interpolate3(point, p, b);
-       Fps.x += Fn * n.x; Fps.y += Fn * n.y; Fps.z += Fn * n.z;
-      if (constant(mu.x) != 0.) {
-        double mua = 0., fa = 0.;
-         {
-          mua += val(mu.x,0,0,0) + val(mu.x,1,0,0);
-          fa += val(fs.x,0,0,0) + val(fs.x,1,0,0);
-        } 
-#line 51
+    if (zlim == 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
+      if (val(cs,0,0,0) > 0. && val(cs,0,0,0) < 1.) {
+        coord n, b;
+        double area = embed_geometry(point, &b, &n);
+        area *= pow(Delta, 3 - 1);
+        double Fn = area * embed_interpolate3(point, p, b);
+         Fps.x += Fn * n.x; Fps.y += Fn * n.y; Fps.z += Fn * n.z;
+        if (constant(mu.x) != 0.) {
+          double mua = 0., fa = 0.;
+           {
+            mua += val(mu.x,0,0,0) + val(mu.x,1,0,0);
+            fa += val(fs.x,0,0,0) + val(fs.x,1,0,0);
+          } 
+#line 53
 {
-          mua += val(mu.y,0,0,0) + val(mu.y,0,1,0);
-          fa += val(fs.y,0,0,0) + val(fs.y,0,1,0);
-        } 
-#line 51
+            mua += val(mu.y,0,0,0) + val(mu.y,0,1,0);
+            fa += val(fs.y,0,0,0) + val(fs.y,0,1,0);
+          } 
+#line 53
 {
-          mua += val(mu.z,0,0,0) + val(mu.z,0,0,1);
-          fa += val(fs.z,0,0,0) + val(fs.z,0,0,1);
-        }
-        mua /= fa;
-        coord dudn = embed_gradient(point, u, b, n);
-         Fmus.x -=
+            mua += val(mu.z,0,0,0) + val(mu.z,0,0,1);
+            fa += val(fs.z,0,0,0) + val(fs.z,0,0,1);
+          }
+          mua /= fa;
+          coord dudn = embed_gradient(point, u, b, n);
+           Fmus.x -=
             area * mua *
             (dudn.x * (( (n.x)*(n.x)) + 1.) + dudn.y * n.x * n.y + dudn.z * n.x * n.z); 
-#line 57
+#line 59
 Fmus.y -=
             area * mua *
             (dudn.y * (( (n.y)*(n.y)) + 1.) + dudn.z * n.y * n.z + dudn.x * n.y * n.x); 
-#line 57
+#line 59
 Fmus.z -=
             area * mua *
             (dudn.z * (( (n.z)*(n.z)) + 1.) + dudn.x * n.z * n.x + dudn.y * n.z * n.y);
+        }
       }
     }
   }}
@@ -86673,7 +86678,7 @@ Fmus.z -=
 
 #line 688
 }
-#line 62 "cylinder.c"
+#line 65 "cylinder.c"
 {mpi_all_reduce_array((double *)&Fmus,MPI_DOUBLE,MPI_SUM,sizeof(Fmus)/sizeof(double));mpi_all_reduce_array((double *)&Fps,MPI_DOUBLE,MPI_SUM,sizeof(Fps)/sizeof(double));}
   Fp->x = Fps.x;
   Fp->y = Fps.y;
@@ -86682,7 +86687,7 @@ Fmus.z -=
   Fmu->x = Fmus.x;
   Fmu->y = Fmus.y;
   Fmu->z = Fmus.z;
-end_tracing("embed_force3","cylinder.c",70);}
+end_tracing("embed_force3","cylinder.c",73);}
 static double shape_cylinder(double x, double y, double z) {
   return ( x*x) + ( y*y) - ( (1.0 / 2)*(1.0 / 2));
 }
@@ -86700,7 +86705,7 @@ static void vorticity_vector(const vector u, vector omega) {
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 81, .first = _first
+      .fname = "cylinder.c", .line = 84, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -86708,7 +86713,7 @@ static void vorticity_vector(const vector u, vector omega) {
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point); 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 { 
      
 _stencil_val(cm,0,0,0);    
@@ -86783,7 +86788,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags; 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -86842,7 +86847,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {
     double delta;
     delta = (2. * val(cm,0,0,0) * Delta + 1e-30);
@@ -86867,7 +86872,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 96 "cylinder.c"
+#line 99 "cylinder.c"
 }else if(is_constant(cm) && !is_constant(fm.x)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);
   
   
@@ -86875,7 +86880,7 @@ int level = point.level; NOT_UNUSED(level);
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 81, .first = _first
+      .fname = "cylinder.c", .line = 84, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -86883,7 +86888,7 @@ int level = point.level; NOT_UNUSED(level);
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point); 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {
 
 ;    
@@ -86958,7 +86963,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags; 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87017,7 +87022,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {
     double delta;
     delta = (2. * _const_cm * Delta + 1e-30);
@@ -87042,7 +87047,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 96 "cylinder.c"
+#line 99 "cylinder.c"
 }else if(!is_constant(cm) && is_constant(fm.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
   
@@ -87050,7 +87055,7 @@ int level = point.level; NOT_UNUSED(level);
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 81, .first = _first
+      .fname = "cylinder.c", .line = 84, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -87058,7 +87063,7 @@ int level = point.level; NOT_UNUSED(level);
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point); 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 { 
      
 _stencil_val(cm,0,0,0);
@@ -87133,7 +87138,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags; 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87192,7 +87197,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {
     double delta;
     delta = (2. * val(cm,0,0,0) * Delta + 1e-30);
@@ -87217,7 +87222,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 96 "cylinder.c"
+#line 99 "cylinder.c"
 }else {double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
   
@@ -87225,7 +87230,7 @@ int level = point.level; NOT_UNUSED(level);
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 81, .first = _first
+      .fname = "cylinder.c", .line = 84, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -87233,7 +87238,7 @@ int level = point.level; NOT_UNUSED(level);
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point); 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {
 
 ;
@@ -87308,7 +87313,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags; 
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87367,7 +87372,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 81 "cylinder.c"
+#line 84 "cylinder.c"
 {
     double delta;
     delta = (2. * _const_cm * Delta + 1e-30);
@@ -87392,7 +87397,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 96 "cylinder.c"
+#line 99 "cylinder.c"
 }
 }
 
@@ -87462,7 +87467,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 107 "cylinder.c"
+#line 110 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87521,7 +87526,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 107 "cylinder.c"
+#line 110 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary6_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87580,7 +87585,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 107 "cylinder.c"
+#line 110 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87639,7 +87644,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 107 "cylinder.c"
+#line 110 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary7(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -87699,7 +87704,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 108 "cylinder.c"
+#line 111 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87758,7 +87763,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 108 "cylinder.c"
+#line 111 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary7_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87817,7 +87822,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 108 "cylinder.c"
+#line 111 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87876,7 +87881,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 108 "cylinder.c"
+#line 111 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary8(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -87936,7 +87941,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 109 "cylinder.c"
+#line 112 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -87995,7 +88000,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 109 "cylinder.c"
+#line 112 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary8_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88054,7 +88059,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 109 "cylinder.c"
+#line 112 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88113,7 +88118,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 109 "cylinder.c"
+#line 112 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double (*Shape[])(double, double, double) = {shape_cylinder,
                                                     shape_sphere};
@@ -88124,14 +88129,13 @@ static int boundaries_surfaces1[] = {bottom, back};
 static const char *boundaries_names[] = {"top", "front"};
 static const char *force_path, *output_prefix, *dump_path;
 static const int outlevel = 5;
-static double reynolds, tend, zlim;
 static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag, InitFileFlag,
     period;
 static vector  muv={{15},{16},{17}};
 static scalar  l2={18};
 static vector  omega={{19},{20},{21}};
 static scalar  phi={22};
-#line 402
+#line 404
 static double _boundary9(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88190,7 +88194,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 402 "cylinder.c"
+#line 404 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88249,7 +88253,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 402 "cylinder.c"
+#line 404 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 1 : 2.*1 - val(_s,0,0,0)));}}}static double _boundary9_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88308,7 +88312,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 402 "cylinder.c"
+#line 404 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88367,7 +88371,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 402 "cylinder.c"
+#line 404 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary10(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -88427,7 +88431,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 403 "cylinder.c"
+#line 405 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88486,7 +88490,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 403 "cylinder.c"
+#line 405 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, 0 : Delta*0 + val(_s,0,0,0)));}}}static double _boundary10_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88545,7 +88549,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 403 "cylinder.c"
+#line 405 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88604,7 +88608,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 403 "cylinder.c"
+#line 405 "cylinder.c"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 static double _boundary11(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -88664,7 +88668,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 404 "cylinder.c"
+#line 406 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88723,7 +88727,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 404 "cylinder.c"
+#line 406 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, 0 : Delta*0 + val(_s,0,0,0)));}}}static double _boundary11_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88782,7 +88786,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 404 "cylinder.c"
+#line 406 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88841,7 +88845,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 404 "cylinder.c"
+#line 406 "cylinder.c"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 
 static double _boundary12(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
@@ -88902,7 +88906,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 406 "cylinder.c"
+#line 408 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -88961,7 +88965,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 406 "cylinder.c"
+#line 408 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, 0 : Delta*0 + val(_s,0,0,0)));}}}static double _boundary12_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89020,7 +89024,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 406 "cylinder.c"
+#line 408 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89079,7 +89083,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 406 "cylinder.c"
+#line 408 "cylinder.c"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 static double _boundary13(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -89139,7 +89143,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 407 "cylinder.c"
+#line 409 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89198,7 +89202,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 407 "cylinder.c"
+#line 409 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary13_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89257,7 +89261,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 407 "cylinder.c"
+#line 409 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89316,7 +89320,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 407 "cylinder.c"
+#line 409 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary14(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -89376,7 +89380,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 408 "cylinder.c"
+#line 410 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89435,7 +89439,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 408 "cylinder.c"
+#line 410 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary14_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89494,7 +89498,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 408 "cylinder.c"
+#line 410 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89553,9 +89557,9 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 408 "cylinder.c"
+#line 410 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
-#line 426
+#line 428
 static double _boundary15(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89614,7 +89618,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 426 "cylinder.c"
+#line 428 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89673,7 +89677,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 426 "cylinder.c"
+#line 428 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary15_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89732,7 +89736,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 426 "cylinder.c"
+#line 428 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89791,7 +89795,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 426 "cylinder.c"
+#line 428 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary16(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -89851,7 +89855,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 427 "cylinder.c"
+#line 429 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89910,7 +89914,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 427 "cylinder.c"
+#line 429 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary16_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -89969,7 +89973,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 427 "cylinder.c"
+#line 429 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90028,7 +90032,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 427 "cylinder.c"
+#line 429 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary17(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -90088,7 +90092,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 428 "cylinder.c"
+#line 430 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90147,7 +90151,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 428 "cylinder.c"
+#line 430 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary17_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90206,7 +90210,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 428 "cylinder.c"
+#line 430 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90265,7 +90269,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 428 "cylinder.c"
+#line 430 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 
 static double _boundary18(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
@@ -90326,7 +90330,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 430 "cylinder.c"
+#line 432 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90385,7 +90389,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 430 "cylinder.c"
+#line 432 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary18_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90444,7 +90448,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 430 "cylinder.c"
+#line 432 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90503,7 +90507,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 430 "cylinder.c"
+#line 432 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary19(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -90563,7 +90567,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 431 "cylinder.c"
+#line 433 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90622,7 +90626,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 431 "cylinder.c"
+#line 433 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary19_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90681,7 +90685,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 431 "cylinder.c"
+#line 433 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90740,7 +90744,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 431 "cylinder.c"
+#line 433 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
 static double _boundary20(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -90800,7 +90804,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 432 "cylinder.c"
+#line 434 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90859,7 +90863,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 432 "cylinder.c"
+#line 434 "cylinder.c"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = true, 0 : 2.*0 - val(_s,0,0,0)));}}}static double _boundary20_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90918,7 +90922,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 432 "cylinder.c"
+#line 434 "cylinder.c"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -90977,13 +90981,13 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 432 "cylinder.c"
+#line 434 "cylinder.c"
 {return( ( data ? *((bool *)data) = true, 0 : - val(_s,0,0,0)));}}}
-#line 126
+#line 128
 int main(int argc, char **argv) {
-#line 449
+#line 451
 _init_solver();  
-#line 127
+#line 129
 char *end;
   const char *boundaries;
   int ReynoldsFlag, MaxLevelFlag, MinLevelFlag, PeriodFlag, TendFlag,
@@ -91307,7 +91311,7 @@ _attribute[u.z.i].dirty=1,_attribute[u.z.i].boundary[boundaries_surfaces1[i]]=_b
   if (Verbose && pid() == 0)
     fprintf(ferr, "cylinder: done\n");
 free_solver();}
-static int init_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(t = 0)!=0;*ip=i;*tp=t;return ret;}      static int init_0(const int i,const double t,Event *_ev){tracing("init_0","cylinder.c",450); {
+static int init_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(t = 0)!=0;*ip=i;*tp=t;return ret;}      static int init_0(const int i,const double t,Event *_ev){tracing("init_0","cylinder.c",452); {
   FILE *dump_file;
   if (dump_path == NULL) {    
 #line 321 "/home/lisergey/basilisk/src/grid/tree-common.h"
@@ -91416,7 +91420,7 @@ int level = point.level; NOT_UNUSED(level);
   parent.k = (point.k + 2)/2;
 #line 328 "/home/lisergey/basilisk/src/grid/tree-common.h"
 if ((
-#line 453 "cylinder.c"
+#line 455 "cylinder.c"
 x < X0 + 0.9 * L0 && level < minlevel
 #line 328 "/home/lisergey/basilisk/src/grid/tree-common.h"
 )) {
@@ -91470,13 +91474,13 @@ mpi_all_reduce (refined, MPI_INT, MPI_SUM);
     } while (refined);
   }
     
-#line 454 "cylinder.c"
+#line 456 "cylinder.c"
 for (;;) {      
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 455, .first = _first
+      .fname = "cylinder.c", .line = 457, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -91487,7 +91491,7 @@ for (;;) {
 #line 335
 {
     _loop.vertex = true; 
-#line 455 "cylinder.c"
+#line 457 "cylinder.c"
 {_stencil_val_a(phi,0,0,0);    }  
 #line 338 "/home/lisergey/basilisk/src/grid/stencils.h"
 }    
@@ -91556,7 +91560,7 @@ check_stencil (&_loop);
 
 
     int kg = -1; NOT_UNUSED (kg); 
-#line 455 "cylinder.c"
+#line 457 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -91615,7 +91619,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 455 "cylinder.c"
+#line 457 "cylinder.c"
 val(phi,0,0,0) = obj_shape(x, y, z);}
   
 #line 1719 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -91627,26 +91631,26 @@ val(phi,0,0,0) = obj_shape(x, y, z);}
 
 #line 1720
 }      
-#line 456 "cylinder.c"
+#line 458 "cylinder.c"
 fractions(phi, cs, fs
 #line 122 "/home/lisergey/basilisk/src/fractions.h"
 , 0.
-#line 456 "cylinder.c"
+#line 458 "cylinder.c"
 );
       astats s = adapt_wavelet(
-#line 457 "/home/lisergey/basilisk/src/grid/tree-common.h"
+#line 459 "/home/lisergey/basilisk/src/grid/tree-common.h"
 (
 #line 173
 scalar *
-#line 457
+#line 459
 )
-#line 457 "cylinder.c"
+#line 459 "cylinder.c"
 ((scalar[]){cs,{-1}}), (double[]){0}, maxlevel
 , minlevel
 #line 176 "/home/lisergey/basilisk/src/grid/tree-common.h"
 , 
 all
-#line 458 "cylinder.c"
+#line 460 "cylinder.c"
 );
       if (Verbose && pid() == 0)
         fprintf(ferr, "cylinder: refined %d cells\n", s.nf);
@@ -91664,7 +91668,7 @@ all
 #line 1220 "/home/lisergey/basilisk/src/output.h"
 "dump", 
 NULL
-#line 471 "cylinder.c"
+#line 473 "cylinder.c"
 , dump_file);
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: starting from '%s': time: %g, step: %d\n",
@@ -91672,13 +91676,13 @@ NULL
     fractions(phi, cs, fs
 #line 122 "/home/lisergey/basilisk/src/fractions.h"
 , 0.
-#line 475 "cylinder.c"
+#line 477 "cylinder.c"
 );
     if (Verbose)
       fields_stats( 
 #line 380 "/home/lisergey/basilisk/src/utils.h"
 all
-#line 477 "cylinder.c"
+#line 479 "cylinder.c"
 );
   }
   if (InitFileFlag == 0) {
@@ -91688,7 +91692,7 @@ all
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 482, .first = _first
+      .fname = "cylinder.c", .line = 484, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -91696,7 +91700,7 @@ all
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point); 
-#line 482 "cylinder.c"
+#line 484 "cylinder.c"
 { 
 _stencil_val(cs,0,0,0);      _stencil_val_a(u.x,0,0,0); 
       _stencil_val_a(u.y,0,0,0);  
@@ -91758,7 +91762,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags; 
-#line 482 "cylinder.c"
+#line 484 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -91817,7 +91821,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 482 "cylinder.c"
+#line 484 "cylinder.c"
 {
       val(u.x,0,0,0) = val(cs,0,0,0);
       val(u.y,0,0,0) = 0;
@@ -91830,20 +91834,20 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }  
-#line 487 "cylinder.c"
+#line 489 "cylinder.c"
 } else {
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: initialize velocity from dump file\n");
   }
   event("metric");
   event("dump");
-}{end_tracing("init_0","cylinder.c",493);return 0;}end_tracing("init_0","cylinder.c",493);}
-static int properties_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int properties_0(const int i,const double t,Event *_ev){tracing("properties_0","cylinder.c",494); {if(!is_constant(fm.x)){  
+}{end_tracing("init_0","cylinder.c",495);return 0;}end_tracing("init_0","cylinder.c",495);}
+static int properties_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int properties_0(const int i,const double t,Event *_ev){tracing("properties_0","cylinder.c",496); {if(!is_constant(fm.x)){  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 494, .first = _first
+      .fname = "cylinder.c", .line = 496, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -91851,19 +91855,19 @@ static int properties_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 { _stencil_val(fm.x,0,0,0);_stencil_val_a(muv.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 { _stencil_val(fm.y,0,0,0);_stencil_val_a(muv.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 { _stencil_val(fm.z,0,0,0);_stencil_val_a(muv.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -91922,13 +91926,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -91987,7 +91991,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 val(muv.x,0,0,0) = val(fm.x,0,0,0) / reynolds;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -91998,7 +92002,7 @@ val(muv.x,0,0,0) = val(fm.x,0,0,0) / reynolds;}
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -92057,7 +92061,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 val(muv.y,0,0,0) = val(fm.y,0,0,0) / reynolds;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -92068,7 +92072,7 @@ val(muv.y,0,0,0) = val(fm.y,0,0,0) / reynolds;}
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -92127,12 +92131,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 val(muv.z,0,0,0) = val(fm.z,0,0,0) / reynolds;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 }      
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
 }
@@ -92141,13 +92145,13 @@ val(muv.z,0,0,0) = val(fm.z,0,0,0) / reynolds;}
 
 #line 696
 }
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 }else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 494, .first = _first
+      .fname = "cylinder.c", .line = 496, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -92155,19 +92159,19 @@ val(muv.z,0,0,0) = val(fm.z,0,0,0) / reynolds;}
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {;_stencil_val_a(muv.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {;_stencil_val_a(muv.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {;_stencil_val_a(muv.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -92226,13 +92230,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -92291,7 +92295,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 val(muv.x,0,0,0) = _const_fm.x / reynolds;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -92302,7 +92306,7 @@ val(muv.x,0,0,0) = _const_fm.x / reynolds;}
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -92361,7 +92365,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 val(muv.y,0,0,0) = _const_fm.y / reynolds;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -92372,7 +92376,7 @@ val(muv.y,0,0,0) = _const_fm.y / reynolds;}
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg); 
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -92431,12 +92435,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 val(muv.z,0,0,0) = _const_fm.z / reynolds;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 494 "cylinder.c"
+#line 496 "cylinder.c"
 }      
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
 }
@@ -92445,9 +92449,9 @@ val(muv.z,0,0,0) = _const_fm.z / reynolds;}
 
 #line 696
 }
-#line 494 "cylinder.c"
-} }{end_tracing("properties_0","cylinder.c",494);return 0;}end_tracing("properties_0","cylinder.c",494);}
-static int dump_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=( t <= tend)!=0;*ip=i;*tp=t;return ret;}static int dump_0_expr1(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int dump_0(const int i,const double t,Event *_ev){tracing("dump_0","cylinder.c",495); {
+#line 496 "cylinder.c"
+} }{end_tracing("properties_0","cylinder.c",496);return 0;}end_tracing("properties_0","cylinder.c",496);}
+static int dump_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=( t <= tend)!=0;*ip=i;*tp=t;return ret;}static int dump_0_expr1(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int dump_0(const int i,const double t,Event *_ev){tracing("dump_0","cylinder.c",497); {
   char path[FILENAME_MAX];
   static FILE *fp;
   coord Fp, Fmu;
@@ -92456,7 +92460,7 @@ static int dump_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;in
       fields_stats( 
 #line 380 "/home/lisergey/basilisk/src/utils.h"
 all
-#line 501 "cylinder.c"
+#line 503 "cylinder.c"
 );
       if (pid() == 0)
         fprintf(ferr, "cylinder: %d: %09d %.16e %ld\n", npe(), i, t, grid->n);
@@ -92481,7 +92485,7 @@ all,
 NULL, 
 false, 
 true
-#line 518 "cylinder.c"
+#line 520 "cylinder.c"
 );
       }
     }
@@ -92516,7 +92520,7 @@ true
 #line 176 "/home/lisergey/basilisk/src/grid/tree-common.h"
 , 
 all
-#line 548 "cylinder.c"
+#line 550 "cylinder.c"
 );    
 #line 364 "/home/lisergey/basilisk/src/grid/tree-common.h"
 {
@@ -92616,7 +92620,7 @@ int level = point.level; NOT_UNUSED(level);
       if (is_leaf(cell))
  continue;
       if (is_local(cell) && ((
-#line 549 "cylinder.c"
+#line 551 "cylinder.c"
 !(x < X0 + 0.9 * L0) && level > outlevel
 #line 369 "/home/lisergey/basilisk/src/grid/tree-common.h"
 )))
@@ -92794,12 +92798,12 @@ mpi_boundary_coarsen (_l, too_fine);
     mpi_boundary_update (all);
   }
     
-#line 550 "cylinder.c"
+#line 552 "cylinder.c"
 if (Verbose && i % period == 0 && pid() == 0)
       fprintf(ferr, "cylinder: refined %d cells, coarsened %d cells\n", s.nf,
               s.nc);
   }
-}{end_tracing("dump_0","cylinder.c",554);return 0;}end_tracing("dump_0","cylinder.c",554);}
+}{end_tracing("dump_0","cylinder.c",556);return 0;}end_tracing("dump_0","cylinder.c",556);}
 #line 2 "ast/init_solver.h"
 
 static void _init_solver (void)
@@ -92838,10 +92842,10 @@ event_register((Event){0,1,default_display,{default_display_expr0},((int *)0),((
 
 
 event_register((Event){0,1,init,{init_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",203,"init"});  
-#line 450 "cylinder.c"
-event_register((Event){0,1,init_0,{init_0_expr0},((int *)0),((double *)0),"cylinder.c",450,"init"});  
-#line 495
-event_register((Event){0,2,dump_0,{dump_0_expr0,dump_0_expr1},((int *)0),((double *)0),"cylinder.c",495,"dump"});
+#line 452 "cylinder.c"
+event_register((Event){0,1,init_0,{init_0_expr0},((int *)0),((double *)0),"cylinder.c",452,"init"});  
+#line 497
+event_register((Event){0,2,dump_0,{dump_0_expr0,dump_0_expr1},((int *)0),((double *)0),"cylinder.c",497,"dump"});
 	
 	
 	
@@ -92907,8 +92911,8 @@ event_register((Event){0,1,end_timestep,{end_timestep_expr0},((int *)0),((double
 
 
 event_register((Event){0,1,adapt,{adapt_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",453,"adapt"});  
-#line 494 "cylinder.c"
-event_register((Event){0,1,properties_0,{properties_0_expr0},((int *)0),((double *)0),"cylinder.c",494,"properties"});  
+#line 496 "cylinder.c"
+event_register((Event){0,1,properties_0,{properties_0_expr0},((int *)0),((double *)0),"cylinder.c",496,"properties"});  
 #line 24 "ast/init_solver.h"
 }
   set_fpe();

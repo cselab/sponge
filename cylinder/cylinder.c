@@ -10,6 +10,7 @@
 #include "embed.h"
 #include "navier-stokes/centered.h"
 #include "output_xdmf.h"
+static double reynolds, tend, zlim;
 trace static double embed_interpolate3(Point point, scalar s, coord p) {
   int i = sign(p.x), j = sign(p.y), k = sign(p.z);
   if (cs[i, 0, 0] && cs[0, j, 0] && cs[i, j, 0] && cs[0, 0, k] && cs[i, 0, k] &&
@@ -40,23 +41,25 @@ trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
                                coord *Fmu) {
   coord Fps = {0}, Fmus = {0};
   foreach (reduction(+ : Fps) reduction(+ : Fmus)) {
-    if (cs[] > 0. && cs[] < 1.) {
-      coord n, b;
-      double area = embed_geometry(point, &b, &n);
-      area *= pow(Delta, dimension - 1);
-      double Fn = area * embed_interpolate3(point, p, b);
-      foreach_dimension() Fps.x += Fn * n.x;
-      if (constant(mu.x) != 0.) {
-        double mua = 0., fa = 0.;
-        foreach_dimension() {
-          mua += mu.x[] + mu.x[1];
-          fa += fs.x[] + fs.x[1];
-        }
-        mua /= fa;
-        coord dudn = embed_gradient(point, u, b, n);
-        foreach_dimension() Fmus.x -=
+    if (zlim == 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
+      if (cs[] > 0. && cs[] < 1.) {
+        coord n, b;
+        double area = embed_geometry(point, &b, &n);
+        area *= pow(Delta, dimension - 1);
+        double Fn = area * embed_interpolate3(point, p, b);
+        foreach_dimension() Fps.x += Fn * n.x;
+        if (constant(mu.x) != 0.) {
+          double mua = 0., fa = 0.;
+          foreach_dimension() {
+            mua += mu.x[] + mu.x[1];
+            fa += fs.x[] + fs.x[1];
+          }
+          mua /= fa;
+          coord dudn = embed_gradient(point, u, b, n);
+          foreach_dimension() Fmus.x -=
             area * mua *
             (dudn.x * (sq(n.x) + 1.) + dudn.y * n.x * n.y + dudn.z * n.x * n.z);
+        }
       }
     }
   }
@@ -116,7 +119,6 @@ static int boundaries_surfaces1[] = {bottom, back};
 static const char *boundaries_names[] = {"top", "front"};
 static const char *force_path, *output_prefix, *dump_path;
 static const int outlevel = 5;
-static double reynolds, tend, zlim;
 static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag, InitFileFlag,
     period;
 static face vector muv[];
