@@ -110,7 +110,7 @@ u.r[embed] = dirichlet(0);
 static double (*Shape[])(double, double, double) = {shape_cylinder,
                                                     shape_sphere};
 static const char *shape_names[] = {"cylinder", "sphere"};
-static double (*shape)(double, double, double);
+static double (*obj_shape)(double, double, double);
 static int boundaries_surfaces0[] = {top, front};
 static int boundaries_surfaces1[] = {bottom, back};
 static const char *boundaries_names[] = {"top", "front"};
@@ -143,7 +143,7 @@ int main(int argc, char **argv) {
   output_prefix = NULL;
   force_path = NULL;
   dump_path = NULL;
-  shape = NULL;
+  obj_shape = NULL;
   boundaries = NULL;
   while (*++argv != NULL && argv[0][0] == '-')
     switch (argv[0][1]) {
@@ -318,7 +318,7 @@ int main(int argc, char **argv) {
           exit(1);
         }
         if (strcmp(shape_names[i], *argv) == 0) {
-          shape = Shape[i];
+          obj_shape = Shape[i];
           break;
         }
       }
@@ -387,7 +387,7 @@ int main(int argc, char **argv) {
             "cylinder: error: eather -d (dump) -z (size) must be set\n");
     exit(1);
   }
-  if (dump_path == NULL && shape == NULL) {
+  if (dump_path == NULL && obj_shape == NULL) {
     fprintf(stderr,
             "cylinder: error: eather -d (dump) or -S (shape) must be set\n");
     exit(1);
@@ -453,7 +453,9 @@ event init(t = 0) {
   if (dump_path == NULL) {
     refine(x < X0 + 0.9 * L0 && level < minlevel);
     for (;;) {
-      solid(cs, fs, shape(x, y, z));
+      foreach_vertex()
+        phi[] = obj_shape(x, y, z);
+      fractions(phi, cs, fs);
       astats s = adapt_wavelet({cs}, (double[]){0}, maxlevel = maxlevel,
                                minlevel = minlevel);
       if (Verbose && pid() == 0)
@@ -497,7 +499,6 @@ event dump(i++; t <= tend) {
   char path[FILENAME_MAX];
   static FILE *fp;
   coord Fp, Fmu;
-
   if (i % period == 0) {
     if (Verbose) {
       fields_stats();
@@ -511,7 +512,6 @@ event dump(i++; t <= tend) {
         sprintf(path, "%s.%09d", output_prefix, i);
         output_xdmf(t, {p, l2}, {u, omega}, NULL, path);
       }
-
       snprintf(path, sizeof path, "%s.y.%09d", output_prefix, i);
       output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice_y, path);
 
