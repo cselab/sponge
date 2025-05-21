@@ -5,8 +5,8 @@ i=$((n*I/4)) j=$((n*(I+1)/4-1))
 mkdir -p $0
 cd $0 &&
    mpiexec --bind-to core --cpu-set $i-$j ../cylinder \
-   -v -r 100 -l $l -m $m -p 100 -e 10 -f force.dat -o h -b pp -S sphere -z 12.5
-sleep 1
+   -v -r 100 -l $l -m $m -p 100 -e 10 -f force.dat -o h -b pp -S sphere -z 12.5 >stdout 2>stderr
+   echo $? > status
 ' <<'!'
 0025
 0050
