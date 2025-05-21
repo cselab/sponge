@@ -7,9 +7,9 @@
 #include "grid/octree.h"
 #include "fractions.h"
 #include "lambda2.h"
+#include "embed.h"
 #include "navier-stokes/centered.h"
 #include "output_xdmf.h"
-#include "embed.h"
 trace static double embed_interpolate3(Point point, scalar s, coord p) {
   int i = sign(p.x), j = sign(p.y), k = sign(p.z);
   if (cs[i, 0, 0] && cs[0, j, 0] && cs[i, j, 0] && cs[0, 0, k] && cs[i, 0, k] &&
@@ -447,14 +447,12 @@ int main(int argc, char **argv) {
   if (Verbose && pid() == 0)
     fprintf(stderr, "cylinder: done\n");
 }
-
 event init(t = 0) {
   FILE *dump_file;
   if (dump_path == NULL) {
     refine(x < X0 + 0.9 * L0 && level < minlevel);
     for (;;) {
-      foreach_vertex()
-        phi[] = obj_shape(x, y, z);
+      foreach_vertex() phi[] = obj_shape(x, y, z);
       fractions(phi, cs, fs);
       astats s = adapt_wavelet({cs}, (double[]){0}, maxlevel = maxlevel,
                                minlevel = minlevel);
@@ -492,9 +490,7 @@ event init(t = 0) {
   }
   event("dump");
 }
-
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
-
 event dump(i++; t <= tend) {
   char path[FILENAME_MAX];
   static FILE *fp;
@@ -514,10 +510,8 @@ event dump(i++; t <= tend) {
       }
       snprintf(path, sizeof path, "%s.y.%09d", output_prefix, i);
       output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice_y, path);
-
       snprintf(path, sizeof path, "%s.z.%09d", output_prefix, i);
       output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice_z, path);
-
       if (i % (10 * period) == 0) {
         snprintf(path, sizeof path, "%s.%09d.dump", output_prefix, i);
         dump(path);
