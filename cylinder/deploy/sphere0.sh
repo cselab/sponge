@@ -9,7 +9,7 @@ set 0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30 \
 shift $I
 mkdir -p $re
 cd $0 &&
-   mpiexec -n $k --bind-to core --map-by core --cpu-list $1 \
+   mpiexec -n $k --bind-to core --cpu-list $1 \
    --report-bindings ../cylinder \
    -v -r $re -l $l -m $m -p 100 -e 10 -f force.dat -o h -b pp -S sphere -z 12.5 >stdout 2>stderr
    echo $? > status
