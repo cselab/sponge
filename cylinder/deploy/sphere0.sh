@@ -1,7 +1,7 @@
 #!/bin/sh
 xargs --process-slot-var I -n 1 -P 4 sh -xc '
 n=128 l=7 m=11
-i=$((n*I/4)) j=$((n*(I+1)/4-1)) k=$((n/4))
+i=$((n*I/4)) j=$((n*(I+1)/4-1)) k=$((n/2/4))
 mkdir -p $0
 cd $0 &&
    taskset --cpu-list $i-$j \
