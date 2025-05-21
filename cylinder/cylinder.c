@@ -490,7 +490,8 @@ event init(t = 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: initialize velocity from dump file\n");
   }
-  event("metric");
+  fm = fs;
+  cm = cs;
   event("dump");
 }
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
