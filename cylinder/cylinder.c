@@ -8,64 +8,75 @@
 #include "fractions.h"
 #include "lambda2.h"
 #include "navier-stokes/centered.h"
-static const double penalty_lambda = 1e3;
-#include "output_force.h"
 #include "output_xdmf.h"
-coord Force = {0};
+#include "embed.h"
+trace static double embed_interpolate3(Point point, scalar s, coord p) {
+  int i = sign(p.x), j = sign(p.y), k = sign(p.z);
+  if (cs[i, 0, 0] && cs[0, j, 0] && cs[i, j, 0] && cs[0, 0, k] && cs[i, 0, k] &&
+      cs[0, j, k] && cs[i, j, k]) {
+    double val_0, val_k;
+    val_0 =
+        (s[0, 0, 0] * (1. - fabs(p.x)) + s[i, 0, 0] * fabs(p.x)) *
+            (1. - fabs(p.y)) +
+        (s[0, j, 0] * (1. - fabs(p.x)) + s[i, j, 0] * fabs(p.x)) * fabs(p.y);
+    val_k =
+        (s[0, 0, k] * (1. - fabs(p.x)) + s[i, 0, k] * fabs(p.x)) *
+            (1. - fabs(p.y)) +
+        (s[0, j, k] * (1. - fabs(p.x)) + s[i, j, k] * fabs(p.x)) * fabs(p.y);
+    return (val_0 * (1. - fabs(p.z)) + val_k * fabs(p.z));
+  } else {
+    double val = s[];
+    foreach_dimension() {
+      int i = sign(p.x);
+      if (cs[i])
+        val += fabs(p.x) * (s[i] - s[]);
+      else if (cs[-i])
+        val += fabs(p.x) * (s[] - s[-i]);
+    }
+    return val;
+  }
+}
+trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
+                               coord *Fmu) {
+  coord Fps = {0}, Fmus = {0};
+  foreach (reduction(+ : Fps) reduction(+ : Fmus)) {
+    if (cs[] > 0. && cs[] < 1.) {
+      coord n, b;
+      double area = embed_geometry(point, &b, &n);
+      area *= pow(Delta, dimension - 1);
+      double Fn = area * embed_interpolate3(point, p, b);
+      foreach_dimension() Fps.x += Fn * n.x;
+      if (constant(mu.x) != 0.) {
+        double mua = 0., fa = 0.;
+        foreach_dimension() {
+          mua += mu.x[] + mu.x[1];
+          fa += fs.x[] + fs.x[1];
+        }
+        mua /= fa;
+        coord dudn = embed_gradient(point, u, b, n);
+        foreach_dimension() Fmus.x -=
+            area * mua *
+            (dudn.x * (sq(n.x) + 1.) + dudn.y * n.x * n.y + dudn.z * n.x * n.z);
+      }
+    }
+  }
+  Fp->x = Fps.x;
+  Fp->y = Fps.y;
+  Fp->z = Fps.z;
+
+  Fmu->x = Fmus.x;
+  Fmu->y = Fmus.y;
+  Fmu->z = Fmus.z;
+}
 static double shape_cylinder(double x, double y, double z) {
   return sq(x) + sq(y) - sq(1.0 / 2);
 }
 static double shape_sphere(double x, double y, double z) {
   return sq(x) + sq(y) + sq(z) - sq(1.0 / 2);
 }
-static double (*Shape[])(double, double, double) = {shape_cylinder,
-                                                    shape_sphere};
-static const char *shape_names[] = {"cylinder", "sphere"};
-static double (*shape)(double, double, double);
-static int boundaries_surfaces0[] = {top, front};
-static int boundaries_surfaces1[] = {bottom, back};
-static const char *boundaries_names[] = {"top", "front"};
-static const char *force_path, *output_prefix, *dump_path;
-static const int outlevel = 5;
-static double reynolds, tend, zlim;
-static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag, InitFileFlag,
-    period;
-static face vector muv[];
-static scalar l2[];
-static vector omega[];
-static scalar phi[];
-static face vector fs[];
-static scalar cs[];
-
-event velocity(i++) {
-  char path[FILENAME_MAX];
-  if (i % period == 0) {
-    snprintf(path, sizeof path, "%s.force.%09d", output_prefix, i);
-    output_force(t, cs, path);
-  }
-  foreach_dimension() Force.x = 0;
-  double alpha = 1.0 / (1.0 + penalty_lambda * dt);
-  foreach (reduction(+ : Force)) {
-    if (zlim == 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
-      if (cs[] < 1.0) {
-        double volume = Delta * Delta * Delta;
-        double coef = volume * (1 - cs[]) * (1 - alpha);
-        Force.x += u.x[] * coef;
-        Force.y += u.y[] * coef;
-        Force.z += u.z[] * coef;
-        u.x[] *= alpha;
-        u.y[] *= alpha;
-        u.z[] *= alpha;
-      }
-    }
-  }
-  foreach_dimension() Force.x /= dt;
-}
-
 static double dot3(const double *a, const double *b) {
   return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 }
-
 static void vorticity_vector(const vector u, vector omega) {
   foreach () {
     double delta;
@@ -93,7 +104,25 @@ static int slice_y(double x, double y, double z, double Delta) {
   double epsilon = Delta / 10;
   return y <= -epsilon && y + Delta + epsilon >= 0;
 }
-
+u.n[embed] = dirichlet(0);
+u.t[embed] = dirichlet(0);
+u.r[embed] = dirichlet(0);
+static double (*Shape[])(double, double, double) = {shape_cylinder,
+                                                    shape_sphere};
+static const char *shape_names[] = {"cylinder", "sphere"};
+static double (*shape)(double, double, double);
+static int boundaries_surfaces0[] = {top, front};
+static int boundaries_surfaces1[] = {bottom, back};
+static const char *boundaries_names[] = {"top", "front"};
+static const char *force_path, *output_prefix, *dump_path;
+static const int outlevel = 5;
+static double reynolds, tend, zlim;
+static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag, InitFileFlag,
+    period;
+static face vector muv[];
+static scalar l2[];
+static vector omega[];
+static scalar phi[];
 int main(int argc, char **argv) {
   char *end;
   const char *boundaries;
@@ -467,6 +496,7 @@ event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
 event dump(i++; t <= tend) {
   char path[FILENAME_MAX];
   static FILE *fp;
+  coord Fp, Fmu;
 
   if (i % period == 0) {
     if (Verbose) {
@@ -494,6 +524,7 @@ event dump(i++; t <= tend) {
       }
     }
     if (force_path) {
+      embed_force3(p, u, mu, &Fp, &Fmu);
       if (pid() == 0) {
         if (fp == NULL) {
           if ((fp = fopen(force_path, "w")) == NULL) {
@@ -506,9 +537,14 @@ event dump(i++; t <= tend) {
             exit(1);
           }
         }
-        fprintf(fp, "%d %.16e %.16e %.16e %.16e %.16e\n", i, t, dt, Force.x,
-                Force.y, Force.z);
-        fflush(fp);
+        fprintf(fp,
+                "%d %.16e %.16e "
+                "%.16e %.16e %.16e "
+                "%.16e %.16e %.16e "
+                "%.16e %.16e %.16e\n",
+                i, t, dt, Fp.x + Fmu.x, Fp.y + Fmu.y, Fp.z + Fmu.z, Fp.x, Fp.y,
+                Fp.z, Fmu.x, Fmu.y, Fmu.z);
+        fclose(fp);
       }
     }
   }
