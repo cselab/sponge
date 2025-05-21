@@ -91486,9 +91486,8 @@ for (;;) {
     Point point = {0}; NOT_UNUSED (point); 
 #line 335
 {
-    _loop.vertex = true;
-        
-#line 456 "cylinder.c"
+    _loop.vertex = true; 
+#line 455 "cylinder.c"
 {_stencil_val_a(phi,0,0,0);    }  
 #line 338 "/home/lisergey/basilisk/src/grid/stencils.h"
 }    
@@ -91556,8 +91555,8 @@ check_stencil (&_loop);
     int jg = -1; NOT_UNUSED (jg);
 
 
-    int kg = -1; NOT_UNUSED (kg);        
-#line 456 "cylinder.c"
+    int kg = -1; NOT_UNUSED (kg); 
+#line 455 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -91616,7 +91615,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 456 "cylinder.c"
+#line 455 "cylinder.c"
 val(phi,0,0,0) = obj_shape(x, y, z);}
   
 #line 1719 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -91628,26 +91627,26 @@ val(phi,0,0,0) = obj_shape(x, y, z);}
 
 #line 1720
 }      
-#line 457 "cylinder.c"
+#line 456 "cylinder.c"
 fractions(phi, cs, fs
 #line 122 "/home/lisergey/basilisk/src/fractions.h"
 , 0.
-#line 457 "cylinder.c"
+#line 456 "cylinder.c"
 );
       astats s = adapt_wavelet(
-#line 458 "/home/lisergey/basilisk/src/grid/tree-common.h"
+#line 457 "/home/lisergey/basilisk/src/grid/tree-common.h"
 (
 #line 173
 scalar *
-#line 458
+#line 457
 )
-#line 458 "cylinder.c"
+#line 457 "cylinder.c"
 ((scalar[]){cs,{-1}}), (double[]){0}, maxlevel
 , minlevel
 #line 176 "/home/lisergey/basilisk/src/grid/tree-common.h"
 , 
 all
-#line 459 "cylinder.c"
+#line 458 "cylinder.c"
 );
       if (Verbose && pid() == 0)
         fprintf(ferr, "cylinder: refined %d cells\n", s.nf);
@@ -91665,7 +91664,7 @@ all
 #line 1220 "/home/lisergey/basilisk/src/output.h"
 "dump", 
 NULL
-#line 472 "cylinder.c"
+#line 471 "cylinder.c"
 , dump_file);
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: starting from '%s': time: %g, step: %d\n",
@@ -91673,13 +91672,13 @@ NULL
     fractions(phi, cs, fs
 #line 122 "/home/lisergey/basilisk/src/fractions.h"
 , 0.
-#line 476 "cylinder.c"
+#line 475 "cylinder.c"
 );
     if (Verbose)
       fields_stats( 
 #line 380 "/home/lisergey/basilisk/src/utils.h"
 all
-#line 478 "cylinder.c"
+#line 477 "cylinder.c"
 );
   }
   if (InitFileFlag == 0) {
@@ -91689,7 +91688,7 @@ all
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "cylinder.c", .line = 483, .first = _first
+      .fname = "cylinder.c", .line = 482, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -91697,7 +91696,7 @@ all
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point); 
-#line 483 "cylinder.c"
+#line 482 "cylinder.c"
 { 
 _stencil_val(cs,0,0,0);      _stencil_val_a(u.x,0,0,0); 
       _stencil_val_a(u.y,0,0,0);  
@@ -91759,7 +91758,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags; 
-#line 483 "cylinder.c"
+#line 482 "cylinder.c"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -91818,7 +91817,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 483 "cylinder.c"
+#line 482 "cylinder.c"
 {
       val(u.x,0,0,0) = val(cs,0,0,0);
       val(u.y,0,0,0) = 0;
@@ -91831,11 +91830,12 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }  
-#line 488 "cylinder.c"
+#line 487 "cylinder.c"
 } else {
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: initialize velocity from dump file\n");
   }
+  event("metric");
   event("dump");
 }{end_tracing("init_0","cylinder.c",493);return 0;}end_tracing("init_0","cylinder.c",493);}
 static int properties_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int properties_0(const int i,const double t,Event *_ev){tracing("properties_0","cylinder.c",494); {if(!is_constant(fm.x)){  
