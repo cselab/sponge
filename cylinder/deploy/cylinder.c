@@ -40141,15 +40141,15 @@ static int defaults_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;
 );
 }{end_tracing("defaults","/home/lisergey/basilisk/src/embed.h",952);return 0;}end_tracing("defaults","/home/lisergey/basilisk/src/embed.h",952);}
 #line 11 "cylinder.c"
-#line 1 "navier-stokes/centered.h"
-#line 1 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-#line 27 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-#line 1 "./run.h"
+#line 1 "centered.h"
+#line 1 "./centered.h"
+#line 27 "./centered.h"
+#line 1 "run.h"
 #line 1 "/home/lisergey/basilisk/src/run.h"
 #line 9 "/home/lisergey/basilisk/src/run.h"
 double dt = 1.;
 
-#line 1 "./utils.h"
+#line 1 "utils.h"
 #line 1 "/home/lisergey/basilisk/src/utils.h"
 
 
@@ -42557,7 +42557,7 @@ void fields_stats (scalar * list)
   }}}
 }
 
-#line 1 "./output.h"
+#line 1 "output.h"
 #line 1 "/home/lisergey/basilisk/src/output.h"
 #line 37 "/home/lisergey/basilisk/src/output.h"
      
@@ -44364,8 +44364,8 @@ static int defaults_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*t
 static int cleanup_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(t = TEND_EVENT)!=0;*ip=i;*tp=t;return ret;}      static int cleanup(const int i,const double t,Event *_ev){tracing("cleanup","/home/lisergey/basilisk/src/run.h",50); {
   display ("", true);
 }{end_tracing("cleanup","/home/lisergey/basilisk/src/run.h",52);return 0;}end_tracing("cleanup","/home/lisergey/basilisk/src/run.h",52);}
-#line 28 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-#line 1 "./timestep.h"
+#line 28 "./centered.h"
+#line 1 "timestep.h"
 #line 1 "/home/lisergey/basilisk/src/timestep.h"
 
 double timestep (const vector u, double dtmax)
@@ -45058,8 +45058,8 @@ if (val(u.z,0,0,0) != 0.) {
   previous = dtmax;
   return dtmax;
 }
-#line 29 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-#line 1 "./bcg.h"
+#line 29 "./centered.h"
+#line 1 "bcg.h"
 #line 1 "/home/lisergey/basilisk/src/bcg.h"
 #line 11 "/home/lisergey/basilisk/src/bcg.h"
      
@@ -47100,12 +47100,12 @@ void advection (scalar * tracers, vector u, double dt,
   if (!psrc)
     pfree (src,__func__,__FILE__,__LINE__);
 end_tracing("advection","/home/lisergey/basilisk/src/bcg.h",99);}
-#line 30 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 30 "./centered.h"
 
-#line 1 "./viscosity-embed.h"
+#line 1 "viscosity-embed.h"
 #line 1 "/home/lisergey/basilisk/src/viscosity-embed.h"
 #line 31 "/home/lisergey/basilisk/src/viscosity-embed.h"
-#line 1 "./poisson.h"
+#line 1 "poisson.h"
 #line 1 "/home/lisergey/basilisk/src/poisson.h"
 #line 32 "/home/lisergey/basilisk/src/poisson.h"
      
@@ -54324,13 +54324,13 @@ restriction (((scalar[]){mu.x,mu.y,mu.z, rho,{-1}}));
 
 , TOLERANCE_MU ? TOLERANCE_MU : TOLERANCE);delete((scalar*)((vector[]){r,{{-1},{-1},{-1}}}));{end_tracing("viscosity","/home/lisergey/basilisk/src/viscosity-embed.h",160);return _ret;}}delete((scalar*)((vector[]){r,{{-1},{-1},{-1}}}));
 end_tracing("viscosity","/home/lisergey/basilisk/src/viscosity-embed.h",161);}
-#line 32 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-#line 44 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 32 "./centered.h"
+#line 44 "./centered.h"
 scalar  p={4};
 vector  u={{5},{6},{7}},  g={{8},{9},{10}};
 scalar  pf={11};
 vector  uf={{12},{13},{14}};
-#line 70 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 70 "./centered.h"
         vector mu = {{_NVARMAX+4},{_NVARMAX+5},{_NVARMAX+6}}, a = {{_NVARMAX+4},{_NVARMAX+5},{_NVARMAX+6}}, alpha = {{_NVARMAX+7},{_NVARMAX+8},{_NVARMAX+9}};
         scalar rho = {_NVARMAX+10};
 mgstats mgp = {0}, mgpf = {0}, mgu = {0};
@@ -54394,7 +54394,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54453,7 +54453,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54512,7 +54512,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54571,7 +54571,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54630,7 +54630,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54689,7 +54689,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54748,7 +54748,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54807,7 +54807,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54866,7 +54866,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54925,7 +54925,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -54984,7 +54984,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55043,7 +55043,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55102,7 +55102,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55161,7 +55161,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55220,7 +55220,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55279,7 +55279,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55338,7 +55338,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55397,7 +55397,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55456,7 +55456,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55515,7 +55515,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55574,7 +55574,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55633,7 +55633,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55692,7 +55692,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55751,7 +55751,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55810,7 +55810,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55869,7 +55869,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55928,7 +55928,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -55987,7 +55987,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56046,7 +56046,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56105,7 +56105,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56164,7 +56164,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56223,7 +56223,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56282,7 +56282,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56341,7 +56341,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56400,7 +56400,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56459,7 +56459,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56518,7 +56518,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56577,7 +56577,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56636,7 +56636,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56695,7 +56695,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56754,7 +56754,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56813,7 +56813,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56872,7 +56872,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56931,7 +56931,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -56990,7 +56990,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57049,7 +57049,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57108,7 +57108,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57167,7 +57167,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57226,7 +57226,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57285,7 +57285,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57344,7 +57344,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57403,7 +57403,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*val(fm.x,1,0,0)/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57462,7 +57462,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57521,7 +57521,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*val(fm.x,1,0,0)/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57580,7 +57580,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57639,7 +57639,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*val(fm.x,1,0,0)/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57698,7 +57698,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57757,7 +57757,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? val(a.x,1,0,0)*_const_fm.x/val(alpha.x,1,0,0) : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57816,7 +57816,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57875,7 +57875,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? val(a.x,1,0,0)*_const_fm.x/_const_alpha.x : val(a.x,1,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57934,7 +57934,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -57993,7 +57993,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.x,1,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,1,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else {_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58052,7 +58052,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58111,7 +58111,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}}static double _boundary0_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58170,7 +58170,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58229,7 +58229,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 91 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 91 "./centered.h"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 static double _boundary1(Point point,Point neighbor,scalar _s,bool *data){if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -58289,7 +58289,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58348,7 +58348,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58407,7 +58407,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58466,7 +58466,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58525,7 +58525,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58584,7 +58584,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58643,7 +58643,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58702,7 +58702,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58761,7 +58761,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58820,7 +58820,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58879,7 +58879,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58938,7 +58938,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -58997,7 +58997,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59056,7 +59056,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59115,7 +59115,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59174,7 +59174,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59233,7 +59233,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59292,7 +59292,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59351,7 +59351,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59410,7 +59410,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59469,7 +59469,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59528,7 +59528,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59587,7 +59587,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59646,7 +59646,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59705,7 +59705,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59764,7 +59764,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59823,7 +59823,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59882,7 +59882,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -59941,7 +59941,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60000,7 +60000,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60059,7 +60059,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60118,7 +60118,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60177,7 +60177,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60236,7 +60236,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60295,7 +60295,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60354,7 +60354,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60413,7 +60413,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60472,7 +60472,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60531,7 +60531,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60590,7 +60590,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60649,7 +60649,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60708,7 +60708,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60767,7 +60767,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60826,7 +60826,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60885,7 +60885,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -60944,7 +60944,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61003,7 +61003,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61062,7 +61062,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61121,7 +61121,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61180,7 +61180,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61239,7 +61239,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61298,7 +61298,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*val(fm.x,0,0,0)/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61357,7 +61357,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61416,7 +61416,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*val(fm.x,0,0,0)/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61475,7 +61475,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61534,7 +61534,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*val(fm.x,0,0,0)/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61593,7 +61593,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61652,7 +61652,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? val(a.x,0,0,0)*_const_fm.x/val(alpha.x,0,0,0) : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61711,7 +61711,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61770,7 +61770,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? val(a.x,0,0,0)*_const_fm.x/_const_alpha.x : val(a.x,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61829,7 +61829,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61888,7 +61888,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.x,0,0,0) ? _const_a.x*_const_fm.x/val(alpha.x,0,0,0) : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else {_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -61947,7 +61947,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62006,7 +62006,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.x ? _const_a.x*_const_fm.x/_const_alpha.x : _const_a.x*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}}static double _boundary1_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62065,7 +62065,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62124,7 +62124,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 92 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 92 "./centered.h"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 
 
@@ -62192,7 +62192,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62251,7 +62251,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62310,7 +62310,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62369,7 +62369,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62428,7 +62428,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62487,7 +62487,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62546,7 +62546,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62605,7 +62605,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62664,7 +62664,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62723,7 +62723,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62782,7 +62782,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62841,7 +62841,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62900,7 +62900,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -62959,7 +62959,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63018,7 +63018,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63077,7 +63077,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63136,7 +63136,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63195,7 +63195,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63254,7 +63254,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63313,7 +63313,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63372,7 +63372,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63431,7 +63431,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63490,7 +63490,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63549,7 +63549,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63608,7 +63608,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63667,7 +63667,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63726,7 +63726,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63785,7 +63785,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63844,7 +63844,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63903,7 +63903,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -63962,7 +63962,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64021,7 +64021,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64080,7 +64080,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64139,7 +64139,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64198,7 +64198,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64257,7 +64257,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64316,7 +64316,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64375,7 +64375,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64434,7 +64434,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64493,7 +64493,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64552,7 +64552,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64611,7 +64611,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64670,7 +64670,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64729,7 +64729,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64788,7 +64788,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64847,7 +64847,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64906,7 +64906,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -64965,7 +64965,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65024,7 +65024,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65083,7 +65083,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65142,7 +65142,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65201,7 +65201,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*val(fm.y,0,1,0)/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65260,7 +65260,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65319,7 +65319,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*val(fm.y,0,1,0)/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65378,7 +65378,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65437,7 +65437,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*val(fm.y,0,1,0)/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65496,7 +65496,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65555,7 +65555,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? val(a.y,0,1,0)*_const_fm.y/val(alpha.y,0,1,0) : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65614,7 +65614,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65673,7 +65673,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? val(a.y,0,1,0)*_const_fm.y/_const_alpha.y : val(a.y,0,1,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65732,7 +65732,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65791,7 +65791,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.y,0,1,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,1,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else {_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65850,7 +65850,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65909,7 +65909,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}}static double _boundary2_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -65968,7 +65968,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66027,7 +66027,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 101 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 101 "./centered.h"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 static double _boundary3(Point point,Point neighbor,scalar _s,bool *data){if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -66087,7 +66087,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66146,7 +66146,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66205,7 +66205,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66264,7 +66264,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66323,7 +66323,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66382,7 +66382,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66441,7 +66441,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66500,7 +66500,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66559,7 +66559,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66618,7 +66618,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66677,7 +66677,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66736,7 +66736,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66795,7 +66795,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66854,7 +66854,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66913,7 +66913,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -66972,7 +66972,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67031,7 +67031,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67090,7 +67090,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67149,7 +67149,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67208,7 +67208,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67267,7 +67267,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67326,7 +67326,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67385,7 +67385,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67444,7 +67444,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67503,7 +67503,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67562,7 +67562,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67621,7 +67621,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67680,7 +67680,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67739,7 +67739,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67798,7 +67798,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67857,7 +67857,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67916,7 +67916,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -67975,7 +67975,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68034,7 +68034,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68093,7 +68093,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68152,7 +68152,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68211,7 +68211,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68270,7 +68270,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68329,7 +68329,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68388,7 +68388,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68447,7 +68447,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68506,7 +68506,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68565,7 +68565,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68624,7 +68624,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68683,7 +68683,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68742,7 +68742,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68801,7 +68801,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68860,7 +68860,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68919,7 +68919,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -68978,7 +68978,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69037,7 +69037,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69096,7 +69096,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*val(fm.y,0,0,0)/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69155,7 +69155,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69214,7 +69214,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*val(fm.y,0,0,0)/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69273,7 +69273,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69332,7 +69332,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*val(fm.y,0,0,0)/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69391,7 +69391,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69450,7 +69450,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? val(a.y,0,0,0)*_const_fm.y/val(alpha.y,0,0,0) : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69509,7 +69509,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69568,7 +69568,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? val(a.y,0,0,0)*_const_fm.y/_const_alpha.y : val(a.y,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69627,7 +69627,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69686,7 +69686,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.y,0,0,0) ? _const_a.y*_const_fm.y/val(alpha.y,0,0,0) : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else {_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69745,7 +69745,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69804,7 +69804,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.y ? _const_a.y*_const_fm.y/_const_alpha.y : _const_a.y*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}}static double _boundary3_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69863,7 +69863,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -69922,7 +69922,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 102 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 102 "./centered.h"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 
 
@@ -69984,7 +69984,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70043,7 +70043,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70102,7 +70102,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70161,7 +70161,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70220,7 +70220,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70279,7 +70279,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70338,7 +70338,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70397,7 +70397,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70456,7 +70456,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70515,7 +70515,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70574,7 +70574,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70633,7 +70633,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70692,7 +70692,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70751,7 +70751,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70810,7 +70810,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70869,7 +70869,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70928,7 +70928,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -70987,7 +70987,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71046,7 +71046,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71105,7 +71105,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71164,7 +71164,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71223,7 +71223,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71282,7 +71282,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71341,7 +71341,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71400,7 +71400,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71459,7 +71459,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71518,7 +71518,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71577,7 +71577,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71636,7 +71636,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71695,7 +71695,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71754,7 +71754,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71813,7 +71813,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71872,7 +71872,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71931,7 +71931,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -71990,7 +71990,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72049,7 +72049,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72108,7 +72108,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72167,7 +72167,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72226,7 +72226,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72285,7 +72285,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72344,7 +72344,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72403,7 +72403,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72462,7 +72462,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72521,7 +72521,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72580,7 +72580,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72639,7 +72639,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72698,7 +72698,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72757,7 +72757,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72816,7 +72816,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72875,7 +72875,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72934,7 +72934,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -72993,7 +72993,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*val(fm.z,0,0,1)/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73052,7 +73052,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73111,7 +73111,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*val(fm.z,0,0,1)/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73170,7 +73170,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73229,7 +73229,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*val(fm.z,0,0,1)/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73288,7 +73288,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73347,7 +73347,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? val(a.z,0,0,1)*_const_fm.z/val(alpha.z,0,0,1) : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73406,7 +73406,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73465,7 +73465,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? val(a.z,0,0,1)*_const_fm.z/_const_alpha.z : val(a.z,0,0,1)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73524,7 +73524,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73583,7 +73583,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*((val(alpha.z,0,0,1) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,1) : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else {_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73642,7 +73642,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73701,7 +73701,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, ((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*((_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}}static double _boundary4_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73760,7 +73760,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73819,7 +73819,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 105 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 105 "./centered.h"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
 static double _boundary5(Point point,Point neighbor,scalar _s,bool *data){if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -73879,7 +73879,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73938,7 +73938,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -73997,7 +73997,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74056,7 +74056,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74115,7 +74115,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74174,7 +74174,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74233,7 +74233,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74292,7 +74292,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74351,7 +74351,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74410,7 +74410,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74469,7 +74469,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74528,7 +74528,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74587,7 +74587,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74646,7 +74646,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74705,7 +74705,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74764,7 +74764,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74823,7 +74823,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74882,7 +74882,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -74941,7 +74941,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75000,7 +75000,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75059,7 +75059,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75118,7 +75118,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75177,7 +75177,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75236,7 +75236,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75295,7 +75295,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75354,7 +75354,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75413,7 +75413,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75472,7 +75472,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75531,7 +75531,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75590,7 +75590,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && !is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75649,7 +75649,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75708,7 +75708,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(val(cm,0,0,0) + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75767,7 +75767,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75826,7 +75826,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75885,7 +75885,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -75944,7 +75944,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76003,7 +76003,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76062,7 +76062,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76121,7 +76121,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76180,7 +76180,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76239,7 +76239,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76298,7 +76298,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76357,7 +76357,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76416,7 +76416,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76475,7 +76475,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76534,7 +76534,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && !is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76593,7 +76593,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76652,7 +76652,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*val(rho,0,0,0)/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76711,7 +76711,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76770,7 +76770,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76829,7 +76829,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76888,7 +76888,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*val(fm.z,0,0,0)/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -76947,7 +76947,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77006,7 +77006,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*val(fm.z,0,0,0)/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && is_constant(a.x) && !is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77065,7 +77065,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77124,7 +77124,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*val(fm.z,0,0,0)/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77183,7 +77183,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77242,7 +77242,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? val(a.z,0,0,0)*_const_fm.z/val(alpha.z,0,0,0) : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(is_constant(alpha.x) && !is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77301,7 +77301,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77360,7 +77360,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? val(a.z,0,0,0)*_const_fm.z/_const_alpha.z : val(a.z,0,0,0)*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else if(!is_constant(alpha.x) && is_constant(a.x) && is_constant(fm.x) && is_constant(rho) && is_constant(cm)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77419,7 +77419,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77478,7 +77478,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*(- (val(alpha.z,0,0,0) ? _const_a.z*_const_fm.z/val(alpha.z,0,0,0) : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}else {_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77537,7 +77537,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77596,7 +77596,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? embed_area_center (point, &x, &y, &z),    *((bool *)data) = false, (- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) : Delta*(- (_const_alpha.z ? _const_a.z*_const_fm.z/_const_alpha.z : _const_a.z*_const_rho/(_const_cm + 1e-30))) + val(_s,0,0,0)));}}}}}static double _boundary5_homogeneous(Point point,Point neighbor,scalar _s,bool *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77655,7 +77655,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -77714,9 +77714,9 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 106 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 106 "./centered.h"
 {return( ( data ? *((bool *)data) = false, 0 : val(_s,0,0,0)));}}}
-#line 116 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 116 "./centered.h"
 void pressure_embed_gradient (Point point, scalar p, coord * g)
 {if(!is_constant(rho) && !is_constant(cm) && !is_constant(a.x)){{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
@@ -77776,7 +77776,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30)*(val(a.x,0,0,0) + val(a.x,1,0,0))/2.;    g->y = val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30)*(val(a.y,0,0,0) + val(a.y,0,1,0))/2.;    g->z = val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30)*(val(a.z,0,0,0) + val(a.z,0,0,1))/2.;
 }}else if(is_constant(rho) && !is_constant(cm) && !is_constant(a.x)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);
 #line 117
@@ -77838,7 +77838,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = _const_rho/(val(cm,0,0,0) + 1e-30)*(val(a.x,0,0,0) + val(a.x,1,0,0))/2.;    g->y = _const_rho/(val(cm,0,0,0) + 1e-30)*(val(a.y,0,0,0) + val(a.y,0,1,0))/2.;    g->z = _const_rho/(val(cm,0,0,0) + 1e-30)*(val(a.z,0,0,0) + val(a.z,0,0,1))/2.;
 }}else if(!is_constant(rho) && is_constant(cm) && !is_constant(a.x)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);
 #line 117
@@ -77900,7 +77900,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = val(rho,0,0,0)/(_const_cm + 1e-30)*(val(a.x,0,0,0) + val(a.x,1,0,0))/2.;    g->y = val(rho,0,0,0)/(_const_cm + 1e-30)*(val(a.y,0,0,0) + val(a.y,0,1,0))/2.;    g->z = val(rho,0,0,0)/(_const_cm + 1e-30)*(val(a.z,0,0,0) + val(a.z,0,0,1))/2.;
 }}else if(is_constant(rho) && is_constant(cm) && !is_constant(a.x)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);
 #line 117
@@ -77962,7 +77962,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = _const_rho/(_const_cm + 1e-30)*(val(a.x,0,0,0) + val(a.x,1,0,0))/2.;    g->y = _const_rho/(_const_cm + 1e-30)*(val(a.y,0,0,0) + val(a.y,0,1,0))/2.;    g->z = _const_rho/(_const_cm + 1e-30)*(val(a.z,0,0,0) + val(a.z,0,0,1))/2.;
 }}else if(!is_constant(rho) && !is_constant(cm) && is_constant(a.x)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
 #line 117
@@ -78024,7 +78024,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30)*(_const_a.x + _const_a.x)/2.;    g->y = val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30)*(_const_a.y + _const_a.y)/2.;    g->z = val(rho,0,0,0)/(val(cm,0,0,0) + 1e-30)*(_const_a.z + _const_a.z)/2.;
 }}else if(is_constant(rho) && !is_constant(cm) && is_constant(a.x)){double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
 #line 117
@@ -78086,7 +78086,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = _const_rho/(val(cm,0,0,0) + 1e-30)*(_const_a.x + _const_a.x)/2.;    g->y = _const_rho/(val(cm,0,0,0) + 1e-30)*(_const_a.y + _const_a.y)/2.;    g->z = _const_rho/(val(cm,0,0,0) + 1e-30)*(_const_a.z + _const_a.z)/2.;
 }}else if(!is_constant(rho) && is_constant(cm) && is_constant(a.x)){double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
 #line 117
@@ -78148,7 +78148,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = val(rho,0,0,0)/(_const_cm + 1e-30)*(_const_a.x + _const_a.x)/2.;    g->y = val(rho,0,0,0)/(_const_cm + 1e-30)*(_const_a.y + _const_a.y)/2.;    g->z = val(rho,0,0,0)/(_const_cm + 1e-30)*(_const_a.z + _const_a.z)/2.;
 }}else {double _const_rho=_constant[rho.i-_NVARMAX];NOT_UNUSED(_const_rho);double _const_cm=_constant[cm.i-_NVARMAX];NOT_UNUSED(_const_cm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
 #line 117
@@ -78210,7 +78210,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;    
-#line 119 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 119 "./centered.h"
 g->x = _const_rho/(_const_cm + 1e-30)*(_const_a.x + _const_a.x)/2.;    g->y = _const_rho/(_const_cm + 1e-30)*(_const_a.y + _const_a.y)/2.;    g->z = _const_rho/(_const_cm + 1e-30)*(_const_a.z + _const_a.z)/2.;
 }}}
 
@@ -78218,7 +78218,7 @@ g->x = _const_rho/(_const_cm + 1e-30)*(_const_a.x + _const_a.x)/2.;    g->y = _c
 
 
 
-static int defaults_1_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i = 0)!=0;*ip=i;*tp=t;return ret;}      static int defaults_1(const int i,const double t,Event *_ev){tracing("defaults_1","/home/lisergey/basilisk/src/navier-stokes/centered.h",126);
+static int defaults_1_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i = 0)!=0;*ip=i;*tp=t;return ret;}      static int defaults_1(const int i,const double t,Event *_ev){tracing("defaults_1","./centered.h",126);
 {
 
 
@@ -78252,7 +78252,7 @@ if(!is_constant(fm.x)){
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 153, .first = _first
+      .fname = "./centered.h", .line = 153, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -78260,19 +78260,19 @@ if(!is_constant(fm.x)){
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 153 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 153 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 { _stencil_val(fm.x,0,0,0);_stencil_val_a(alphav.x,0,0,0); } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 { _stencil_val(fm.y,0,0,0);_stencil_val_a(alphav.y,0,0,0); } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 { _stencil_val(fm.z,0,0,0);_stencil_val_a(alphav.z,0,0,0); }}
 
     
@@ -78333,13 +78333,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 153 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 153 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -78398,7 +78398,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 val(alphav.x,0,0,0) = val(fm.x,0,0,0);}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -78409,7 +78409,7 @@ val(alphav.x,0,0,0) = val(fm.x,0,0,0);}
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -78468,7 +78468,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 val(alphav.y,0,0,0) = val(fm.y,0,0,0);}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -78479,7 +78479,7 @@ val(alphav.y,0,0,0) = val(fm.y,0,0,0);}
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -78538,12 +78538,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 val(alphav.z,0,0,0) = val(fm.z,0,0,0);}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -78553,7 +78553,7 @@ val(alphav.z,0,0,0) = val(fm.z,0,0,0);}
 
 #line 696
 }
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 }else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
   
@@ -78561,7 +78561,7 @@ val(alphav.z,0,0,0) = val(fm.z,0,0,0);}
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 153, .first = _first
+      .fname = "./centered.h", .line = 153, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -78569,19 +78569,19 @@ val(alphav.z,0,0,0) = val(fm.z,0,0,0);}
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 153 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 153 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {;_stencil_val_a(alphav.x,0,0,0); } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {;_stencil_val_a(alphav.y,0,0,0); } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {;_stencil_val_a(alphav.z,0,0,0); }}
 
     
@@ -78642,13 +78642,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 153 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 153 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -78707,7 +78707,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 val(alphav.x,0,0,0) = _const_fm.x;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -78718,7 +78718,7 @@ val(alphav.x,0,0,0) = _const_fm.x;}
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -78777,7 +78777,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 val(alphav.y,0,0,0) = _const_fm.y;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -78788,7 +78788,7 @@ val(alphav.y,0,0,0) = _const_fm.y;}
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);      
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -78847,12 +78847,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 val(alphav.z,0,0,0) = _const_fm.z;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -78862,7 +78862,7 @@ val(alphav.z,0,0,0) = _const_fm.z;}
 
 #line 696
 }
-#line 154 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 154 "./centered.h"
 }
   }
 
@@ -78900,7 +78900,7 @@ val(alphav.z,0,0,0) = _const_fm.z;}
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 185, .first = _first
+      .fname = "./centered.h", .line = 185, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -78908,7 +78908,7 @@ val(alphav.z,0,0,0) = _const_fm.z;}
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);    
-#line 186 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 186 "./centered.h"
 {
       {_stencil_val(u.x,0,0,0);   }      {_stencil_val(u.y,0,0,0);   }      {_stencil_val(u.z,0,0,0);   }}
 
@@ -78969,7 +78969,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags;    
-#line 186 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 186 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79028,7 +79028,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 186 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 186 "./centered.h"
 {
       dimensional (val(u.x,0,0,0) == Delta/t);      dimensional (val(u.y,0,0,0) == Delta/t);      dimensional (val(u.z,0,0,0) == Delta/t);}}
       
@@ -79039,19 +79039,19 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 188 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-}{end_tracing("defaults_1","/home/lisergey/basilisk/src/navier-stokes/centered.h",188);return 0;}end_tracing("defaults_1","/home/lisergey/basilisk/src/navier-stokes/centered.h",188);}
+#line 188 "./centered.h"
+}{end_tracing("defaults_1","./centered.h",188);return 0;}end_tracing("defaults_1","./centered.h",188);}
 
 
 
 
 
-static int default_display_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i = 0)!=0;*ip=i;*tp=t;return ret;}      static int default_display(const int i,const double t,Event *_ev){tracing("default_display","/home/lisergey/basilisk/src/navier-stokes/centered.h",194);
+static int default_display_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i = 0)!=0;*ip=i;*tp=t;return ret;}      static int default_display(const int i,const double t,Event *_ev){tracing("default_display","./centered.h",194);
 {display ("squares (color = 'u.x', spread = -1);"
 #line 494 "/home/lisergey/basilisk/src/common.h"
 , false
-#line 195 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-);  }{end_tracing("default_display","/home/lisergey/basilisk/src/navier-stokes/centered.h",195);return 0;}end_tracing("default_display","/home/lisergey/basilisk/src/navier-stokes/centered.h",195);}
+#line 195 "./centered.h"
+);  }{end_tracing("default_display","./centered.h",195);return 0;}end_tracing("default_display","./centered.h",195);}
 
 
 
@@ -79059,7 +79059,7 @@ static int default_display_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double
 
 double dtmax;
 
-static int init_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i = 0)!=0;*ip=i;*tp=t;return ret;}      static int init(const int i,const double t,Event *_ev){tracing("init","/home/lisergey/basilisk/src/navier-stokes/centered.h",203);
+static int init_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i = 0)!=0;*ip=i;*tp=t;return ret;}      static int init(const int i,const double t,Event *_ev){tracing("init","./centered.h",203);
 {
   trash (((vector[]){uf,{{-1},{-1},{-1}}}));
 if(!is_constant(fm.x)){
@@ -79069,7 +79069,7 @@ if(!is_constant(fm.x)){
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 206, .first = _first
+      .fname = "./centered.h", .line = 206, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -79077,19 +79077,19 @@ if(!is_constant(fm.x)){
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 206 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 206 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 { _stencil_val(fm.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val_a(uf.x,0,0,0);                 } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 { _stencil_val(fm.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);_stencil_val_a(uf.y,0,0,0);                 } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 { _stencil_val(fm.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);_stencil_val_a(uf.z,0,0,0);                 }}
 
     
@@ -79150,13 +79150,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 206 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 206 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79215,7 +79215,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 val(uf.x,0,0,0) = val(fm.x,0,0,0)*(_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.)));}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -79226,7 +79226,7 @@ val(uf.x,0,0,0) = val(fm.x,0,0,0)*(_attribute[u.x.i].third && val(fs.x,0,0,0) < 
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79285,7 +79285,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 val(uf.y,0,0,0) = val(fm.y,0,0,0)*(_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.)));}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -79296,7 +79296,7 @@ val(uf.y,0,0,0) = val(fm.y,0,0,0)*(_attribute[u.y.i].third && val(fs.y,0,0,0) < 
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79355,12 +79355,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 val(uf.z,0,0,0) = val(fm.z,0,0,0)*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.)));}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -79370,7 +79370,7 @@ val(uf.z,0,0,0) = val(fm.z,0,0,0)*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 
 
 #line 696
 }
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 }else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
   
@@ -79378,7 +79378,7 @@ val(uf.z,0,0,0) = val(fm.z,0,0,0)*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 206, .first = _first
+      .fname = "./centered.h", .line = 206, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -79386,19 +79386,19 @@ val(uf.z,0,0,0) = val(fm.z,0,0,0)*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 206 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 206 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {; _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val_a(uf.x,0,0,0);                 } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {; _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);_stencil_val_a(uf.y,0,0,0);                 } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {; _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);_stencil_val_a(uf.z,0,0,0);                 }}
 
     
@@ -79459,13 +79459,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 206 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 206 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79524,7 +79524,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 val(uf.x,0,0,0) = _const_fm.x*(_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.)));}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -79535,7 +79535,7 @@ val(uf.x,0,0,0) = _const_fm.x*(_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. &
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79594,7 +79594,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 val(uf.y,0,0,0) = _const_fm.y*(_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.)));}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -79605,7 +79605,7 @@ val(uf.y,0,0,0) = _const_fm.y*(_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. &
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79664,12 +79664,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 val(uf.z,0,0,0) = _const_fm.z*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.)));}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -79679,7 +79679,7 @@ val(uf.z,0,0,0) = _const_fm.z*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. &
 
 #line 696
 }
-#line 207 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 207 "./centered.h"
 }
 
 
@@ -79693,7 +79693,7 @@ val(uf.z,0,0,0) = _const_fm.z*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. &
 
   dtmax = DT;
   event ("stability");
-}{end_tracing("init","/home/lisergey/basilisk/src/navier-stokes/centered.h",220);return 0;}end_tracing("init","/home/lisergey/basilisk/src/navier-stokes/centered.h",220);}
+}{end_tracing("init","./centered.h",220);return 0;}end_tracing("init","./centered.h",220);}
 
 
 
@@ -79703,12 +79703,12 @@ val(uf.z,0,0,0) = _const_fm.z*(_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. &
 
 
 static int set_dtmax_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 229 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-      static int set_dtmax(const int i,const double t,Event *_ev){tracing("set_dtmax","/home/lisergey/basilisk/src/navier-stokes/centered.h",229);{dtmax = DT; }{end_tracing("set_dtmax","/home/lisergey/basilisk/src/navier-stokes/centered.h",229);return 0;}end_tracing("set_dtmax","/home/lisergey/basilisk/src/navier-stokes/centered.h",229);}
+#line 229 "./centered.h"
+      static int set_dtmax(const int i,const double t,Event *_ev){tracing("set_dtmax","./centered.h",229);{dtmax = DT; }{end_tracing("set_dtmax","./centered.h",229);return 0;}end_tracing("set_dtmax","./centered.h",229);}
 
-static int stability_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int stability(const int i,const double t,Event *_ev){tracing("stability","/home/lisergey/basilisk/src/navier-stokes/centered.h",231); {
+static int stability_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int stability(const int i,const double t,Event *_ev){tracing("stability","./centered.h",231); {
   dt = dtnext (stokes ? dtmax : timestep (uf, dtmax));
-}{end_tracing("stability","/home/lisergey/basilisk/src/navier-stokes/centered.h",233);return 0;}end_tracing("stability","/home/lisergey/basilisk/src/navier-stokes/centered.h",233);}
+}{end_tracing("stability","./centered.h",233);return 0;}end_tracing("stability","./centered.h",233);}
 
 
 
@@ -79726,7 +79726,7 @@ static int tracer_diffusion_expr0(int *ip,double *tp,Event *_ev){int i=*ip;doubl
 
 
 static int properties_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}static int properties(const int i,const double t,Event *_ev){;return 0;}
-#line 262 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 262 "./centered.h"
 void prediction()
 {
   vector du;
@@ -79753,7 +79753,7 @@ void prediction()
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 271, .first = _first
+      .fname = "./centered.h", .line = 271, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -79761,7 +79761,7 @@ void prediction()
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);      
-#line 272 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 272 "./centered.h"
 { {
 
 _stencil_val(fs.x,0,0,0);_stencil_val(fs.x,1,0,0);{
@@ -79846,7 +79846,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags;      
-#line 272 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 272 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -79905,7 +79905,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 272 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 272 "./centered.h"
 { {
 
         if (!val(fs.x,0,0,0) || !val(fs.x,1,0,0))
@@ -79940,7 +79940,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 279 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 279 "./centered.h"
 }
   else
     {
@@ -79950,7 +79950,7 @@ int level = point.level; NOT_UNUSED(level);
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 281, .first = _first
+      .fname = "./centered.h", .line = 281, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -79958,7 +79958,7 @@ int level = point.level; NOT_UNUSED(level);
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);      
-#line 282 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 282 "./centered.h"
 { {
 
 _stencil_val(fs.x,0,0,0);_stencil_val(fs.x,1,0,0);{
@@ -80043,7 +80043,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags;      
-#line 282 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 282 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -80102,7 +80102,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 282 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 282 "./centered.h"
 { {
 
         if (!val(fs.x,0,0,0) || !val(fs.x,1,0,0))
@@ -80137,7 +80137,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 289 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 289 "./centered.h"
 }
 
   trash (((vector[]){uf,{{-1},{-1},{-1}}}));
@@ -80148,7 +80148,7 @@ if(!is_constant(fm.x)){
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 292, .first = _first
+      .fname = "./centered.h", .line = 292, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -80156,11 +80156,11 @@ if(!is_constant(fm.x)){
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {              
      _stencil_val(u.x,-1,0,0);_stencil_val(u.x,0,0,0);     
     
@@ -80181,7 +80181,7 @@ _stencil_val(fm.x,0,0,0);    _stencil_val_r(uf.x,0,0,0);
   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {              
      _stencil_val(u.y,0,-1,0);_stencil_val(u.y,0,0,0);     
     
@@ -80202,7 +80202,7 @@ _stencil_val(fm.y,0,0,0);    _stencil_val_r(uf.y,0,0,0);
   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {              
      _stencil_val(u.z,0,0,-1);_stencil_val(u.z,0,0,0);     
     
@@ -80280,13 +80280,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -80345,7 +80345,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
     double un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = ( (int)(un > 0 ? 1 : -1));
     int i = -(s + 1.)/2.;
@@ -80373,7 +80373,7 @@ int level = point.level; NOT_UNUSED(level);
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -80432,7 +80432,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
     double un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = ( (int)(un > 0 ? 1 : -1));
     int i = -(s + 1.)/2.;
@@ -80460,7 +80460,7 @@ int level = point.level; NOT_UNUSED(level);
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -80519,7 +80519,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
     double un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = ( (int)(un > 0 ? 1 : -1));
     int i = -(s + 1.)/2.;
@@ -80541,7 +80541,7 @@ int level = point.level; NOT_UNUSED(level);
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 309 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 309 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -80551,7 +80551,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 696
 }
-#line 309 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 309 "./centered.h"
 }else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
   
@@ -80559,7 +80559,7 @@ int level = point.level; NOT_UNUSED(level);
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 292, .first = _first
+      .fname = "./centered.h", .line = 292, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -80567,11 +80567,11 @@ int level = point.level; NOT_UNUSED(level);
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {              
      _stencil_val(u.x,-1,0,0);_stencil_val(u.x,0,0,0);     
     
@@ -80592,7 +80592,7 @@ _stencil_val(u.z,o_stencil,0,0);      _stencil_val_r(uf.x,0,0,0);
   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {              
      _stencil_val(u.y,0,-1,0);_stencil_val(u.y,0,0,0);     
     
@@ -80613,7 +80613,7 @@ _stencil_val(u.x,0,o_stencil,0);      _stencil_val_r(uf.y,0,0,0);
   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {              
      _stencil_val(u.z,0,0,-1);_stencil_val(u.z,0,0,0);     
     
@@ -80691,13 +80691,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -80756,7 +80756,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
     double un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = ( (int)(un > 0 ? 1 : -1));
     int i = -(s + 1.)/2.;
@@ -80784,7 +80784,7 @@ int level = point.level; NOT_UNUSED(level);
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -80843,7 +80843,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
     double un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = ( (int)(un > 0 ? 1 : -1));
     int i = -(s + 1.)/2.;
@@ -80871,7 +80871,7 @@ int level = point.level; NOT_UNUSED(level);
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg); 
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -80930,7 +80930,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 292 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 292 "./centered.h"
 {
     double un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = ( (int)(un > 0 ? 1 : -1));
     int i = -(s + 1.)/2.;
@@ -80952,7 +80952,7 @@ int level = point.level; NOT_UNUSED(level);
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 309 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 309 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -80962,22 +80962,22 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 696
 }
-#line 309 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 309 "./centered.h"
 }
 
   delete ((scalar *)((vector[]){du,{{-1},{-1},{-1}}}));
 }
 #line 323
 static int advection_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 323 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-      static int advection_term(const int i,const double t,Event *_ev){tracing("advection_term","/home/lisergey/basilisk/src/navier-stokes/centered.h",323);
+#line 323 "./centered.h"
+      static int advection_term(const int i,const double t,Event *_ev){tracing("advection_term","./centered.h",323);
 {
   if (!stokes) {
     prediction();
     mgpf = project (uf, pf, alpha, dt/2., mgpf.nrelax);
     advection ((scalar *)((vector[]){u,{{-1},{-1},{-1}}}), uf, dt, (scalar *)((vector[]){g,{{-1},{-1},{-1}}}));
   }
-}{end_tracing("advection_term","/home/lisergey/basilisk/src/navier-stokes/centered.h",330);return 0;}end_tracing("advection_term","/home/lisergey/basilisk/src/navier-stokes/centered.h",330);}
+}{end_tracing("advection_term","./centered.h",330);return 0;}end_tracing("advection_term","./centered.h",330);}
 
 
 
@@ -80991,7 +80991,7 @@ static void correction (double dt)
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 340, .first = _first
+      .fname = "./centered.h", .line = 340, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -81000,7 +81000,7 @@ static void correction (double dt)
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
     
-#line 341 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 341 "./centered.h"
 {
       {_stencil_val(g.x,0,0,0);_stencil_val_r(u.x,0,0,0);  }      {_stencil_val(g.y,0,0,0);_stencil_val_r(u.y,0,0,0);  }      {_stencil_val(g.z,0,0,0);_stencil_val_r(u.z,0,0,0);  }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
@@ -81059,7 +81059,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags;    
-#line 341 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 341 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81118,7 +81118,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 341 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 341 "./centered.h"
 {
       val(u.x,0,0,0) += dt*val(g.x,0,0,0);      val(u.y,0,0,0) += dt*val(g.y,0,0,0);      val(u.z,0,0,0) += dt*val(g.z,0,0,0);}}
       
@@ -81129,7 +81129,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 343 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 343 "./centered.h"
 }
 
 
@@ -81140,15 +81140,15 @@ int level = point.level; NOT_UNUSED(level);
 
 
 static int viscous_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 352 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-      static int viscous_term(const int i,const double t,Event *_ev){tracing("viscous_term","/home/lisergey/basilisk/src/navier-stokes/centered.h",352);
+#line 352 "./centered.h"
+      static int viscous_term(const int i,const double t,Event *_ev){tracing("viscous_term","./centered.h",352);
 {
   if (constant(mu.x) != 0.) {
     correction (dt);
     mgu = viscosity (u, mu, rho, dt, mgu.nrelax
 #line 146 "/home/lisergey/basilisk/src/viscosity-embed.h"
 , NULL
-#line 356 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 356 "./centered.h"
 );
     correction (-dt);
   }
@@ -81163,7 +81163,7 @@ static int viscous_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 366, .first = _first
+      .fname = "./centered.h", .line = 366, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -81171,19 +81171,19 @@ static int viscous_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 366 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 366 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);      
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 {_stencil_val_a(af.x,0,0,0);  } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);      
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 {_stencil_val_a(af.y,0,0,0);  } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);      
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 {_stencil_val_a(af.z,0,0,0);  }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -81242,13 +81242,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 366 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 366 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);      
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81307,7 +81307,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 val(af.x,0,0,0) = 0.;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -81318,7 +81318,7 @@ val(af.x,0,0,0) = 0.;}
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);      
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81377,7 +81377,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 val(af.y,0,0,0) = 0.;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -81388,7 +81388,7 @@ val(af.y,0,0,0) = 0.;}
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);      
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81447,12 +81447,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 val(af.z,0,0,0) = 0.;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 367 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 367 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -81462,13 +81462,13 @@ val(af.z,0,0,0) = 0.;}
 
 #line 696
 }  
-#line 368 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 368 "./centered.h"
 }
-}{end_tracing("viscous_term","/home/lisergey/basilisk/src/navier-stokes/centered.h",369);return 0;}end_tracing("viscous_term","/home/lisergey/basilisk/src/navier-stokes/centered.h",369);}
+}{end_tracing("viscous_term","./centered.h",369);return 0;}end_tracing("viscous_term","./centered.h",369);}
 #line 388
 static int acceleration_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 388 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-      static int acceleration(const int i,const double t,Event *_ev){tracing("acceleration","/home/lisergey/basilisk/src/navier-stokes/centered.h",388);
+#line 388 "./centered.h"
+      static int acceleration(const int i,const double t,Event *_ev){tracing("acceleration","./centered.h",388);
 {
   trash (((vector[]){uf,{{-1},{-1},{-1}}}));
 if(!is_constant(fm.x) && !is_constant(a.x)){  
@@ -81476,7 +81476,7 @@ if(!is_constant(fm.x) && !is_constant(a.x)){
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 391, .first = _first
+      .fname = "./centered.h", .line = 391, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -81484,22 +81484,22 @@ if(!is_constant(fm.x) && !is_constant(a.x)){
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 { _stencil_val(fm.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(a.x,0,0,0);_stencil_val_a(uf.x,0,0,0);                   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 { _stencil_val(fm.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);_stencil_val(a.y,0,0,0);_stencil_val_a(uf.y,0,0,0);                   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 { _stencil_val(fm.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);_stencil_val(a.z,0,0,0);_stencil_val_a(uf.z,0,0,0);                   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -81558,13 +81558,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81623,7 +81623,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.x,0,0,0) = val(fm.x,0,0,0)*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -81634,7 +81634,7 @@ val(uf.x,0,0,0) = val(fm.x,0,0,0)*((_attribute[u.x.i].third && val(fs.x,0,0,0) <
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81693,7 +81693,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.y,0,0,0) = val(fm.y,0,0,0)*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -81704,7 +81704,7 @@ val(uf.y,0,0,0) = val(fm.y,0,0,0)*((_attribute[u.y.i].third && val(fs.y,0,0,0) <
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81763,12 +81763,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -81778,13 +81778,13 @@ val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) <
 
 #line 696
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }else if(is_constant(fm.x) && !is_constant(a.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 391, .first = _first
+      .fname = "./centered.h", .line = 391, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -81792,22 +81792,22 @@ val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) <
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {; _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(a.x,0,0,0);_stencil_val_a(uf.x,0,0,0);                   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {; _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);_stencil_val(a.y,0,0,0);_stencil_val_a(uf.y,0,0,0);                   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {; _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);_stencil_val(a.z,0,0,0);_stencil_val_a(uf.z,0,0,0);                   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -81866,13 +81866,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -81931,7 +81931,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.x,0,0,0) = _const_fm.x*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -81942,7 +81942,7 @@ val(uf.x,0,0,0) = _const_fm.x*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. 
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82001,7 +82001,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.y,0,0,0) = _const_fm.y*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82012,7 +82012,7 @@ val(uf.y,0,0,0) = _const_fm.y*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. 
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82071,12 +82071,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.z,0,0,0) = _const_fm.z*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82086,13 +82086,13 @@ val(uf.z,0,0,0) = _const_fm.z*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. 
 
 #line 696
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }else if(!is_constant(fm.x) && is_constant(a.x)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 391, .first = _first
+      .fname = "./centered.h", .line = 391, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -82100,22 +82100,22 @@ val(uf.z,0,0,0) = _const_fm.z*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. 
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 { _stencil_val(fm.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);;_stencil_val_a(uf.x,0,0,0);                   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 { _stencil_val(fm.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);;_stencil_val_a(uf.y,0,0,0);                   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 { _stencil_val(fm.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);;_stencil_val_a(uf.z,0,0,0);                   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -82174,13 +82174,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82239,7 +82239,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.x,0,0,0) = val(fm.x,0,0,0)*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82250,7 +82250,7 @@ val(uf.x,0,0,0) = val(fm.x,0,0,0)*((_attribute[u.x.i].third && val(fs.x,0,0,0) <
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82309,7 +82309,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.y,0,0,0) = val(fm.y,0,0,0)*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82320,7 +82320,7 @@ val(uf.y,0,0,0) = val(fm.y,0,0,0)*((_attribute[u.y.i].third && val(fs.y,0,0,0) <
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82379,12 +82379,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82394,13 +82394,13 @@ val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) <
 
 #line 696
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 391, .first = _first
+      .fname = "./centered.h", .line = 391, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -82408,22 +82408,22 @@ val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) <
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {; _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);;_stencil_val_a(uf.x,0,0,0);                   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {; _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);;_stencil_val_a(uf.y,0,0,0);                   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {; _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);;_stencil_val_a(uf.z,0,0,0);                   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -82482,13 +82482,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 391 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 391 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82547,7 +82547,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.x,0,0,0) = _const_fm.x*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82558,7 +82558,7 @@ val(uf.x,0,0,0) = _const_fm.x*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. 
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82617,7 +82617,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.y,0,0,0) = _const_fm.y*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82628,7 +82628,7 @@ val(uf.y,0,0,0) = _const_fm.y*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. 
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82687,12 +82687,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 val(uf.z,0,0,0) = _const_fm.z*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82702,10 +82702,10 @@ val(uf.z,0,0,0) = _const_fm.z*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. 
 
 #line 696
 }
-#line 392 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 392 "./centered.h"
 }
-}{end_tracing("acceleration","/home/lisergey/basilisk/src/navier-stokes/centered.h",393);return 0;}end_tracing("acceleration","/home/lisergey/basilisk/src/navier-stokes/centered.h",393);}
-#line 402 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+}{end_tracing("acceleration","./centered.h",393);return 0;}end_tracing("acceleration","./centered.h",393);}
+#line 402 "./centered.h"
 void centered_gradient (scalar p, vector g)
 {
 
@@ -82719,7 +82719,7 @@ if(!is_constant(fm.x) && !is_constant(a.x) && !is_constant(alpha.x)){
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -82727,22 +82727,22 @@ if(!is_constant(fm.x) && !is_constant(a.x) && !is_constant(alpha.x)){
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.x,0,0,0);_stencil_val(a.x,0,0,0); _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.y,0,0,0);_stencil_val(a.y,0,0,0); _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.z,0,0,0);_stencil_val(a.z,0,0,0); _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -82801,13 +82801,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82866,7 +82866,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82877,7 +82877,7 @@ val(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -82936,7 +82936,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -82947,7 +82947,7 @@ val(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83006,12 +83006,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83021,13 +83021,13 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }else if(is_constant(fm.x) && !is_constant(a.x) && !is_constant(alpha.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -83035,22 +83035,22 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;_stencil_val(a.x,0,0,0); _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;_stencil_val(a.y,0,0,0); _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;_stencil_val(a.z,0,0,0); _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -83109,13 +83109,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83174,7 +83174,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83185,7 +83185,7 @@ val(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) 
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83244,7 +83244,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83255,7 +83255,7 @@ val(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) 
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83314,12 +83314,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83329,13 +83329,13 @@ val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) 
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }else if(!is_constant(fm.x) && is_constant(a.x) && !is_constant(alpha.x)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -83343,22 +83343,22 @@ val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) 
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.x,0,0,0);; _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.y,0,0,0);; _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.z,0,0,0);; _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -83417,13 +83417,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83482,7 +83482,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83493,7 +83493,7 @@ val(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) 
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83552,7 +83552,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83563,7 +83563,7 @@ val(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) 
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83622,12 +83622,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83637,13 +83637,13 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) 
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }else if(is_constant(fm.x) && is_constant(a.x) && !is_constant(alpha.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -83651,22 +83651,22 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) 
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;; _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;; _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;; _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -83725,13 +83725,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83790,7 +83790,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = _const_fm.x*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83801,7 +83801,7 @@ val(gf.x,0,0,0) = _const_fm.x*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - va
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83860,7 +83860,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = _const_fm.y*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83871,7 +83871,7 @@ val(gf.y,0,0,0) = _const_fm.y*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - va
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -83930,12 +83930,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = _const_fm.z*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -83945,13 +83945,13 @@ val(gf.z,0,0,0) = _const_fm.z*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - va
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }else if(!is_constant(fm.x) && !is_constant(a.x) && is_constant(alpha.x)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -83959,22 +83959,22 @@ val(gf.z,0,0,0) = _const_fm.z*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - va
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.x,0,0,0);_stencil_val(a.x,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.y,0,0,0);_stencil_val(a.y,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.z,0,0,0);_stencil_val(a.z,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -84033,13 +84033,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84098,7 +84098,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84109,7 +84109,7 @@ val(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) 
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84168,7 +84168,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84179,7 +84179,7 @@ val(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) 
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84238,12 +84238,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84253,13 +84253,13 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) 
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }else if(is_constant(fm.x) && !is_constant(a.x) && is_constant(alpha.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -84267,22 +84267,22 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) 
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;_stencil_val(a.x,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;_stencil_val(a.y,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;_stencil_val(a.z,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -84341,13 +84341,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84406,7 +84406,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84417,7 +84417,7 @@ val(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - va
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84476,7 +84476,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84487,7 +84487,7 @@ val(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - va
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84546,12 +84546,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84561,13 +84561,13 @@ val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - va
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }else if(!is_constant(fm.x) && is_constant(a.x) && is_constant(alpha.x)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -84575,22 +84575,22 @@ val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - va
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.x,0,0,0);;;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.y,0,0,0);;;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 { _stencil_val(fm.z,0,0,0);;;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -84649,13 +84649,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84714,7 +84714,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84725,7 +84725,7 @@ val(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - _const_alpha.x*(val(p,0,0,0) - va
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84784,7 +84784,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84795,7 +84795,7 @@ val(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - _const_alpha.y*(val(p,0,0,0) - va
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -84854,12 +84854,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -84869,13 +84869,13 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - _const_alpha.z*(val(p,0,0,0) - va
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 410, .first = _first
+      .fname = "./centered.h", .line = 410, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -84883,22 +84883,22 @@ val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - _const_alpha.z*(val(p,0,0,0) - va
       }
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 { 
 #line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 0);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;;;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   } 
 #line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 1);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;;;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   } 
 #line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
 _loop.face |= (1 << 2);
     
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {;;;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
 check_stencil (&_loop);
@@ -84957,13 +84957,13 @@ check_stencil (&_loop);
 ((Tree *)grid)->faces
 #line 445
 ).p[_k].flags;
-#line 410 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 410 "./centered.h"
 {
   
 #line 699 "/home/lisergey/basilisk/src/grid/tree.h"
 if (_flags & face_x) {
     int ig = -1; NOT_UNUSED(ig);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -85022,7 +85022,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.x,0,0,0) = _const_fm.x*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}
   
 #line 702 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -85033,7 +85033,7 @@ val(gf.x,0,0,0) = _const_fm.x*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,
 
 if (_flags & face_y) {
     int jg = -1; NOT_UNUSED(jg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -85092,7 +85092,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.y,0,0,0) = _const_fm.y*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}
   
 #line 710 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -85103,7 +85103,7 @@ val(gf.y,0,0,0) = _const_fm.y*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,
 
 if (_flags & face_z) {
     int kg = -1; NOT_UNUSED(kg);    
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -85162,12 +85162,12 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 val(gf.z,0,0,0) = _const_fm.z*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}
   
 #line 718 "/home/lisergey/basilisk/src/grid/tree.h"
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
       
 #line 447 "/home/lisergey/basilisk/src/grid/tree.h"
@@ -85177,7 +85177,7 @@ val(gf.z,0,0,0) = _const_fm.z*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,
 
 #line 696
 }
-#line 411 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 411 "./centered.h"
 }
 
 
@@ -85190,7 +85190,7 @@ val(gf.z,0,0,0) = _const_fm.z*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 418, .first = _first
+      .fname = "./centered.h", .line = 418, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -85199,7 +85199,7 @@ val(gf.z,0,0,0) = _const_fm.z*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
     
-#line 419 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 419 "./centered.h"
 {
       {_stencil_val(gf.x,0,0,0); _stencil_val(gf.x,1,0,0);_stencil_val(fm.x,0,0,0); _stencil_val(fm.x,1,0,0);_stencil_val_a(g.x,0,0,0);      }      {_stencil_val(gf.y,0,0,0); _stencil_val(gf.y,0,1,0);_stencil_val(fm.y,0,0,0); _stencil_val(fm.y,0,1,0);_stencil_val_a(g.y,0,0,0);      }      {_stencil_val(gf.z,0,0,0); _stencil_val(gf.z,0,0,1);_stencil_val(fm.z,0,0,0); _stencil_val(fm.z,0,0,1);_stencil_val_a(g.z,0,0,0);      }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
@@ -85258,7 +85258,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags;    
-#line 419 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 419 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -85317,7 +85317,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 419 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 419 "./centered.h"
 {
       val(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(val(fm.x,0,0,0) + val(fm.x,1,0,0) + 1e-30);      val(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(val(fm.y,0,0,0) + val(fm.y,0,1,0) + 1e-30);      val(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(val(fm.z,0,0,0) + val(fm.z,0,0,1) + 1e-30);}}
       
@@ -85328,13 +85328,13 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 420 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 420 "./centered.h"
 }else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);  
 #line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
 {
     static int _first = 1.;
     ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 418, .first = _first
+      .fname = "./centered.h", .line = 418, .first = _first
     };
     if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
  _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
@@ -85343,7 +85343,7 @@ int level = point.level; NOT_UNUSED(level);
     int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
     Point point = {0}; NOT_UNUSED (point);
     
-#line 419 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 419 "./centered.h"
 {
       {_stencil_val(gf.x,0,0,0); _stencil_val(gf.x,1,0,0);;;_stencil_val_a(g.x,0,0,0);      }      {_stencil_val(gf.y,0,0,0); _stencil_val(gf.y,0,1,0);;;_stencil_val_a(g.y,0,0,0);      }      {_stencil_val(gf.z,0,0,0); _stencil_val(gf.z,0,0,1);;;_stencil_val_a(g.z,0,0,0);      }}    
 #line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
@@ -85402,7 +85402,7 @@ check_stencil (&_loop);
 ((Tree *)grid)->leaves
 #line 445
 ).p[_k].flags;    
-#line 419 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 419 "./centered.h"
 {  
 #line 3 "/home/lisergey/basilisk/src/grid/variables.h"
 double Delta = L0*(1./(1 << point.level));
@@ -85461,7 +85461,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
   parent.k = (point.k + 2)/2;
-#line 419 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 419 "./centered.h"
 {
       val(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(_const_fm.x + _const_fm.x + 1e-30);      val(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(_const_fm.y + _const_fm.y + 1e-30);      val(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(_const_fm.z + _const_fm.z + 1e-30);}}
       
@@ -85472,7 +85472,7 @@ int level = point.level; NOT_UNUSED(level);
 
 #line 688
 }
-#line 420 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
+#line 420 "./centered.h"
 }delete((scalar*)((vector[]){gf,{{-1},{-1},{-1}}}));
 }
 
@@ -85481,7 +85481,7 @@ int level = point.level; NOT_UNUSED(level);
 
 
 
-static int projection_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int projection(const int i,const double t,Event *_ev){tracing("projection","/home/lisergey/basilisk/src/navier-stokes/centered.h",428);
+static int projection_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}      static int projection(const int i,const double t,Event *_ev){tracing("projection","./centered.h",428);
 {
   mgp = project (uf, p, alpha, dt, mgp.nrelax);
   centered_gradient (p, g);
@@ -85490,346 +85490,13 @@ static int projection_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*t
 
 
   correction (dt);
-}{end_tracing("projection","/home/lisergey/basilisk/src/navier-stokes/centered.h",437);return 0;}end_tracing("projection","/home/lisergey/basilisk/src/navier-stokes/centered.h",437);}
+}{end_tracing("projection","./centered.h",437);return 0;}end_tracing("projection","./centered.h",437);}
 
 
 
 
 
 static int end_timestep_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}static int end_timestep(const int i,const double t,Event *_ev){;return 0;}
-
-
-
-
-
-
-
-
-
-static int adapt_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 453 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-      static int adapt(const int i,const double t,Event *_ev){tracing("adapt","/home/lisergey/basilisk/src/navier-stokes/centered.h",453); {
-
-  fractions_cleanup (cs, fs
-#line 293 "/home/lisergey/basilisk/src/embed.h"
-, 
-0., false
-#line 455 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-);  
-#line 314 "/home/lisergey/basilisk/src/grid/stencils.h"
-{
-    static int _first = 1.;
-    ForeachData _loop = {
-      .fname = "/home/lisergey/basilisk/src/navier-stokes/centered.h", .line = 456, .first = _first
-    };
-    if (baseblock) for (scalar s = baseblock[0], * i = baseblock; s.i >= 0; i++, s = *i) {
- _attribute[s.i].input = _attribute[s.i].output = _attribute[s.i].nowarning = false;
- _attribute[s.i].width = 0;
-      }
-    int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
-    Point point = {0}; NOT_UNUSED (point);
-#line 456 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{ 
-#line 377 "/home/lisergey/basilisk/src/grid/stencils.h"
-_loop.face |= (1 << 0);
-    
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{_stencil_val(uf.x,0,0,0);_stencil_val(fs.x,0,0,0);
-      {_stencil_val_a(uf.x,0,0,0);  }   } 
-#line 378 "/home/lisergey/basilisk/src/grid/stencils.h"
-_loop.face |= (1 << 1);
-    
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{_stencil_val(uf.y,0,0,0);_stencil_val(fs.y,0,0,0);
-      {_stencil_val_a(uf.y,0,0,0);  }   } 
-#line 379 "/home/lisergey/basilisk/src/grid/stencils.h"
-_loop.face |= (1 << 2);
-    
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{_stencil_val(uf.z,0,0,0);_stencil_val(fs.z,0,0,0);
-      {_stencil_val_a(uf.z,0,0,0);  }   }}    
-#line 328 "/home/lisergey/basilisk/src/grid/stencils.h"
-check_stencil (&_loop);
-    boundary_stencil (&_loop);
-    _first = 0;
-  }
-
-#line 692 "/home/lisergey/basilisk/src/grid/tree.h"
-{
-  { if (((Tree *)grid)->dirty) update_cache_f(); };
-#line 423
-{
-  OMP_PARALLEL () {
-    int ig = 0, jg = 0, kg = 0; NOT_UNUSED(ig); NOT_UNUSED(jg); NOT_UNUSED(kg);
-    Point point = {0}; NOT_UNUSED (point);
-    point.i = 2;
-
-    point.j = 2;
-
-
-    point.k = 2;
-
-    int _k; unsigned short _flags; NOT_UNUSED(_flags);
-    OMP(omp for schedule(static))
-      for (_k = 0; _k < (
-#line 694
-((Tree *)grid)->faces
-#line 436
-).n; _k++) {
- point.i = (
-#line 694
-((Tree *)grid)->faces
-#line 437
-).p[_k].i;
-
- point.j = (
-#line 694
-((Tree *)grid)->faces
-#line 439
-).p[_k].j;
-
-
- point.k = (
-#line 694
-((Tree *)grid)->faces
-#line 442
-).p[_k].k;
-
- point.level = (
-#line 694
-((Tree *)grid)->faces
-#line 444
-).p[_k].level;
- _flags = (
-#line 694
-((Tree *)grid)->faces
-#line 445
-).p[_k].flags;
-#line 456 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{
-  
-#line 699 "/home/lisergey/basilisk/src/grid/tree.h"
-if (_flags & face_x) {
-    int ig = -1; NOT_UNUSED(ig);    
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{  
-#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
-double Delta = L0*(1./(1 << point.level));
-  double Delta_x = Delta;
-
-  double Delta_y = Delta;
-
-
-  double Delta_z = Delta;
-
-
-  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
-
-  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
-
-
-
-  NOT_UNUSED(y);
-
-  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
-
-
-
-  NOT_UNUSED(z);
-
-  NOT_UNUSED(Delta);
-  NOT_UNUSED(Delta_x);
-
-  NOT_UNUSED(Delta_y);
-
-
-  NOT_UNUSED(Delta_z);
-
-
-  ;
-  
-#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
-int level = point.level; NOT_UNUSED(level);
-
-
-
-
-
-
-
-  struct { int x, y, z; } child = {
-    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
-  };
-
-  NOT_UNUSED(child);
-  Point parent = point; NOT_UNUSED(parent);
-  parent.level--;
-  parent.i = (point.i + 2)/2;
-
-  parent.j = (point.j + 2)/2;
-
-
-  parent.k = (point.k + 2)/2;
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-if (val(uf.x,0,0,0) && !val(fs.x,0,0,0))
-      val(uf.x,0,0,0) = 0.;}
-  
-#line 702 "/home/lisergey/basilisk/src/grid/tree.h"
-}
-  
-
-
-
-if (_flags & face_y) {
-    int jg = -1; NOT_UNUSED(jg);    
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{  
-#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
-double Delta = L0*(1./(1 << point.level));
-  double Delta_y = Delta;
-
-  double Delta_z = Delta;
-
-
-  double Delta_x = Delta;
-
-
-  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
-
-  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
-
-
-
-  NOT_UNUSED(y);
-
-  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
-
-
-
-  NOT_UNUSED(z);
-
-  NOT_UNUSED(Delta);
-  NOT_UNUSED(Delta_y);
-
-  NOT_UNUSED(Delta_z);
-
-
-  NOT_UNUSED(Delta_x);
-
-
-  ;
-  
-#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
-int level = point.level; NOT_UNUSED(level);
-
-
-
-
-
-
-
-  struct { int x, y, z; } child = {
-    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
-  };
-
-  NOT_UNUSED(child);
-  Point parent = point; NOT_UNUSED(parent);
-  parent.level--;
-  parent.i = (point.i + 2)/2;
-
-  parent.j = (point.j + 2)/2;
-
-
-  parent.k = (point.k + 2)/2;
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-if (val(uf.y,0,0,0) && !val(fs.y,0,0,0))
-      val(uf.y,0,0,0) = 0.;}
-  
-#line 710 "/home/lisergey/basilisk/src/grid/tree.h"
-}
-  
-
-
-
-if (_flags & face_z) {
-    int kg = -1; NOT_UNUSED(kg);    
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-{  
-#line 3 "/home/lisergey/basilisk/src/grid/variables.h"
-double Delta = L0*(1./(1 << point.level));
-  double Delta_z = Delta;
-
-  double Delta_x = Delta;
-
-
-  double Delta_y = Delta;
-
-
-  double x = ((ig + 1)/2. + (point.i - 2))*Delta + X0; NOT_UNUSED(x);
-
-  double y = ((jg + 1)/2. + (point.j - 2))*Delta + Y0;
-
-
-
-  NOT_UNUSED(y);
-
-  double z = ((kg + 1)/2. + (point.k - 2))*Delta + Z0;
-
-
-
-  NOT_UNUSED(z);
-
-  NOT_UNUSED(Delta);
-  NOT_UNUSED(Delta_z);
-
-  NOT_UNUSED(Delta_x);
-
-
-  NOT_UNUSED(Delta_y);
-
-
-  ;
-  
-#line 321 "/home/lisergey/basilisk/src/grid/tree.h"
-int level = point.level; NOT_UNUSED(level);
-
-
-
-
-
-
-
-  struct { int x, y, z; } child = {
-    2*((point.i+2)%2)-1, 2*((point.j+2)%2)-1, 2*((point.k+2)%2)-1
-  };
-
-  NOT_UNUSED(child);
-  Point parent = point; NOT_UNUSED(parent);
-  parent.level--;
-  parent.i = (point.i + 2)/2;
-
-  parent.j = (point.j + 2)/2;
-
-
-  parent.k = (point.k + 2)/2;
-#line 457 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-if (val(uf.z,0,0,0) && !val(fs.z,0,0,0))
-      val(uf.z,0,0,0) = 0.;}
-  
-#line 718 "/home/lisergey/basilisk/src/grid/tree.h"
-}
-#line 458 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-}      
-#line 447 "/home/lisergey/basilisk/src/grid/tree.h"
-}
-  }
-}
-
-#line 696
-}  
-#line 460 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-event ("properties");
-}{end_tracing("adapt","/home/lisergey/basilisk/src/navier-stokes/centered.h",461);return 0;}end_tracing("adapt","/home/lisergey/basilisk/src/navier-stokes/centered.h",461);}
 #line 12 "cylinder.c"
 #line 1 "output_xdmf.h"
 #line 1 "./output_xdmf.h"
@@ -92830,10 +92497,10 @@ event_register((Event){0,1,metric,{metric_expr0},((int *)0),((double *)0),"/home
 event_register((Event){0,1,defaults,{defaults_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/embed.h",949,"defaults"});  
 #line 42 "/home/lisergey/basilisk/src/run.h"
 event_register((Event){0,1,defaults_0,{defaults_0_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/run.h",42,"defaults"});  
-#line 126 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-event_register((Event){0,1,defaults_1,{defaults_1_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",126,"defaults"});  
+#line 126 "./centered.h"
+event_register((Event){0,1,defaults_1,{defaults_1_expr0},((int *)0),((double *)0),"./centered.h",126,"defaults"});  
 #line 194
-event_register((Event){0,1,default_display,{default_display_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",194,"default_display"});  
+event_register((Event){0,1,default_display,{default_display_expr0},((int *)0),((double *)0),"./centered.h",194,"default_display"});  
 
 
 
@@ -92842,7 +92509,7 @@ event_register((Event){0,1,default_display,{default_display_expr0},((int *)0),((
 
 
 
-event_register((Event){0,1,init,{init_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",203,"init"});  
+event_register((Event){0,1,init,{init_expr0},((int *)0),((double *)0),"./centered.h",203,"init"});  
 #line 452 "cylinder.c"
 event_register((Event){0,1,init_0,{init_0_expr0},((int *)0),((double *)0),"cylinder.c",452,"init"});  
 #line 498
@@ -92869,12 +92536,10 @@ embed=new_bid();  init_scalar((scalar){4},"p");  init_vector((vector){{5},{6},{7
 }_attribute[p.i].dirty=1,_attribute[p.i].boundary[right]=_boundary0,_attribute[p.i].boundary_homogeneous[right]=_boundary0_homogeneous;_attribute[p.i].dirty=1,_attribute[p.i].boundary[left]=_boundary1,_attribute[p.i].boundary_homogeneous[left]=_boundary1_homogeneous;_attribute[p.i].dirty=1,_attribute[p.i].boundary[top]=_boundary2,_attribute[p.i].boundary_homogeneous[top]=_boundary2_homogeneous;_attribute[p.i].dirty=1,_attribute[p.i].boundary[bottom]=_boundary3,_attribute[p.i].boundary_homogeneous[bottom]=_boundary3_homogeneous;_attribute[p.i].dirty=1,_attribute[p.i].boundary[front]=_boundary4,_attribute[p.i].boundary_homogeneous[front]=_boundary4_homogeneous;_attribute[p.i].dirty=1,_attribute[p.i].boundary[back]=_boundary5,_attribute[p.i].boundary_homogeneous[back]=_boundary5_homogeneous;_attribute[u.x.i].dirty=1,_attribute[u.x.i].boundary[embed]=_boundary6,_attribute[u.x.i].boundary_homogeneous[embed]=_boundary6_homogeneous;_attribute[u.y.i].dirty=1,_attribute[u.y.i].boundary[embed]=_boundary7,_attribute[u.y.i].boundary_homogeneous[embed]=_boundary7_homogeneous;_attribute[u.z.i].dirty=1,_attribute[u.z.i].boundary[embed]=_boundary8,_attribute[u.z.i].boundary_homogeneous[embed]=_boundary8_homogeneous;  
 #line 50 "/home/lisergey/basilisk/src/run.h"
 event_register((Event){0,1,cleanup,{cleanup_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/run.h",50,"cleanup"});  
-#line 229 "/home/lisergey/basilisk/src/navier-stokes/centered.h"
-event_register((Event){0,1,set_dtmax,{set_dtmax_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",229,"set_dtmax"});  
+#line 229 "./centered.h"
+event_register((Event){0,1,set_dtmax,{set_dtmax_expr0},((int *)0),((double *)0),"./centered.h",229,"set_dtmax"});  
 
-event_register((Event){0,1,stability,{stability_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",231,"stability"});  
-
-
+event_register((Event){0,1,stability,{stability_expr0},((int *)0),((double *)0),"./centered.h",231,"stability"});  
 
 
 
@@ -92882,36 +92547,28 @@ event_register((Event){0,1,stability,{stability_expr0},((int *)0),((double *)0),
 
 
 
-event_register((Event){0,1,vof,{vof_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",241,"vof"});  
-event_register((Event){0,1,tracer_advection,{tracer_advection_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",242,"tracer_advection"});  
-event_register((Event){0,1,tracer_diffusion,{tracer_diffusion_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",243,"tracer_diffusion"});  
+
+
+event_register((Event){0,1,vof,{vof_expr0},((int *)0),((double *)0),"./centered.h",241,"vof"});  
+event_register((Event){0,1,tracer_advection,{tracer_advection_expr0},((int *)0),((double *)0),"./centered.h",242,"tracer_advection"});  
+event_register((Event){0,1,tracer_diffusion,{tracer_diffusion_expr0},((int *)0),((double *)0),"./centered.h",243,"tracer_diffusion"});  
 
 
 
 
 
 
-event_register((Event){0,1,properties,{properties_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",250,"properties"});  
+event_register((Event){0,1,properties,{properties_expr0},((int *)0),((double *)0),"./centered.h",250,"properties"});  
 #line 323
-event_register((Event){0,1,advection_term,{advection_term_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",323,"advection_term"});  
+event_register((Event){0,1,advection_term,{advection_term_expr0},((int *)0),((double *)0),"./centered.h",323,"advection_term"});  
 #line 352
-event_register((Event){0,1,viscous_term,{viscous_term_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",352,"viscous_term"});  
+event_register((Event){0,1,viscous_term,{viscous_term_expr0},((int *)0),((double *)0),"./centered.h",352,"viscous_term"});  
 #line 388
-event_register((Event){0,1,acceleration,{acceleration_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",388,"acceleration"});  
+event_register((Event){0,1,acceleration,{acceleration_expr0},((int *)0),((double *)0),"./centered.h",388,"acceleration"});  
 #line 428
-event_register((Event){0,1,projection,{projection_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",428,"projection"});  
+event_register((Event){0,1,projection,{projection_expr0},((int *)0),((double *)0),"./centered.h",428,"projection"});  
 #line 443
-event_register((Event){0,1,end_timestep,{end_timestep_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",443,"end_timestep"});  
-
-
-
-
-
-
-
-
-
-event_register((Event){0,1,adapt,{adapt_expr0},((int *)0),((double *)0),"/home/lisergey/basilisk/src/navier-stokes/centered.h",453,"adapt"});  
+event_register((Event){0,1,end_timestep,{end_timestep_expr0},((int *)0),((double *)0),"./centered.h",443,"end_timestep"});  
 #line 497 "cylinder.c"
 event_register((Event){0,1,properties_0,{properties_0_expr0},((int *)0),((double *)0),"cylinder.c",497,"properties"});  
 #line 24 "ast/init_solver.h"
