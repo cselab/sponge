@@ -116,7 +116,7 @@ static int boundaries_surfaces1[] = {bottom, back};
 static const char *boundaries_names[] = {"top", "front"};
 static const char *force_path, *output_prefix, *dump_path;
 static const int outlevel = 5;
-static int maxlevel, minlevel, Verbose, FullOutput, AdaptFlag, InitFileFlag,
+static int maxlevel, minlevel, Verbose, FullOutput, InitFileFlag,
     period;
 static face vector muv[];
 static scalar l2[];
@@ -130,7 +130,6 @@ int main(int argc, char **argv) {
       DomainFlag, DTFlag, i;
   double domain, dt_min;
   InitFileFlag = 0;
-  AdaptFlag = 0;
   DomainFlag = 0;
   FullOutput = 0;
   MaxLevelFlag = 0;
@@ -159,7 +158,6 @@ int main(int argc, char **argv) {
           "  -h          Display this help message\n"
           "  -v          Verbose\n"
           "  -F          Output the full field\n"
-          "  -a          Use adoptation\n"
           "  -i          Initialize velocities from the dump file\n"
           "  -b <string> the boundary condition code for top and "
           "front surfaces. \n"
@@ -255,9 +253,6 @@ int main(int argc, char **argv) {
       break;
     case 'v':
       Verbose = 1;
-      break;
-    case 'a':
-      AdaptFlag = 1;
       break;
     case 'i':
       InitFileFlag = 1;
@@ -497,8 +492,8 @@ event init(t = 0) {
   if (is_constant (cm)) {
     cm = cs;
   }
-  //cs.refine = embed_fraction_refine;
-  //cs.prolongation = fraction_refine;
+  cs.refine = NULL;
+  cs.prolongation = NULL;
   foreach_dimension()
     fs.x.prolongation = embed_face_fraction_refine_x;
   restriction ({cs, fs});
@@ -555,13 +550,5 @@ event dump(i++; t <= tend) {
         fclose(fp);
       }
     }
-  }
-  if (AdaptFlag) {
-    astats s = adapt_wavelet((scalar *){cs, u}, (double[]){0, 0.1, 0.1, 0.1},
-                             maxlevel = maxlevel, minlevel = minlevel);
-    unrefine(!(x < X0 + 0.9 * L0) && level > outlevel);
-    if (Verbose && i % period == 0 && pid() == 0)
-      fprintf(stderr, "cylinder: refined %d cells, coarsened %d cells\n", s.nf,
-              s.nc);
   }
 }

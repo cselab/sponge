@@ -1,8 +1,8 @@
 #!/bin/sh
 set -eu
 
-l=7 m=9
-#l=10 m=13
+#l=9 m=12
+l=7 m=10
 make
 (cd ../../dump && make dump2xdmf stl2dump)
 # ../../stl/cylinder.py -n 64 ver.stl
