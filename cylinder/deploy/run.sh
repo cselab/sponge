@@ -1,7 +1,7 @@
 #!/bin/sh
 set -eu
 
-l=5 m=7
+l=6 m=8
 #l=10 m=13
 make
 (cd ../../dump && make dump2xdmf stl2dump)
@@ -11,6 +11,6 @@ zlim=`../../stl/size.py center.stl`
 ../../dump/stl2dump -v -s 26 -o -w z $((m-1)) $zlim -- \
 		    -5 -6.25 -6.25 12.5  $l $m  64 center.stl basilisk.dump
 set -- $zlim
-z=$2
-mpiexec.openmpi ./cylinder -v -i -Z $z \
+zlim=$2
+mpiexec.openmpi ./cylinder -v -i -Z $zlim \
     	 -r 2000 -l $l -m $m -p 10 -e 200 -f force.dat -d basilisk.dump -o h -b pp

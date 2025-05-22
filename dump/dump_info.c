@@ -119,8 +119,6 @@ static long traverse(int level) {
     exit(1);
   }
   size = values[0];
-  if (size == 9)
-    fprintf(stderr, "%ld\n", size);
   size0 = 1;
   if (flags & leaf)
     process(level);
