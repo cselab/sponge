@@ -497,8 +497,8 @@ event init(t = 0) {
   if (is_constant (cm)) {
     cm = cs;
   }
-  cs.refine = embed_fraction_refine;
-  cs.prolongation = fraction_refine;
+  //cs.refine = embed_fraction_refine;
+  //cs.prolongation = fraction_refine;
   foreach_dimension()
     fs.x.prolongation = embed_face_fraction_refine_x;
   restriction ({cs, fs});
