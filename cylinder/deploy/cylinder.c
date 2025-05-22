@@ -19923,7 +19923,7 @@ static int stability_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp
 
 
 
-static int vof_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
+static int properties_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
 
 
 
@@ -19933,32 +19933,8 @@ static int vof_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int r
 
 
 #line 241
-static int vof(const int i,const double t,Event *_ev){;return 0;}
-static int tracer_advection_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-
-#line 242
-static int tracer_advection(const int i,const double t,Event *_ev){;return 0;}
-static int tracer_diffusion_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-
-#line 243
-static int tracer_diffusion(const int i,const double t,Event *_ev){;return 0;}
-
-
-
-
-
-
-static int properties_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-
-
-
-
-
-
-
-#line 250
 static int properties(const int i,const double t,Event *_ev){;return 0;}
-#line 262 "./centered.h"
+#line 253 "./centered.h"
 void prediction()
 {
   vector du;
@@ -19966,12 +19942,12 @@ void prediction()
     scalar s = new_scalar("s");
     du.x = s;
   } 
-#line 265
+#line 256
 {
     scalar s = new_scalar("s");
     du.y = s;
   } 
-#line 265
+#line 256
 {
     scalar s = new_scalar("s");
     du.z = s;
@@ -19980,8 +19956,8 @@ void prediction()
   if (_attribute[u.x.i].gradient)
     {
     
-#line 271
-foreach_stencil(1,{(NonLocal[]){{"u","vector",(void *)&u,NULL,0},{"du","vector",(void *)&du,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n      \n// #line 272 \"./centered.h\"\n{ {\n\n        if (!val(fs.x,0,0,0) || !val(fs.x,1,0,0))\n   val_out_(du.x,0,0,0) = 0.;\n else\n\n   val_out_(du.x,0,0,0) = u.x.gradient (val(u.x,-1,0,0), val(u.x,0,0,0), val(u.x,1,0,0))/Delta;\n      } \n// #line 272\n{\n\n        if (!val(fs.y,0,0,0) || !val(fs.y,0,1,0))\n   val_out_(du.y,0,0,0) = 0.;\n else\n\n   val_out_(du.y,0,0,0) = u.y.gradient (val(u.y,0,-1,0), val(u.y,0,0,0), val(u.y,0,1,0))/Delta;\n      } \n// #line 272\n{\n\n        if (!val(fs.z,0,0,0) || !val(fs.z,0,0,1))\n   val_out_(du.z,0,0,0) = 0.;\n else\n\n   val_out_(du.z,0,0,0) = u.z.gradient (val(u.z,0,0,-1), val(u.z,0,0,0), val(u.z,0,0,1))/Delta;\n      }}"})
+#line 262
+foreach_stencil(1,{(NonLocal[]){{"u","vector",(void *)&u,NULL,0},{"du","vector",(void *)&du,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n      \n// #line 263 \"./centered.h\"\n{ {\n\n        if (!val(fs.x,0,0,0) || !val(fs.x,1,0,0))\n   val_out_(du.x,0,0,0) = 0.;\n else\n\n   val_out_(du.x,0,0,0) = u.x.gradient (val(u.x,-1,0,0), val(u.x,0,0,0), val(u.x,1,0,0))/Delta;\n      } \n// #line 263\n{\n\n        if (!val(fs.y,0,0,0) || !val(fs.y,0,1,0))\n   val_out_(du.y,0,0,0) = 0.;\n else\n\n   val_out_(du.y,0,0,0) = u.y.gradient (val(u.y,0,-1,0), val(u.y,0,0,0), val(u.y,0,1,0))/Delta;\n      } \n// #line 263\n{\n\n        if (!val(fs.z,0,0,0) || !val(fs.z,0,0,1))\n   val_out_(du.z,0,0,0) = 0.;\n else\n\n   val_out_(du.z,0,0,0) = u.z.gradient (val(u.z,0,0,-1), val(u.z,0,0,0), val(u.z,0,0,1))/Delta;\n      }}"})
       { {
 
 _stencil_val(fs.x,0,0,0);_stencil_val(fs.x,1,0,0);{
@@ -19993,9 +19969,9 @@ _stencil_val(fs.x,0,0,0);_stencil_val(fs.x,1,0,0);{
            
  
       
-#line 279
+#line 270
 } 
-#line 272
+#line 263
 {
 
 _stencil_val(fs.y,0,0,0);_stencil_val(fs.y,0,1,0);{
@@ -20007,9 +19983,9 @@ _stencil_val(fs.y,0,0,0);_stencil_val(fs.y,0,1,0);{
            
  
       
-#line 279
+#line 270
 } 
-#line 272
+#line 263
 {
 
 _stencil_val(fs.z,0,0,0);_stencil_val(fs.z,0,0,1);{
@@ -20021,9 +19997,9 @@ _stencil_val(fs.z,0,0,0);_stencil_val(fs.z,0,0,1);{
            
  
       
-#line 279
+#line 270
 }}end_foreach_stencil();{
-#line 271
+#line 262
 foreach()
       { {
 
@@ -20033,7 +20009,7 @@ foreach()
 
    val(du.x,0,0,0) = _attribute[u.x.i].gradient (val(u.x,-1,0,0), val(u.x,0,0,0), val(u.x,1,0,0))/Delta;
       } 
-#line 272
+#line 263
 {
 
         if (!val(fs.y,0,0,0) || !val(fs.y,0,1,0))
@@ -20042,7 +20018,7 @@ foreach()
 
    val(du.y,0,0,0) = _attribute[u.y.i].gradient (val(u.y,0,-1,0), val(u.y,0,0,0), val(u.y,0,1,0))/Delta;
       } 
-#line 272
+#line 263
 {
 
         if (!val(fs.z,0,0,0) || !val(fs.z,0,0,1))
@@ -20054,8 +20030,8 @@ foreach()
   else
     {
     
-#line 281
-foreach_stencil(1,{(NonLocal[]){{"u","vector",(void *)&u,NULL,0},{"du","vector",(void *)&du,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n      \n// #line 282 \"./centered.h\"\n{ {\n\n        if (!val(fs.x,0,0,0) || !val(fs.x,1,0,0))\n   val_out_(du.x,0,0,0) = 0.;\n else\n\n   val_out_(du.x,0,0,0) = (val(u.x,1,0,0) - val(u.x,-1,0,0))/(2.*Delta);\n    } \n// #line 282\n{\n\n        if (!val(fs.y,0,0,0) || !val(fs.y,0,1,0))\n   val_out_(du.y,0,0,0) = 0.;\n else\n\n   val_out_(du.y,0,0,0) = (val(u.y,0,1,0) - val(u.y,0,-1,0))/(2.*Delta);\n    } \n// #line 282\n{\n\n        if (!val(fs.z,0,0,0) || !val(fs.z,0,0,1))\n   val_out_(du.z,0,0,0) = 0.;\n else\n\n   val_out_(du.z,0,0,0) = (val(u.z,0,0,1) - val(u.z,0,0,-1))/(2.*Delta);\n    }}"})
+#line 272
+foreach_stencil(1,{(NonLocal[]){{"u","vector",(void *)&u,NULL,0},{"du","vector",(void *)&du,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n      \n// #line 273 \"./centered.h\"\n{ {\n\n        if (!val(fs.x,0,0,0) || !val(fs.x,1,0,0))\n   val_out_(du.x,0,0,0) = 0.;\n else\n\n   val_out_(du.x,0,0,0) = (val(u.x,1,0,0) - val(u.x,-1,0,0))/(2.*Delta);\n    } \n// #line 273\n{\n\n        if (!val(fs.y,0,0,0) || !val(fs.y,0,1,0))\n   val_out_(du.y,0,0,0) = 0.;\n else\n\n   val_out_(du.y,0,0,0) = (val(u.y,0,1,0) - val(u.y,0,-1,0))/(2.*Delta);\n    } \n// #line 273\n{\n\n        if (!val(fs.z,0,0,0) || !val(fs.z,0,0,1))\n   val_out_(du.z,0,0,0) = 0.;\n else\n\n   val_out_(du.z,0,0,0) = (val(u.z,0,0,1) - val(u.z,0,0,-1))/(2.*Delta);\n    }}"})
       { {
 
 _stencil_val(fs.x,0,0,0);_stencil_val(fs.x,1,0,0);{
@@ -20067,9 +20043,9 @@ _stencil_val(fs.x,0,0,0);_stencil_val(fs.x,1,0,0);{
            
  
     
-#line 289
+#line 280
 } 
-#line 282
+#line 273
 {
 
 _stencil_val(fs.y,0,0,0);_stencil_val(fs.y,0,1,0);{
@@ -20081,9 +20057,9 @@ _stencil_val(fs.y,0,0,0);_stencil_val(fs.y,0,1,0);{
            
  
     
-#line 289
+#line 280
 } 
-#line 282
+#line 273
 {
 
 _stencil_val(fs.z,0,0,0);_stencil_val(fs.z,0,0,1);{
@@ -20095,9 +20071,9 @@ _stencil_val(fs.z,0,0,0);_stencil_val(fs.z,0,0,1);{
            
  
     
-#line 289
+#line 280
 }}end_foreach_stencil();{
-#line 281
+#line 272
 foreach()
       { {
 
@@ -20107,7 +20083,7 @@ foreach()
 
    val(du.x,0,0,0) = (val(u.x,1,0,0) - val(u.x,-1,0,0))/(2.*Delta);
     } 
-#line 282
+#line 273
 {
 
         if (!val(fs.y,0,0,0) || !val(fs.y,0,1,0))
@@ -20116,7 +20092,7 @@ foreach()
 
    val(du.y,0,0,0) = (val(u.y,0,1,0) - val(u.y,0,-1,0))/(2.*Delta);
     } 
-#line 282
+#line 273
 {
 
         if (!val(fs.z,0,0,0) || !val(fs.z,0,0,1))
@@ -20129,20 +20105,20 @@ foreach()
   trash (((vector[]){uf,{{-1},{-1},{-1}}}));
   if(!is_constant(fm.x)){
   
-#line 292
-foreach_face_stencil(1,{(NonLocal[]){{"fm","vector",(void *)&fm,NULL,0},{"du","vector",(void *)&du,NULL,0},{"g","vector",(void *)&g,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"u","vector",(void *)&u,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 292 \"./centered.h\"\n{is_face_x(){ {\n    real un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.x,0,0,0) = val(u.x,i,0,0) + (val(g.x,0,0,0) + val(g.x,-1,0,0))*dt/4. + s*(1. - s*un)*val(du.x,i,0,0)*Delta/2.;\n\n    if (val(fm.y,i,0,0) && val(fm.y,i,1,0)) {\n      real fyy = val(u.y,i,0,0) < 0. ? val(u.x,i,1,0) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,-1,0);\n      val_out_(uf.x,0,0,0) -= dt*val(u.y,i,0,0)*fyy/(2.*Delta);\n    }\n\n\n    if (val(fm.z,i,0,0) && val(fm.z,i,0,1)) {\n      real fzz = val(u.z,i,0,0) < 0. ? val(u.x,i,0,1) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,0,-1);\n      val_out_(uf.x,0,0,0) -= dt*val(u.z,i,0,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.x,0,0,0) *= val(fm.x,0,0,0);\n  }}end_is_face_x()\n// #line 292\nis_face_y(){ {\n    real un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.y,0,0,0) = val(u.y,0,i,0) + (val(g.y,0,0,0) + val(g.y,0,-1,0))*dt/4. + s*(1. - s*un)*val(du.y,0,i,0)*Delta/2.;\n\n    if (val(fm.z,0,i,0) && val(fm.z,0,i,1)) {\n      real fyy = val(u.z,0,i,0) < 0. ? val(u.y,0,i,1) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,0,i,-1);\n      val_out_(uf.y,0,0,0) -= dt*val(u.z,0,i,0)*fyy/(2.*Delta);\n    }\n\n\n    if (val(fm.x,0,i,0) && val(fm.x,1,i,0)) {\n      real fzz = val(u.x,0,i,0) < 0. ? val(u.y,1,i,0) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,-1,i,0);\n      val_out_(uf.y,0,0,0) -= dt*val(u.x,0,i,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.y,0,0,0) *= val(fm.y,0,0,0);\n  }}end_is_face_y()\n// #line 292\nis_face_z(){ {\n    real un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.z,0,0,0) = val(u.z,0,0,i) + (val(g.z,0,0,0) + val(g.z,0,0,-1))*dt/4. + s*(1. - s*un)*val(du.z,0,0,i)*Delta/2.;\n\n    if (val(fm.x,0,0,i) && val(fm.x,1,0,i)) {\n      real fyy = val(u.x,0,0,i) < 0. ? val(u.z,1,0,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,-1,0,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.x,0,0,i)*fyy/(2.*Delta);\n    }\n\n\n    if (val(fm.y,0,0,i) && val(fm.y,0,1,i)) {\n      real fzz = val(u.y,0,0,i) < 0. ? val(u.z,0,1,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,0,-1,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.y,0,0,i)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.z,0,0,0) *= val(fm.z,0,0,0);\n  }}end_is_face_z()}"}){_stencil_is_face_x(){ {       
+#line 283
+foreach_face_stencil(1,{(NonLocal[]){{"fm","vector",(void *)&fm,NULL,0},{"du","vector",(void *)&du,NULL,0},{"g","vector",(void *)&g,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"u","vector",(void *)&u,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 283 \"./centered.h\"\n{is_face_x(){ {\n    real un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.x,0,0,0) = val(u.x,i,0,0) + (val(g.x,0,0,0) + val(g.x,-1,0,0))*dt/4. + s*(1. - s*un)*val(du.x,i,0,0)*Delta/2.;\n\n    if (val(fm.y,i,0,0) && val(fm.y,i,1,0)) {\n      real fyy = val(u.y,i,0,0) < 0. ? val(u.x,i,1,0) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,-1,0);\n      val_out_(uf.x,0,0,0) -= dt*val(u.y,i,0,0)*fyy/(2.*Delta);\n    }\n\n\n    if (val(fm.z,i,0,0) && val(fm.z,i,0,1)) {\n      real fzz = val(u.z,i,0,0) < 0. ? val(u.x,i,0,1) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,0,-1);\n      val_out_(uf.x,0,0,0) -= dt*val(u.z,i,0,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.x,0,0,0) *= val(fm.x,0,0,0);\n  }}end_is_face_x()\n// #line 283\nis_face_y(){ {\n    real un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.y,0,0,0) = val(u.y,0,i,0) + (val(g.y,0,0,0) + val(g.y,0,-1,0))*dt/4. + s*(1. - s*un)*val(du.y,0,i,0)*Delta/2.;\n\n    if (val(fm.z,0,i,0) && val(fm.z,0,i,1)) {\n      real fyy = val(u.z,0,i,0) < 0. ? val(u.y,0,i,1) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,0,i,-1);\n      val_out_(uf.y,0,0,0) -= dt*val(u.z,0,i,0)*fyy/(2.*Delta);\n    }\n\n\n    if (val(fm.x,0,i,0) && val(fm.x,1,i,0)) {\n      real fzz = val(u.x,0,i,0) < 0. ? val(u.y,1,i,0) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,-1,i,0);\n      val_out_(uf.y,0,0,0) -= dt*val(u.x,0,i,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.y,0,0,0) *= val(fm.y,0,0,0);\n  }}end_is_face_y()\n// #line 283\nis_face_z(){ {\n    real un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.z,0,0,0) = val(u.z,0,0,i) + (val(g.z,0,0,0) + val(g.z,0,0,-1))*dt/4. + s*(1. - s*un)*val(du.z,0,0,i)*Delta/2.;\n\n    if (val(fm.x,0,0,i) && val(fm.x,1,0,i)) {\n      real fyy = val(u.x,0,0,i) < 0. ? val(u.z,1,0,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,-1,0,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.x,0,0,i)*fyy/(2.*Delta);\n    }\n\n\n    if (val(fm.y,0,0,i) && val(fm.y,0,1,i)) {\n      real fzz = val(u.y,0,0,i) < 0. ? val(u.z,0,1,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,0,-1,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.y,0,0,i)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.z,0,0,0) *= val(fm.z,0,0,0);\n  }}end_is_face_z()}"}){_stencil_is_face_x(){ {       
      _stencil_val(u.x,-1,0,0);_stencil_val(u.x,0,0,0);     
     
 _stencil_val(u.x, o_stencil,0,0);_stencil_val(g.x,0,0,0); _stencil_val(g.x,-1,0,0);_stencil_val(du.x,o_stencil,0,0);
     
-#line 295
+#line 286
 _stencil_val_a(uf.x,0,0,0);
 
 _stencil_val(fm.y,o_stencil,0,0); _stencil_val(fm.y,o_stencil,1,0); {        
        _stencil_val(u.x,o_stencil,-1,0);_stencil_val(u.x, o_stencil,0,0);_stencil_val(u.x, o_stencil,0,0); _stencil_val(u.x,o_stencil,1,0);_stencil_val(u.y, o_stencil,0,0);
 _stencil_val(u.y,o_stencil,0,0);
       
-#line 299
+#line 290
 _stencil_val_r(uf.x,0,0,0);  
     }
 
@@ -20151,7 +20127,7 @@ _stencil_val(fm.z,o_stencil,0,0); _stencil_val(fm.z,o_stencil,0,1); {
        _stencil_val(u.x,o_stencil,0,-1);_stencil_val(u.x, o_stencil,0,0);_stencil_val(u.x, o_stencil,0,0); _stencil_val(u.x,o_stencil,0,1);_stencil_val(u.z, o_stencil,0,0);
 _stencil_val(u.z,o_stencil,0,0);
       
-#line 305
+#line 296
 _stencil_val_r(uf.x,0,0,0);  
     } 
 
@@ -20163,23 +20139,23 @@ _stencil_val(fm.x,0,0,0);
       
 
     
-#line 308
+#line 299
 _stencil_val_r(uf.x,0,0,0); 
   }}end__stencil_is_face_x()
-#line 292
+#line 283
 _stencil_is_face_y(){ {       
      _stencil_val(u.y,0,-1,0);_stencil_val(u.y,0,0,0);     
     
 _stencil_val(u.y,0, o_stencil,0);_stencil_val(g.y,0,0,0); _stencil_val(g.y,0,-1,0);_stencil_val(du.y,0,o_stencil,0);
     
-#line 295
+#line 286
 _stencil_val_a(uf.y,0,0,0);
 
 _stencil_val(fm.z,0,o_stencil,0); _stencil_val(fm.z,0,o_stencil,1); {        
        _stencil_val(u.y,0,o_stencil,-1);_stencil_val(u.y,0, o_stencil,0);_stencil_val(u.y,0, o_stencil,0); _stencil_val(u.y,0,o_stencil,1);_stencil_val(u.z,0, o_stencil,0);
 _stencil_val(u.z,0,o_stencil,0);
       
-#line 299
+#line 290
 _stencil_val_r(uf.y,0,0,0);  
     }
 
@@ -20188,7 +20164,7 @@ _stencil_val(fm.x,0,o_stencil,0); _stencil_val(fm.x,1,o_stencil,0); {
        _stencil_val(u.y,-1,o_stencil,0);_stencil_val(u.y,0, o_stencil,0);_stencil_val(u.y,0, o_stencil,0); _stencil_val(u.y,1,o_stencil,0);_stencil_val(u.x,0, o_stencil,0);
 _stencil_val(u.x,0,o_stencil,0);
       
-#line 305
+#line 296
 _stencil_val_r(uf.y,0,0,0);  
     } 
 
@@ -20200,23 +20176,23 @@ _stencil_val(fm.y,0,0,0);
       
 
     
-#line 308
+#line 299
 _stencil_val_r(uf.y,0,0,0); 
   }}end__stencil_is_face_y()
-#line 292
+#line 283
 _stencil_is_face_z(){ {       
      _stencil_val(u.z,0,0,-1);_stencil_val(u.z,0,0,0);     
     
 _stencil_val(u.z,0,0, o_stencil);_stencil_val(g.z,0,0,0); _stencil_val(g.z,0,0,-1);_stencil_val(du.z,0,0,o_stencil);
     
-#line 295
+#line 286
 _stencil_val_a(uf.z,0,0,0);
 
 _stencil_val(fm.x,0,0,o_stencil); _stencil_val(fm.x,1,0,o_stencil); {        
        _stencil_val(u.z,-1,0,o_stencil);_stencil_val(u.z,0,0, o_stencil);_stencil_val(u.z,0,0, o_stencil); _stencil_val(u.z,1,0,o_stencil);_stencil_val(u.x,0,0, o_stencil);
 _stencil_val(u.x,0,0,o_stencil);
       
-#line 299
+#line 290
 _stencil_val_r(uf.z,0,0,0);  
     }
 
@@ -20225,7 +20201,7 @@ _stencil_val(fm.y,0,0,o_stencil); _stencil_val(fm.y,0,1,o_stencil); {
        _stencil_val(u.z,0,-1,o_stencil);_stencil_val(u.z,0,0, o_stencil);_stencil_val(u.z,0,0, o_stencil); _stencil_val(u.z,0,1,o_stencil);_stencil_val(u.y,0,0, o_stencil);
 _stencil_val(u.y,0,0,o_stencil);
       
-#line 305
+#line 296
 _stencil_val_r(uf.z,0,0,0);  
     } 
 
@@ -20237,10 +20213,10 @@ _stencil_val(fm.z,0,0,0);
       
 
     
-#line 308
+#line 299
 _stencil_val_r(uf.z,0,0,0); 
   }}end__stencil_is_face_z()}end_foreach_face_stencil();{
-#line 292
+#line 283
 foreach_face_generic(){is_face_x(){ {
     double un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = sign(un);
     int i = -(s + 1.)/2.;
@@ -20259,7 +20235,7 @@ foreach_face_generic(){is_face_x(){ {
 
     val(uf.x,0,0,0) *= val(fm.x,0,0,0);
   }}end_is_face_x()
-#line 292
+#line 283
 is_face_y(){ {
     double un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = sign(un);
     int i = -(s + 1.)/2.;
@@ -20278,7 +20254,7 @@ is_face_y(){ {
 
     val(uf.y,0,0,0) *= val(fm.y,0,0,0);
   }}end_is_face_y()
-#line 292
+#line 283
 is_face_z(){ {
     double un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = sign(un);
     int i = -(s + 1.)/2.;
@@ -20298,20 +20274,20 @@ is_face_z(){ {
     val(uf.z,0,0,0) *= val(fm.z,0,0,0);
   }}end_is_face_z()}end_foreach_face_generic();}}else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
-#line 292
-foreach_face_stencil(1,{(NonLocal[]){{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"du","vector",(void *)&du,NULL,0},{"g","vector",(void *)&g,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"u","vector",(void *)&u,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 292 \"./centered.h\"\n{is_face_x(){ {\n    real un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.x,0,0,0) = val(u.x,i,0,0) + (val(g.x,0,0,0) + val(g.x,-1,0,0))*dt/4. + s*(1. - s*un)*val(du.x,i,0,0)*Delta/2.;\n\n    if (_const_fm.y && _const_fm.y) {\n      real fyy = val(u.y,i,0,0) < 0. ? val(u.x,i,1,0) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,-1,0);\n      val_out_(uf.x,0,0,0) -= dt*val(u.y,i,0,0)*fyy/(2.*Delta);\n    }\n\n\n    if (_const_fm.z && _const_fm.z) {\n      real fzz = val(u.z,i,0,0) < 0. ? val(u.x,i,0,1) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,0,-1);\n      val_out_(uf.x,0,0,0) -= dt*val(u.z,i,0,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.x,0,0,0) *= _const_fm.x;\n  }}end_is_face_x()\n// #line 292\nis_face_y(){ {\n    real un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.y,0,0,0) = val(u.y,0,i,0) + (val(g.y,0,0,0) + val(g.y,0,-1,0))*dt/4. + s*(1. - s*un)*val(du.y,0,i,0)*Delta/2.;\n\n    if (_const_fm.z && _const_fm.z) {\n      real fyy = val(u.z,0,i,0) < 0. ? val(u.y,0,i,1) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,0,i,-1);\n      val_out_(uf.y,0,0,0) -= dt*val(u.z,0,i,0)*fyy/(2.*Delta);\n    }\n\n\n    if (_const_fm.x && _const_fm.x) {\n      real fzz = val(u.x,0,i,0) < 0. ? val(u.y,1,i,0) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,-1,i,0);\n      val_out_(uf.y,0,0,0) -= dt*val(u.x,0,i,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.y,0,0,0) *= _const_fm.y;\n  }}end_is_face_y()\n// #line 292\nis_face_z(){ {\n    real un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.z,0,0,0) = val(u.z,0,0,i) + (val(g.z,0,0,0) + val(g.z,0,0,-1))*dt/4. + s*(1. - s*un)*val(du.z,0,0,i)*Delta/2.;\n\n    if (_const_fm.x && _const_fm.x) {\n      real fyy = val(u.x,0,0,i) < 0. ? val(u.z,1,0,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,-1,0,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.x,0,0,i)*fyy/(2.*Delta);\n    }\n\n\n    if (_const_fm.y && _const_fm.y) {\n      real fzz = val(u.y,0,0,i) < 0. ? val(u.z,0,1,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,0,-1,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.y,0,0,i)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.z,0,0,0) *= _const_fm.z;\n  }}end_is_face_z()}"}){_stencil_is_face_x(){ {       
+#line 283
+foreach_face_stencil(1,{(NonLocal[]){{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"du","vector",(void *)&du,NULL,0},{"g","vector",(void *)&g,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"u","vector",(void *)&u,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 283 \"./centered.h\"\n{is_face_x(){ {\n    real un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.x,0,0,0) = val(u.x,i,0,0) + (val(g.x,0,0,0) + val(g.x,-1,0,0))*dt/4. + s*(1. - s*un)*val(du.x,i,0,0)*Delta/2.;\n\n    if (_const_fm.y && _const_fm.y) {\n      real fyy = val(u.y,i,0,0) < 0. ? val(u.x,i,1,0) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,-1,0);\n      val_out_(uf.x,0,0,0) -= dt*val(u.y,i,0,0)*fyy/(2.*Delta);\n    }\n\n\n    if (_const_fm.z && _const_fm.z) {\n      real fzz = val(u.z,i,0,0) < 0. ? val(u.x,i,0,1) - val(u.x,i,0,0) : val(u.x,i,0,0) - val(u.x,i,0,-1);\n      val_out_(uf.x,0,0,0) -= dt*val(u.z,i,0,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.x,0,0,0) *= _const_fm.x;\n  }}end_is_face_x()\n// #line 283\nis_face_y(){ {\n    real un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.y,0,0,0) = val(u.y,0,i,0) + (val(g.y,0,0,0) + val(g.y,0,-1,0))*dt/4. + s*(1. - s*un)*val(du.y,0,i,0)*Delta/2.;\n\n    if (_const_fm.z && _const_fm.z) {\n      real fyy = val(u.z,0,i,0) < 0. ? val(u.y,0,i,1) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,0,i,-1);\n      val_out_(uf.y,0,0,0) -= dt*val(u.z,0,i,0)*fyy/(2.*Delta);\n    }\n\n\n    if (_const_fm.x && _const_fm.x) {\n      real fzz = val(u.x,0,i,0) < 0. ? val(u.y,1,i,0) - val(u.y,0,i,0) : val(u.y,0,i,0) - val(u.y,-1,i,0);\n      val_out_(uf.y,0,0,0) -= dt*val(u.x,0,i,0)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.y,0,0,0) *= _const_fm.y;\n  }}end_is_face_y()\n// #line 283\nis_face_z(){ {\n    real un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = sign(un);\n    int i = -(s + 1.)/2.;\n    val_out_(uf.z,0,0,0) = val(u.z,0,0,i) + (val(g.z,0,0,0) + val(g.z,0,0,-1))*dt/4. + s*(1. - s*un)*val(du.z,0,0,i)*Delta/2.;\n\n    if (_const_fm.x && _const_fm.x) {\n      real fyy = val(u.x,0,0,i) < 0. ? val(u.z,1,0,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,-1,0,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.x,0,0,i)*fyy/(2.*Delta);\n    }\n\n\n    if (_const_fm.y && _const_fm.y) {\n      real fzz = val(u.y,0,0,i) < 0. ? val(u.z,0,1,i) - val(u.z,0,0,i) : val(u.z,0,0,i) - val(u.z,0,-1,i);\n      val_out_(uf.z,0,0,0) -= dt*val(u.y,0,0,i)*fzz/(2.*Delta);\n    }\n\n    val_out_(uf.z,0,0,0) *= _const_fm.z;\n  }}end_is_face_z()}"}){_stencil_is_face_x(){ {       
      _stencil_val(u.x,-1,0,0);_stencil_val(u.x,0,0,0);     
     
 _stencil_val(u.x, o_stencil,0,0);_stencil_val(g.x,0,0,0); _stencil_val(g.x,-1,0,0);_stencil_val(du.x,o_stencil,0,0);
     
-#line 295
+#line 286
 _stencil_val_a(uf.x,0,0,0);
 
 ;; {        
        _stencil_val(u.x,o_stencil,-1,0);_stencil_val(u.x, o_stencil,0,0);_stencil_val(u.x, o_stencil,0,0); _stencil_val(u.x,o_stencil,1,0);_stencil_val(u.y, o_stencil,0,0);
 _stencil_val(u.y,o_stencil,0,0);
       
-#line 299
+#line 290
 _stencil_val_r(uf.x,0,0,0);  
     }
 
@@ -20320,7 +20296,7 @@ _stencil_val_r(uf.x,0,0,0);
        _stencil_val(u.x,o_stencil,0,-1);_stencil_val(u.x, o_stencil,0,0);_stencil_val(u.x, o_stencil,0,0); _stencil_val(u.x,o_stencil,0,1);_stencil_val(u.z, o_stencil,0,0);
 _stencil_val(u.z,o_stencil,0,0);
       
-#line 305
+#line 296
 _stencil_val_r(uf.x,0,0,0);  
     }
 
@@ -20332,23 +20308,23 @@ _stencil_val_r(uf.x,0,0,0);
       
 
     
-#line 308
+#line 299
 _stencil_val_r(uf.x,0,0,0); 
   }}end__stencil_is_face_x()
-#line 292
+#line 283
 _stencil_is_face_y(){ {       
      _stencil_val(u.y,0,-1,0);_stencil_val(u.y,0,0,0);     
     
 _stencil_val(u.y,0, o_stencil,0);_stencil_val(g.y,0,0,0); _stencil_val(g.y,0,-1,0);_stencil_val(du.y,0,o_stencil,0);
     
-#line 295
+#line 286
 _stencil_val_a(uf.y,0,0,0);
 
 ;; {        
        _stencil_val(u.y,0,o_stencil,-1);_stencil_val(u.y,0, o_stencil,0);_stencil_val(u.y,0, o_stencil,0); _stencil_val(u.y,0,o_stencil,1);_stencil_val(u.z,0, o_stencil,0);
 _stencil_val(u.z,0,o_stencil,0);
       
-#line 299
+#line 290
 _stencil_val_r(uf.y,0,0,0);  
     }
 
@@ -20357,7 +20333,7 @@ _stencil_val_r(uf.y,0,0,0);
        _stencil_val(u.y,-1,o_stencil,0);_stencil_val(u.y,0, o_stencil,0);_stencil_val(u.y,0, o_stencil,0); _stencil_val(u.y,1,o_stencil,0);_stencil_val(u.x,0, o_stencil,0);
 _stencil_val(u.x,0,o_stencil,0);
       
-#line 305
+#line 296
 _stencil_val_r(uf.y,0,0,0);  
     }
 
@@ -20369,23 +20345,23 @@ _stencil_val_r(uf.y,0,0,0);
       
 
     
-#line 308
+#line 299
 _stencil_val_r(uf.y,0,0,0); 
   }}end__stencil_is_face_y()
-#line 292
+#line 283
 _stencil_is_face_z(){ {       
      _stencil_val(u.z,0,0,-1);_stencil_val(u.z,0,0,0);     
     
 _stencil_val(u.z,0,0, o_stencil);_stencil_val(g.z,0,0,0); _stencil_val(g.z,0,0,-1);_stencil_val(du.z,0,0,o_stencil);
     
-#line 295
+#line 286
 _stencil_val_a(uf.z,0,0,0);
 
 ;; {        
        _stencil_val(u.z,-1,0,o_stencil);_stencil_val(u.z,0,0, o_stencil);_stencil_val(u.z,0,0, o_stencil); _stencil_val(u.z,1,0,o_stencil);_stencil_val(u.x,0,0, o_stencil);
 _stencil_val(u.x,0,0,o_stencil);
       
-#line 299
+#line 290
 _stencil_val_r(uf.z,0,0,0);  
     }
 
@@ -20394,7 +20370,7 @@ _stencil_val_r(uf.z,0,0,0);
        _stencil_val(u.z,0,-1,o_stencil);_stencil_val(u.z,0,0, o_stencil);_stencil_val(u.z,0,0, o_stencil); _stencil_val(u.z,0,1,o_stencil);_stencil_val(u.y,0,0, o_stencil);
 _stencil_val(u.y,0,0,o_stencil);
       
-#line 305
+#line 296
 _stencil_val_r(uf.z,0,0,0);  
     }
 
@@ -20406,11 +20382,11 @@ _stencil_val_r(uf.z,0,0,0);
       
 
     
-#line 308
+#line 299
 _stencil_val_r(uf.z,0,0,0); 
   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 292
+#line 283
 foreach_face_generic(){is_face_x(){ {
     double un = dt*(val(u.x,0,0,0) + val(u.x,-1,0,0))/(2.*Delta), s = sign(un);
     int i = -(s + 1.)/2.;
@@ -20429,7 +20405,7 @@ foreach_face_generic(){is_face_x(){ {
 
     val(uf.x,0,0,0) *= _const_fm.x;
   }}end_is_face_x()
-#line 292
+#line 283
 is_face_y(){ {
     double un = dt*(val(u.y,0,0,0) + val(u.y,0,-1,0))/(2.*Delta), s = sign(un);
     int i = -(s + 1.)/2.;
@@ -20448,7 +20424,7 @@ is_face_y(){ {
 
     val(uf.y,0,0,0) *= _const_fm.y;
   }}end_is_face_y()
-#line 292
+#line 283
 is_face_z(){ {
     double un = dt*(val(u.z,0,0,0) + val(u.z,0,0,-1))/(2.*Delta), s = sign(un);
     int i = -(s + 1.)/2.;
@@ -20470,17 +20446,17 @@ is_face_z(){ {
 
   delete ((scalar *)((vector[]){du,{{-1},{-1},{-1}}}));
 }
-#line 323
+#line 314
 static int advection_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 323 "./centered.h"
-      static int advection_term(const int i,const double t,Event *_ev){tracing("advection_term","./centered.h",323);
+#line 314 "./centered.h"
+      static int advection_term(const int i,const double t,Event *_ev){tracing("advection_term","./centered.h",314);
 {
   if (!stokes) {
     prediction();
     mgpf = project (uf, pf, alpha, dt/2., mgpf.nrelax);
     advection ((scalar *)((vector[]){u,{{-1},{-1},{-1}}}), uf, dt, (scalar *)((vector[]){g,{{-1},{-1},{-1}}}));
   }
-}{end_tracing("advection_term","./centered.h",330);return 0;}end_tracing("advection_term","./centered.h",330);}
+}{end_tracing("advection_term","./centered.h",321);return 0;}end_tracing("advection_term","./centered.h",321);}
 
 
 
@@ -20490,25 +20466,25 @@ static int advection_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double 
 
 static void correction (double dt)
 {
-  foreach_stencil(1,{(NonLocal[]){{"g","vector",(void *)&g,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"u","vector",(void *)&u,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n    \n// #line 341 \"./centered.h\"\n{\n      val_out_(u.x,0,0,0) += dt*val(g.x,0,0,0);\n      \n// #line 342\nval_out_(u.y,0,0,0) += dt*val(g.y,0,0,0);\n      \n// #line 342\nval_out_(u.z,0,0,0) += dt*val(g.z,0,0,0);}"})
+  foreach_stencil(1,{(NonLocal[]){{"g","vector",(void *)&g,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"u","vector",(void *)&u,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n    \n// #line 332 \"./centered.h\"\n{\n      val_out_(u.x,0,0,0) += dt*val(g.x,0,0,0);\n      \n// #line 333\nval_out_(u.y,0,0,0) += dt*val(g.y,0,0,0);\n      \n// #line 333\nval_out_(u.z,0,0,0) += dt*val(g.z,0,0,0);}"})
     {
       {_stencil_val(g.x,0,0,0);_stencil_val_r(u.x,0,0,0);  }
       
-#line 342
+#line 333
 {_stencil_val(g.y,0,0,0);_stencil_val_r(u.y,0,0,0);  }
       
-#line 342
+#line 333
 {_stencil_val(g.z,0,0,0);_stencil_val_r(u.z,0,0,0);  }}end_foreach_stencil();
   {
-#line 340
+#line 331
 foreach()
     {
       val(u.x,0,0,0) += dt*val(g.x,0,0,0);
       
-#line 342
+#line 333
 val(u.y,0,0,0) += dt*val(g.y,0,0,0);
       
-#line 342
+#line 333
 val(u.z,0,0,0) += dt*val(g.z,0,0,0);}end_foreach();}
 }
 
@@ -20520,15 +20496,15 @@ val(u.z,0,0,0) += dt*val(g.z,0,0,0);}end_foreach();}
 
 
 static int viscous_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 352 "./centered.h"
-      static int viscous_term(const int i,const double t,Event *_ev){tracing("viscous_term","./centered.h",352);
+#line 343 "./centered.h"
+      static int viscous_term(const int i,const double t,Event *_ev){tracing("viscous_term","./centered.h",343);
 {
   if (constant(mu.x) != 0.) {
     correction (dt);
     mgu = viscosity (u, mu, rho, dt, mgu.nrelax
 #line 152 "/home/lisergey/basilisk/src/viscosity-embed.h"
 , NULL
-#line 356 "./centered.h"
+#line 347 "./centered.h"
 );
     correction (-dt);
   }
@@ -20539,114 +20515,114 @@ static int viscous_term_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=
   if (!is_constant(a.x)) {
     vector af = a;
     trash (((vector[]){af,{{-1},{-1},{-1}}}));
-    foreach_face_stencil(1,{(NonLocal[]){{"af","vector",(void *)&af,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 366 \"./centered.h\"\n{is_face_x(){\n      val_out_(af.x,0,0,0) = 0.;}end_is_face_x()\n// #line 366\nis_face_y(){\n      val_out_(af.y,0,0,0) = 0.;}end_is_face_y()\n// #line 366\nis_face_z(){\n      val_out_(af.z,0,0,0) = 0.;}end_is_face_z()}"}){_stencil_is_face_x(){
+    foreach_face_stencil(1,{(NonLocal[]){{"af","vector",(void *)&af,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 357 \"./centered.h\"\n{is_face_x(){\n      val_out_(af.x,0,0,0) = 0.;}end_is_face_x()\n// #line 357\nis_face_y(){\n      val_out_(af.y,0,0,0) = 0.;}end_is_face_y()\n// #line 357\nis_face_z(){\n      val_out_(af.z,0,0,0) = 0.;}end_is_face_z()}"}){_stencil_is_face_x(){
       {_stencil_val_a(af.x,0,0,0);  }}end__stencil_is_face_x()
-#line 366
+#line 357
 _stencil_is_face_y(){
       {_stencil_val_a(af.y,0,0,0);  }}end__stencil_is_face_y()
-#line 366
+#line 357
 _stencil_is_face_z(){
       {_stencil_val_a(af.z,0,0,0);  }}end__stencil_is_face_z()}end_foreach_face_stencil();
     {
-#line 366
+#line 357
 foreach_face_generic(){is_face_x(){
       val(af.x,0,0,0) = 0.;}end_is_face_x()
-#line 366
+#line 357
 is_face_y(){
       val(af.y,0,0,0) = 0.;}end_is_face_y()
-#line 366
+#line 357
 is_face_z(){
       val(af.z,0,0,0) = 0.;}end_is_face_z()}end_foreach_face_generic();}
   }
-}{end_tracing("viscous_term","./centered.h",369);return 0;}end_tracing("viscous_term","./centered.h",369);}
-#line 388
+}{end_tracing("viscous_term","./centered.h",360);return 0;}end_tracing("viscous_term","./centered.h",360);}
+#line 379
 static int acceleration_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
-#line 388 "./centered.h"
-      static int acceleration(const int i,const double t,Event *_ev){tracing("acceleration","./centered.h",388);
+#line 379 "./centered.h"
+      static int acceleration(const int i,const double t,Event *_ev){tracing("acceleration","./centered.h",379);
 {
   trash (((vector[]){uf,{{-1},{-1},{-1}}}));
   if(!is_constant(fm.x) && !is_constant(a.x)){
   
-#line 391
-foreach_face_stencil(1,{(NonLocal[]){{"a","vector",(void *)&a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 391 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = val(fm.x,0,0,0)*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}end_is_face_x()\n// #line 391\nis_face_y(){\n    val_out_(uf.y,0,0,0) = val(fm.y,0,0,0)*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}end_is_face_y()\n// #line 391\nis_face_z(){\n    val_out_(uf.z,0,0,0) = val(fm.z,0,0,0)*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 382
+foreach_face_stencil(1,{(NonLocal[]){{"a","vector",(void *)&a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 382 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = val(fm.x,0,0,0)*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}end_is_face_x()\n// #line 382\nis_face_y(){\n    val_out_(uf.y,0,0,0) = val(fm.y,0,0,0)*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}end_is_face_y()\n// #line 382\nis_face_z(){\n    val_out_(uf.z,0,0,0) = val(fm.z,0,0,0)*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}end_is_face_z()}"}){_stencil_is_face_x(){
     { _stencil_val(fm.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(a.x,0,0,0);_stencil_val_a(uf.x,0,0,0);                   }}end__stencil_is_face_x()
-#line 391
+#line 382
 _stencil_is_face_y(){
     { _stencil_val(fm.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);_stencil_val(a.y,0,0,0);_stencil_val_a(uf.y,0,0,0);                   }}end__stencil_is_face_y()
-#line 391
+#line 382
 _stencil_is_face_z(){
     { _stencil_val(fm.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);_stencil_val(a.z,0,0,0);_stencil_val_a(uf.z,0,0,0);                   }}end__stencil_is_face_z()}end_foreach_face_stencil();{
-#line 391
+#line 382
 foreach_face_generic(){is_face_x(){
     val(uf.x,0,0,0) = val(fm.x,0,0,0)*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}end_is_face_x()
-#line 391
+#line 382
 is_face_y(){
     val(uf.y,0,0,0) = val(fm.y,0,0,0)*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}end_is_face_y()
-#line 391
+#line 382
 is_face_z(){
     val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}end_is_face_z()}end_foreach_face_generic();}}else if(is_constant(fm.x) && !is_constant(a.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
-#line 391
-foreach_face_stencil(1,{(NonLocal[]){{"a","vector",(void *)&a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 391 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = _const_fm.x*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}end_is_face_x()\n// #line 391\nis_face_y(){\n    val_out_(uf.y,0,0,0) = _const_fm.y*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}end_is_face_y()\n// #line 391\nis_face_z(){\n    val_out_(uf.z,0,0,0) = _const_fm.z*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 382
+foreach_face_stencil(1,{(NonLocal[]){{"a","vector",(void *)&a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 382 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = _const_fm.x*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}end_is_face_x()\n// #line 382\nis_face_y(){\n    val_out_(uf.y,0,0,0) = _const_fm.y*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}end_is_face_y()\n// #line 382\nis_face_z(){\n    val_out_(uf.z,0,0,0) = _const_fm.z*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}end_is_face_z()}"}){_stencil_is_face_x(){
     {; _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(a.x,0,0,0);_stencil_val_a(uf.x,0,0,0);                   }}end__stencil_is_face_x()
-#line 391
+#line 382
 _stencil_is_face_y(){
     {; _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);_stencil_val(a.y,0,0,0);_stencil_val_a(uf.y,0,0,0);                   }}end__stencil_is_face_y()
-#line 391
+#line 382
 _stencil_is_face_z(){
     {; _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);_stencil_val(a.z,0,0,0);_stencil_val_a(uf.z,0,0,0);                   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 391
+#line 382
 foreach_face_generic(){is_face_x(){
     val(uf.x,0,0,0) = _const_fm.x*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*val(a.x,0,0,0));}end_is_face_x()
-#line 391
+#line 382
 is_face_y(){
     val(uf.y,0,0,0) = _const_fm.y*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*val(a.y,0,0,0));}end_is_face_y()
-#line 391
+#line 382
 is_face_z(){
     val(uf.z,0,0,0) = _const_fm.z*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*val(a.z,0,0,0));}end_is_face_z()}end_foreach_face_generic();}}else if(!is_constant(fm.x) && is_constant(a.x)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
   
-#line 391
-foreach_face_stencil(1,{(NonLocal[]){{"_const_a","_coord",(void *)&_const_a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 391 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = val(fm.x,0,0,0)*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}end_is_face_x()\n// #line 391\nis_face_y(){\n    val_out_(uf.y,0,0,0) = val(fm.y,0,0,0)*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}end_is_face_y()\n// #line 391\nis_face_z(){\n    val_out_(uf.z,0,0,0) = val(fm.z,0,0,0)*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 382
+foreach_face_stencil(1,{(NonLocal[]){{"_const_a","_coord",(void *)&_const_a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 382 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = val(fm.x,0,0,0)*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}end_is_face_x()\n// #line 382\nis_face_y(){\n    val_out_(uf.y,0,0,0) = val(fm.y,0,0,0)*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}end_is_face_y()\n// #line 382\nis_face_z(){\n    val_out_(uf.z,0,0,0) = val(fm.z,0,0,0)*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}end_is_face_z()}"}){_stencil_is_face_x(){
     { _stencil_val(fm.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);;_stencil_val_a(uf.x,0,0,0);                   }}end__stencil_is_face_x()
-#line 391
+#line 382
 _stencil_is_face_y(){
     { _stencil_val(fm.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);;_stencil_val_a(uf.y,0,0,0);                   }}end__stencil_is_face_y()
-#line 391
+#line 382
 _stencil_is_face_z(){
     { _stencil_val(fm.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);;_stencil_val_a(uf.z,0,0,0);                   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 391
+#line 382
 foreach_face_generic(){is_face_x(){
     val(uf.x,0,0,0) = val(fm.x,0,0,0)*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}end_is_face_x()
-#line 391
+#line 382
 is_face_y(){
     val(uf.y,0,0,0) = val(fm.y,0,0,0)*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}end_is_face_y()
-#line 391
+#line 382
 is_face_z(){
     val(uf.z,0,0,0) = val(fm.z,0,0,0)*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}end_is_face_z()}end_foreach_face_generic();}}else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
   
-#line 391
-foreach_face_stencil(1,{(NonLocal[]){{"_const_a","_coord",(void *)&_const_a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 391 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = _const_fm.x*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}end_is_face_x()\n// #line 391\nis_face_y(){\n    val_out_(uf.y,0,0,0) = _const_fm.y*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}end_is_face_y()\n// #line 391\nis_face_z(){\n    val_out_(uf.z,0,0,0) = _const_fm.z*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 382
+foreach_face_stencil(1,{(NonLocal[]){{"_const_a","_coord",(void *)&_const_a,NULL,0},{"dt","double",(void *)&dt,NULL,0},{"cs","scalar",(void *)&cs,NULL,0},{"fs","vector",(void *)&fs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"uf","vector",(void *)&uf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"\n// # 30 \"/home/lisergey/basilisk/src/embed.h\" 2\n// # 95 \"/home/lisergey/basilisk/src/embed.h\"\n\nstatic inline coord embed_face_barycentre_z (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.z;\n   {\n    n1.x = (val(f,-1,-1,i) + 2.*val(f,-1,0,i) + val(f,-1,1,i) -\n     val(f,+1,-1,i) - 2.*val(f,+1,0,i) - val(f,+1,1,i));\n    nn += fabs(n1.x);\n  } \n// #line 102\n{\n    n1.y = (val(f,-1,-1,i) + 2.*val(f,0,-1,i) + val(f,1,-1,i) -\n     val(f,-1,+1,i) - 2.*val(f,0,+1,i) - val(f,1,+1,i));\n    nn += fabs(n1.y);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.x /= nn;\n    \n// #line 110\nn1.y /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.x, ((real *)&n)[1] = n1.y;\n  real alpha = line_alpha (val(f,0,0,i), n);\n  line_center (n, alpha, val(f,0,0,i), &p1);\n  p.x = ((real *)&p1)[0], p.y = ((real *)&p1)[1], p.z = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_z (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_z (point, i);\n\n  int j = sign(p.x), k = sign(p.y);\n  if ((val(fs.z,j,k,i) > 0.5 && (val(fs.z,j,0,i) > 0.5 || val(fs.z,0,k,i) > 0.5) && val(fs.x,j + (j < 0),0,i) && val(fs.x,j + (j < 0),0,i-1) && val(fs.x,j + (j < 0),k,i) && val(fs.x,j + (j < 0),k,i-1) && val(fs.y,0,k + (k < 0),i) && val(fs.y,0,k + (k < 0),i-1) && val(fs.y,j,k + (k < 0),i) && val(fs.y,j,k + (k < 0),i-1) && val(cs,j,0,i-1) && val(cs,0,k,i-1) && val(cs,j,k,i-1) && val(cs,j,0,i) && val(cs,0,k,i) && val(cs,j,k,i))) {\n    p.x = fabs(p.x), p.y = fabs(p.y);\n    return ((((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.))*(1. - p.x) + ((val(a,j,0,i)*(1.5 + val(cs,j,0,i)) + val(a,j,0,i-1)*(1.5 + val(cs,j,0,i-1)))/ (val(cs,j,0,i) + val(cs,j,0,i-1) + 3.))*p.x)*(1. - p.y) +\n     (((val(a,0,k,i)*(1.5 + val(cs,0,k,i)) + val(a,0,k,i-1)*(1.5 + val(cs,0,k,i-1)))/ (val(cs,0,k,i) + val(cs,0,k,i-1) + 3.))*(1. - p.x) + ((val(a,j,k,i)*(1.5 + val(cs,j,k,i)) + val(a,j,k,i-1)*(1.5 + val(cs,j,k,i-1)))/ (val(cs,j,k,i) + val(cs,j,k,i-1) + 3.))*p.x)*p.y);\n  }\n  return ((val(a,0,0,i)*(1.5 + val(cs,0,0,i)) + val(a,0,0,i-1)*(1.5 + val(cs,0,0,i-1)))/ (val(cs,0,0,i) + val(cs,0,0,i-1) + 3.));\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_y (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.y;\n   {\n    n1.z = (val(f,-1,i,-1) + 2.*val(f,0,i,-1) + val(f,1,i,-1) -\n     val(f,-1,i,+1) - 2.*val(f,0,i,+1) - val(f,1,i,+1));\n    nn += fabs(n1.z);\n  } \n// #line 102\n{\n    n1.x = (val(f,-1,i,-1) + 2.*val(f,-1,i,0) + val(f,-1,i,1) -\n     val(f,+1,i,-1) - 2.*val(f,+1,i,0) - val(f,+1,i,1));\n    nn += fabs(n1.x);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.z /= nn;\n    \n// #line 110\nn1.x /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.z, ((real *)&n)[1] = n1.x;\n  real alpha = line_alpha (val(f,0,i,0), n);\n  line_center (n, alpha, val(f,0,i,0), &p1);\n  p.z = ((real *)&p1)[0], p.x = ((real *)&p1)[1], p.y = 0.;\n  return p;\n}\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_y (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_y (point, i);\n\n  int j = sign(p.z), k = sign(p.x);\n  if ((val(fs.y,k,i,j) > 0.5 && (val(fs.y,0,i,j) > 0.5 || val(fs.y,k,i,0) > 0.5) && val(fs.z,0,i,j + (j < 0)) && val(fs.z,0,i-1,j + (j < 0)) && val(fs.z,k,i,j + (j < 0)) && val(fs.z,k,i-1,j + (j < 0)) && val(fs.x,k + (k < 0),i,0) && val(fs.x,k + (k < 0),i-1,0) && val(fs.x,k + (k < 0),i,j) && val(fs.x,k + (k < 0),i-1,j) && val(cs,0,i-1,j) && val(cs,k,i-1,0) && val(cs,k,i-1,j) && val(cs,0,i,j) && val(cs,k,i,0) && val(cs,k,i,j))) {\n    p.z = fabs(p.z), p.x = fabs(p.x);\n    return ((((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.))*(1. - p.z) + ((val(a,0,i,j)*(1.5 + val(cs,0,i,j)) + val(a,0,i-1,j)*(1.5 + val(cs,0,i-1,j)))/ (val(cs,0,i,j) + val(cs,0,i-1,j) + 3.))*p.z)*(1. - p.x) +\n     (((val(a,k,i,0)*(1.5 + val(cs,k,i,0)) + val(a,k,i-1,0)*(1.5 + val(cs,k,i-1,0)))/ (val(cs,k,i,0) + val(cs,k,i-1,0) + 3.))*(1. - p.z) + ((val(a,k,i,j)*(1.5 + val(cs,k,i,j)) + val(a,k,i-1,j)*(1.5 + val(cs,k,i-1,j)))/ (val(cs,k,i,j) + val(cs,k,i-1,j) + 3.))*p.z)*p.x);\n  }\n  return ((val(a,0,i,0)*(1.5 + val(cs,0,i,0)) + val(a,0,i-1,0)*(1.5 + val(cs,0,i-1,0)))/ (val(cs,0,i,0) + val(cs,0,i-1,0) + 3.));\n}\n\n\n\n\n\n\n\n// #line 512 \"/home/lisergey/basilisk/src/geometry.h\"\nvoid line_center (coord m, real alpha, real a, coord * p)\n{\n  alpha += (m.x + m.y)/2.;\n\n  coord n = m;\n  \n    if (n.x < 0.) {\n      alpha -= n.x;\n      n.x = - n.x;\n    }\n    \n// #line 518\nif (n.y < 0.) {\n      alpha -= n.y;\n      n.y = - n.y;\n    }\n\n  p->z = 0.;\n  if (alpha <= 0.) {\n    p->x = p->y = -0.5;\n    return;\n  }\n\n  if (alpha >= n.x + n.y) {\n    p->x = p->y = 0.;\n    return;\n  }\n\n  \n    if (n.x < 1e-4) {\n      p->x = 0.;\n      p->y = sign(m.y)*(a/2. - 0.5);\n      return;\n    }\n    \n// #line 535\nif (n.y < 1e-4) {\n      p->y = 0.;\n      p->x = sign(m.x)*(a/2. - 0.5);\n      return;\n    }\n\n  p->x = p->y = cube(alpha);\n\n   {\n    real b = alpha - n.x;\n    if (b > 0.) {\n      p->x -= sq(b)*(alpha + 2.*n.x);\n      p->y -= cube(b);\n    }\n  } \n// #line 543\n{\n    real b = alpha - n.y;\n    if (b > 0.) {\n      p->y -= sq(b)*(alpha + 2.*n.y);\n      p->x -= cube(b);\n    }\n  }\n\n   {\n    p->x /= 6.*sq(n.x)*n.y*a;\n    p->x = sign(m.x)*(p->x - 0.5);\n  } \n// #line 551\n{\n    p->y /= 6.*sq(n.y)*n.x*a;\n    p->y = sign(m.y)*(p->y - 0.5);\n  }\n}\n// # 8 \"cylinder.c\" 2\n// # 1 \"fractions.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 12 \"/home/lisergey/basilisk/src/fractions.h\"\n// # 1 \"geometry.h\" 1\n// # 1 \"/home/lisergey/basilisk/src/geometry.h\"\n// # 35 \"/home/lisergey/basilisk/src/geometry.h\"\nreal line_alpha (real c, coord n)\n{\n  real alpha, n1, n2;\n\n  n1 = fabs (n.x); n2 = fabs (n.y);\n  if (n1 > n2)\n    do { real __tmp = n1; n1 = n2; n2 = __tmp; } while(0);\n\n  c = clamp (c, 0., 1.);\n  real v1 = n1/2.;\n  if (c <= v1/n2)\n    alpha = sqrt (2.*c*n1*n2);\n  else if (c <= 1. - v1/n2)\n    alpha = c*n2 + v1;\n  else\n    alpha = n1 + n2 - sqrt (2.*n1*n2*(1. - c));\n\n  if (n.x < 0.)\n    alpha += n.x;\n  if (n.y < 0.)\n    alpha += n.y;\n\n  return alpha - (n.x + n.y)/2.;\n}\n\n// #line 96 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline coord embed_face_barycentre_x (Point point, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n\n  coord n1 = {0};\n  real nn = 0.;\n  scalar f = fs.x;\n   {\n    n1.y = (val(f,i,-1,-1) + 2.*val(f,i,-1,0) + val(f,i,-1,1) -\n     val(f,i,+1,-1) - 2.*val(f,i,+1,0) - val(f,i,+1,1));\n    nn += fabs(n1.y);\n  } \n// #line 102\n{\n    n1.z = (val(f,i,-1,-1) + 2.*val(f,i,0,-1) + val(f,i,1,-1) -\n     val(f,i,-1,+1) - 2.*val(f,i,0,+1) - val(f,i,1,+1));\n    nn += fabs(n1.z);\n  }\n  if (!nn)\n    return (coord){0.,0.,0.};\n  \n    n1.y /= nn;\n    \n// #line 110\nn1.z /= nn;\n\n  coord n, p1, p;\n  ((real *)&n)[0] = n1.y, ((real *)&n)[1] = n1.z;\n  real alpha = line_alpha (val(f,i,0,0), n);\n  line_center (n, alpha, val(f,i,0,0), &p1);\n  p.y = ((real *)&p1)[0], p.z = ((real *)&p1)[1], p.x = 0.;\n  return p;\n}\n\n\n\n// #line 156 \"/home/lisergey/basilisk/src/embed.h\"\nstatic inline real embed_face_value_x (Point point, scalar a, int i)\n{int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;\n  coord p = embed_face_barycentre_x (point, i);\n\n  int j = sign(p.y), k = sign(p.z);\n  if ((val(fs.x,i,j,k) > 0.5 && (val(fs.x,i,j,0) > 0.5 || val(fs.x,i,0,k) > 0.5) && val(fs.y,i,j + (j < 0),0) && val(fs.y,i-1,j + (j < 0),0) && val(fs.y,i,j + (j < 0),k) && val(fs.y,i-1,j + (j < 0),k) && val(fs.z,i,0,k + (k < 0)) && val(fs.z,i-1,0,k + (k < 0)) && val(fs.z,i,j,k + (k < 0)) && val(fs.z,i-1,j,k + (k < 0)) && val(cs,i-1,j,0) && val(cs,i-1,0,k) && val(cs,i-1,j,k) && val(cs,i,j,0) && val(cs,i,0,k) && val(cs,i,j,k))) {\n    p.y = fabs(p.y), p.z = fabs(p.z);\n    return ((((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.))*(1. - p.y) + ((val(a,i,j,0)*(1.5 + val(cs,i,j,0)) + val(a,i-1,j,0)*(1.5 + val(cs,i-1,j,0)))/ (val(cs,i,j,0) + val(cs,i-1,j,0) + 3.))*p.y)*(1. - p.z) +\n     (((val(a,i,0,k)*(1.5 + val(cs,i,0,k)) + val(a,i-1,0,k)*(1.5 + val(cs,i-1,0,k)))/ (val(cs,i,0,k) + val(cs,i-1,0,k) + 3.))*(1. - p.y) + ((val(a,i,j,k)*(1.5 + val(cs,i,j,k)) + val(a,i-1,j,k)*(1.5 + val(cs,i-1,j,k)))/ (val(cs,i,j,k) + val(cs,i-1,j,k) + 3.))*p.y)*p.z);\n  }\n  return ((val(a,i,0,0)*(1.5 + val(cs,i,0,0)) + val(a,i-1,0,0)*(1.5 + val(cs,i-1,0,0)))/ (val(cs,i,0,0) + val(cs,i-1,0,0) + 3.));\n}","\n// #line 382 \"./centered.h\"\n{is_face_x(){\n    val_out_(uf.x,0,0,0) = _const_fm.x*((u.x.third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}end_is_face_x()\n// #line 382\nis_face_y(){\n    val_out_(uf.y,0,0,0) = _const_fm.y*((u.y.third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}end_is_face_y()\n// #line 382\nis_face_z(){\n    val_out_(uf.z,0,0,0) = _const_fm.z*((u.z.third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}end_is_face_z()}"}){_stencil_is_face_x(){
     {; _stencil_val(fs.x,0,0,0); _stencil_val(fs.x,0,0,0); _stencil_embed_face_value_x (point, u.x, 0);_stencil_val(u.x,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.x,0 -1,0,0); _stencil_val(cs,0 -1,0,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0 -1,0,0);;_stencil_val_a(uf.x,0,0,0);                   }}end__stencil_is_face_x()
-#line 391
+#line 382
 _stencil_is_face_y(){
     {; _stencil_val(fs.y,0,0,0); _stencil_val(fs.y,0,0,0); _stencil_embed_face_value_y (point, u.y, 0);_stencil_val(u.y,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.y,0,0 -1,0); _stencil_val(cs,0,0 -1,0);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0 -1,0);;_stencil_val_a(uf.y,0,0,0);                   }}end__stencil_is_face_y()
-#line 391
+#line 382
 _stencil_is_face_z(){
     {; _stencil_val(fs.z,0,0,0); _stencil_val(fs.z,0,0,0); _stencil_embed_face_value_z (point, u.z, 0);_stencil_val(u.z,0,0,0); _stencil_val(cs,0,0,0); _stencil_val(u.z,0,0,0 -1); _stencil_val(cs,0,0,0 -1);_stencil_val(cs,0,0,0); _stencil_val(cs,0,0,0 -1);;_stencil_val_a(uf.z,0,0,0);                   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 391
+#line 382
 foreach_face_generic(){is_face_x(){
     val(uf.x,0,0,0) = _const_fm.x*((_attribute[u.x.i].third && val(fs.x,0,0,0) < 1. && val(fs.x,0,0,0) > 0. ? embed_face_value_x (point, u.x, 0) : ((val(u.x,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.x,0 -1,0,0)*(1.5 + val(cs,0 -1,0,0)))/ (val(cs,0,0,0) + val(cs,0 -1,0,0) + 3.))) + dt*_const_a.x);}end_is_face_x()
-#line 391
+#line 382
 is_face_y(){
     val(uf.y,0,0,0) = _const_fm.y*((_attribute[u.y.i].third && val(fs.y,0,0,0) < 1. && val(fs.y,0,0,0) > 0. ? embed_face_value_y (point, u.y, 0) : ((val(u.y,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.y,0,0 -1,0)*(1.5 + val(cs,0,0 -1,0)))/ (val(cs,0,0,0) + val(cs,0,0 -1,0) + 3.))) + dt*_const_a.y);}end_is_face_y()
-#line 391
+#line 382
 is_face_z(){
     val(uf.z,0,0,0) = _const_fm.z*((_attribute[u.z.i].third && val(fs.z,0,0,0) < 1. && val(fs.z,0,0,0) > 0. ? embed_face_value_z (point, u.z, 0) : ((val(u.z,0,0,0)*(1.5 + val(cs,0,0,0)) + val(u.z,0,0,0 -1)*(1.5 + val(cs,0,0,0 -1)))/ (val(cs,0,0,0) + val(cs,0,0,0 -1) + 3.))) + dt*_const_a.z);}end_is_face_z()}end_foreach_face_generic();}}
-}{end_tracing("acceleration","./centered.h",393);return 0;}end_tracing("acceleration","./centered.h",393);}
-#line 402 "./centered.h"
+}{end_tracing("acceleration","./centered.h",384);return 0;}end_tracing("acceleration","./centered.h",384);}
+#line 393 "./centered.h"
 void centered_gradient (scalar p, vector g)
 {
 
@@ -20657,162 +20633,162 @@ void centered_gradient (scalar p, vector g)
   vector  gf=new_face_vector("gf");
   if(!is_constant(fm.x) && !is_constant(a.x) && !is_constant(alpha.x)){
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     { _stencil_val(fm.x,0,0,0);_stencil_val(a.x,0,0,0); _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     { _stencil_val(fm.y,0,0,0);_stencil_val(a.y,0,0,0); _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     { _stencil_val(fm.z,0,0,0);_stencil_val(a.z,0,0,0); _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();{
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}else if(is_constant(fm.x) && !is_constant(a.x) && !is_constant(alpha.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     {;_stencil_val(a.x,0,0,0); _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     {;_stencil_val(a.y,0,0,0); _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     {;_stencil_val(a.z,0,0,0); _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}else if(!is_constant(fm.x) && is_constant(a.x) && !is_constant(alpha.x)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     { _stencil_val(fm.x,0,0,0);; _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     { _stencil_val(fm.y,0,0,0);; _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     { _stencil_val(fm.z,0,0,0);; _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}else if(is_constant(fm.x) && is_constant(a.x) && !is_constant(alpha.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"alpha","vector",(void *)&alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     {;; _stencil_val(alpha.x,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     {;; _stencil_val(alpha.y,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     {;; _stencil_val(alpha.z,0,0,0);_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = _const_fm.x*_const_a.x - val(alpha.x,0,0,0)*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = _const_fm.y*_const_a.y - val(alpha.y,0,0,0)*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = _const_fm.z*_const_a.z - val(alpha.z,0,0,0)*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}else if(!is_constant(fm.x) && !is_constant(a.x) && is_constant(alpha.x)){_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     { _stencil_val(fm.x,0,0,0);_stencil_val(a.x,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     { _stencil_val(fm.y,0,0,0);_stencil_val(a.y,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     { _stencil_val(fm.z,0,0,0);_stencil_val(a.z,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = val(fm.x,0,0,0)*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = val(fm.y,0,0,0)*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = val(fm.z,0,0,0)*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}else if(is_constant(fm.x) && !is_constant(a.x) && is_constant(alpha.x)){_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"a","vector",(void *)&a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     {;_stencil_val(a.x,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     {;_stencil_val(a.y,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     {;_stencil_val(a.z,0,0,0);;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = _const_fm.x*val(a.x,0,0,0) - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = _const_fm.y*val(a.y,0,0,0) - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = _const_fm.z*val(a.z,0,0,0) - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}else if(!is_constant(fm.x) && is_constant(a.x) && is_constant(alpha.x)){_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     { _stencil_val(fm.x,0,0,0);;;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     { _stencil_val(fm.y,0,0,0);;;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     { _stencil_val(fm.z,0,0,0);;;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = val(fm.x,0,0,0)*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = val(fm.y,0,0,0)*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = val(fm.z,0,0,0)*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);_coord _const_a={_constant[a.x.i-_NVARMAX],_constant[a.y.i-_NVARMAX],_constant[a.z.i-_NVARMAX]};NOT_UNUSED(_const_a);_coord _const_alpha={_constant[alpha.x.i-_NVARMAX],_constant[alpha.y.i-_NVARMAX],_constant[alpha.z.i-_NVARMAX]};NOT_UNUSED(_const_alpha);
   
-#line 410
-foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 410 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 410\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 410\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
+#line 401
+foreach_face_stencil(1,{(NonLocal[]){{"p","scalar",(void *)&p,NULL,0},{"_const_alpha","_coord",(void *)&_const_alpha,NULL,0},{"_const_a","_coord",(void *)&_const_a,NULL,0},{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n// #line 401 \"./centered.h\"\n{is_face_x(){\n    val_out_(gf.x,0,0,0) = _const_fm.x*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()\n// #line 401\nis_face_y(){\n    val_out_(gf.y,0,0,0) = _const_fm.y*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()\n// #line 401\nis_face_z(){\n    val_out_(gf.z,0,0,0) = _const_fm.z*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}"}){_stencil_is_face_x(){
     {;;;_stencil_val(p,0,0,0); _stencil_val(p,-1,0,0);_stencil_val_a(gf.x,0,0,0);   }}end__stencil_is_face_x()
-#line 410
+#line 401
 _stencil_is_face_y(){
     {;;;_stencil_val(p,0,0,0); _stencil_val(p,0,-1,0);_stencil_val_a(gf.y,0,0,0);   }}end__stencil_is_face_y()
-#line 410
+#line 401
 _stencil_is_face_z(){
     {;;;_stencil_val(p,0,0,0); _stencil_val(p,0,0,-1);_stencil_val_a(gf.z,0,0,0);   }}end__stencil_is_face_z()}end_foreach_face_stencil();
   {
-#line 410
+#line 401
 foreach_face_generic(){is_face_x(){
     val(gf.x,0,0,0) = _const_fm.x*_const_a.x - _const_alpha.x*(val(p,0,0,0) - val(p,-1,0,0))/Delta;}end_is_face_x()
-#line 410
+#line 401
 is_face_y(){
     val(gf.y,0,0,0) = _const_fm.y*_const_a.y - _const_alpha.y*(val(p,0,0,0) - val(p,0,-1,0))/Delta;}end_is_face_y()
-#line 410
+#line 401
 is_face_z(){
     val(gf.z,0,0,0) = _const_fm.z*_const_a.z - _const_alpha.z*(val(p,0,0,0) - val(p,0,0,-1))/Delta;}end_is_face_z()}end_foreach_face_generic();}}
 
@@ -20823,47 +20799,47 @@ is_face_z(){
   trash (((vector[]){g,{{-1},{-1},{-1}}}));
   if(!is_constant(fm.x)){
   
-#line 418
-foreach_stencil(1,{(NonLocal[]){{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"g","vector",(void *)&g,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n    \n// #line 419 \"./centered.h\"\n{\n      val_out_(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(val(fm.x,0,0,0) + val(fm.x,1,0,0) + 1e-30);\n      \n// #line 420\nval_out_(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(val(fm.y,0,0,0) + val(fm.y,0,1,0) + 1e-30);\n      \n// #line 420\nval_out_(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(val(fm.z,0,0,0) + val(fm.z,0,0,1) + 1e-30);}"})
+#line 409
+foreach_stencil(1,{(NonLocal[]){{"fm","vector",(void *)&fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"g","vector",(void *)&g,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n    \n// #line 410 \"./centered.h\"\n{\n      val_out_(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(val(fm.x,0,0,0) + val(fm.x,1,0,0) + 1e-30);\n      \n// #line 411\nval_out_(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(val(fm.y,0,0,0) + val(fm.y,0,1,0) + 1e-30);\n      \n// #line 411\nval_out_(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(val(fm.z,0,0,0) + val(fm.z,0,0,1) + 1e-30);}"})
     {
       {_stencil_val(gf.x,0,0,0); _stencil_val(gf.x,1,0,0);_stencil_val(fm.x,0,0,0); _stencil_val(fm.x,1,0,0);_stencil_val_a(g.x,0,0,0);      }
       
-#line 420
+#line 411
 {_stencil_val(gf.y,0,0,0); _stencil_val(gf.y,0,1,0);_stencil_val(fm.y,0,0,0); _stencil_val(fm.y,0,1,0);_stencil_val_a(g.y,0,0,0);      }
       
-#line 420
+#line 411
 {_stencil_val(gf.z,0,0,0); _stencil_val(gf.z,0,0,1);_stencil_val(fm.z,0,0,0); _stencil_val(fm.z,0,0,1);_stencil_val_a(g.z,0,0,0);      }}end_foreach_stencil();{
-#line 418
+#line 409
 foreach()
     {
       val(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(val(fm.x,0,0,0) + val(fm.x,1,0,0) + 1e-30);
       
-#line 420
+#line 411
 val(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(val(fm.y,0,0,0) + val(fm.y,0,1,0) + 1e-30);
       
-#line 420
+#line 411
 val(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(val(fm.z,0,0,0) + val(fm.z,0,0,1) + 1e-30);}end_foreach();}}else {_coord _const_fm={_constant[fm.x.i-_NVARMAX],_constant[fm.y.i-_NVARMAX],_constant[fm.z.i-_NVARMAX]};NOT_UNUSED(_const_fm);
   
-#line 418
-foreach_stencil(1,{(NonLocal[]){{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"g","vector",(void *)&g,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n    \n// #line 419 \"./centered.h\"\n{\n      val_out_(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(_const_fm.x + _const_fm.x + 1e-30);\n      \n// #line 420\nval_out_(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(_const_fm.y + _const_fm.y + 1e-30);\n      \n// #line 420\nval_out_(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(_const_fm.z + _const_fm.z + 1e-30);}"})
+#line 409
+foreach_stencil(1,{(NonLocal[]){{"_const_fm","_coord",(void *)&_const_fm,NULL,0},{"gf","vector",(void *)&gf,NULL,0},{"g","vector",(void *)&g,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},"","\n    \n// #line 410 \"./centered.h\"\n{\n      val_out_(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(_const_fm.x + _const_fm.x + 1e-30);\n      \n// #line 411\nval_out_(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(_const_fm.y + _const_fm.y + 1e-30);\n      \n// #line 411\nval_out_(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(_const_fm.z + _const_fm.z + 1e-30);}"})
     {
       {_stencil_val(gf.x,0,0,0); _stencil_val(gf.x,1,0,0);;;_stencil_val_a(g.x,0,0,0);      }
       
-#line 420
+#line 411
 {_stencil_val(gf.y,0,0,0); _stencil_val(gf.y,0,1,0);;;_stencil_val_a(g.y,0,0,0);      }
       
-#line 420
+#line 411
 {_stencil_val(gf.z,0,0,0); _stencil_val(gf.z,0,0,1);;;_stencil_val_a(g.z,0,0,0);      }}end_foreach_stencil();
   {
-#line 418
+#line 409
 foreach()
     {
       val(g.x,0,0,0) = (val(gf.x,0,0,0) + val(gf.x,1,0,0))/(_const_fm.x + _const_fm.x + 1e-30);
       
-#line 420
+#line 411
 val(g.y,0,0,0) = (val(gf.y,0,0,0) + val(gf.y,0,1,0))/(_const_fm.y + _const_fm.y + 1e-30);
       
-#line 420
+#line 411
 val(g.z,0,0,0) = (val(gf.z,0,0,0) + val(gf.z,0,0,1))/(_const_fm.z + _const_fm.z + 1e-30);}end_foreach();}}delete((scalar*)((vector[]){gf,{{-1},{-1},{-1}}}));
 }
 
@@ -20880,8 +20856,8 @@ static int projection_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*t
 
 
 
-#line 428
-      static int projection(const int i,const double t,Event *_ev){tracing("projection","./centered.h",428);
+#line 419
+      static int projection(const int i,const double t,Event *_ev){tracing("projection","./centered.h",419);
 {
   mgp = project (uf, p, alpha, dt, mgp.nrelax);
   centered_gradient (p, g);
@@ -20890,7 +20866,7 @@ static int projection_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*t
 
 
   correction (dt);
-}{end_tracing("projection","./centered.h",437);return 0;}end_tracing("projection","./centered.h",437);}
+}{end_tracing("projection","./centered.h",428);return 0;}end_tracing("projection","./centered.h",428);}
 
 
 
@@ -20903,7 +20879,7 @@ static int end_timestep_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=
 
 
 
-#line 443
+#line 434
 static int end_timestep(const int i,const double t,Event *_ev){;return 0;}
 #line 12 "cylinder.c"
 #line 1 "output_xdmf.h"
@@ -22084,26 +22060,17 @@ event_register((Event){0,1,stability,{stability_expr0},((int *)0),((double *)0),
 
 
 
-event_register((Event){0,1,vof,{vof_expr0},((int *)0),((double *)0),"./centered.h",241,"vof"});  
-event_register((Event){0,1,tracer_advection,{tracer_advection_expr0},((int *)0),((double *)0),"./centered.h",242,"tracer_advection"});  
-event_register((Event){0,1,tracer_diffusion,{tracer_diffusion_expr0},((int *)0),((double *)0),"./centered.h",243,"tracer_diffusion"});  
-
-
-
-
-
-
-event_register((Event){0,1,properties,{properties_expr0},((int *)0),((double *)0),"./centered.h",250,"properties"});  
-#line 323
-event_register((Event){0,1,advection_term,{advection_term_expr0},((int *)0),((double *)0),"./centered.h",323,"advection_term"});  
-#line 352
-event_register((Event){0,1,viscous_term,{viscous_term_expr0},((int *)0),((double *)0),"./centered.h",352,"viscous_term"});  
-#line 388
-event_register((Event){0,1,acceleration,{acceleration_expr0},((int *)0),((double *)0),"./centered.h",388,"acceleration"});  
-#line 428
-event_register((Event){0,1,projection,{projection_expr0},((int *)0),((double *)0),"./centered.h",428,"projection"});  
-#line 443
-event_register((Event){0,1,end_timestep,{end_timestep_expr0},((int *)0),((double *)0),"./centered.h",443,"end_timestep"});  
+event_register((Event){0,1,properties,{properties_expr0},((int *)0),((double *)0),"./centered.h",241,"properties"});  
+#line 314
+event_register((Event){0,1,advection_term,{advection_term_expr0},((int *)0),((double *)0),"./centered.h",314,"advection_term"});  
+#line 343
+event_register((Event){0,1,viscous_term,{viscous_term_expr0},((int *)0),((double *)0),"./centered.h",343,"viscous_term"});  
+#line 379
+event_register((Event){0,1,acceleration,{acceleration_expr0},((int *)0),((double *)0),"./centered.h",379,"acceleration"});  
+#line 419
+event_register((Event){0,1,projection,{projection_expr0},((int *)0),((double *)0),"./centered.h",419,"projection"});  
+#line 434
+event_register((Event){0,1,end_timestep,{end_timestep_expr0},((int *)0),((double *)0),"./centered.h",434,"end_timestep"});  
 #line 496 "cylinder.c"
 event_register((Event){0,1,properties_0,{properties_0_expr0},((int *)0),((double *)0),"cylinder.c",496,"properties"});
   
