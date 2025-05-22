@@ -491,8 +491,11 @@ event init(t = 0) {
   u.n[embed] = dirichlet(0);
   u.t[embed] = dirichlet(0);
   u.r[embed] = dirichlet(0);
+  fm = fs;
+  cm = cs;
   event("metric");
 }
+
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
 event dump(i++; t <= tend) {
   char path[FILENAME_MAX];
