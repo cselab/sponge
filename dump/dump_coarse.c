@@ -39,10 +39,10 @@ int main(int argc, char **argv) {
     switch (argv[0][1]) {
     case 'h':
       fprintf(stderr,
-              "Usage: dump_info [-h] file.dump\n"
+              "Usage: dump_coarse [-h] input.dump output.dump\n"
               "Options:\n"
               "  -h                          Print help message and exit\n"
-              "  file.dump                   basilisk dump\n");
+              "  input.dump, output.dump     basilisk dumps\n");
       exit(1);
     default:
       fprintf(stderr, "dump_info: error: unknown option '%s'\n", *argv);
