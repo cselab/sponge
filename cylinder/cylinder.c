@@ -492,7 +492,6 @@ event init(t = 0) {
   }
   fm = fs;
   cm = cs;
-  event("dump");
 }
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
 event dump(i++; t <= tend) {
