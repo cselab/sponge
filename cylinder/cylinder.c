@@ -493,7 +493,6 @@ event init(t = 0) {
   u.r[embed] = dirichlet(0);
   fm = fs;
   cm = cs;
-  event("metric");
 }
 
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
