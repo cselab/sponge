@@ -126,6 +126,7 @@ static scalar l2[];
 static vector omega[];
 static scalar phi[];
 int main(int argc, char **argv) {
+  NITERMAX = 10;
   char *end;
   const char *boundaries;
   int ReynoldsFlag, MaxLevelFlag, MinLevelFlag, PeriodFlag, TendFlag,
