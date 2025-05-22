@@ -488,8 +488,6 @@ event init(t = 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: initialize velocity from dump file\n");
   }
-  fm = fs;
-  cm = cs;
   u.n[embed] = dirichlet(0);
   u.t[embed] = dirichlet(0);
   u.r[embed] = dirichlet(0);
