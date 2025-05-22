@@ -107,9 +107,6 @@ static int slice_y(double x, double y, double z, double Delta) {
   double epsilon = Delta / 10;
   return y <= -epsilon && y + Delta + epsilon >= 0;
 }
-u.n[embed] = dirichlet(0);
-u.t[embed] = dirichlet(0);
-u.r[embed] = dirichlet(0);
 static double (*Shape[])(double, double, double) = {shape_cylinder,
                                                     shape_sphere};
 static const char *shape_names[] = {"cylinder", "sphere"};
@@ -493,6 +490,9 @@ event init(t = 0) {
   }
   fm = fs;
   cm = cs;
+  u.n[embed] = dirichlet(0);
+  u.t[embed] = dirichlet(0);
+  u.r[embed] = dirichlet(0);
 }
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
 event dump(i++; t <= tend) {
