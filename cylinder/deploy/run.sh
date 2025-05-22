@@ -13,4 +13,4 @@ zlim=`../../stl/size.py center.stl`
 set -- $zlim
 zlim=$2
 mpiexec.openmpi ./cylinder -v -i -Z $zlim \
-    	 -r 2000 -l $l -m $m -p 10 -e 200 -f force.dat -d basilisk.dump -o h -b pp
+    	 -r 2000 -l $l -m $m -p 1 -e 200 -f force.dat -d basilisk.dump -o h -b pp

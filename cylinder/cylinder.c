@@ -486,17 +486,8 @@ event init(t = 0) {
   u.n[embed] = dirichlet(0);
   u.t[embed] = dirichlet(0);
   u.r[embed] = dirichlet(0);
-  if (is_constant (fm.x)) {
-    fm = fs;
-  }
-  if (is_constant (cm)) {
-    cm = cs;
-  }
-  cs.refine = NULL;
-  cs.prolongation = NULL;
-  foreach_dimension()
-    fs.x.prolongation = embed_face_fraction_refine_x;
-  restriction ({cs, fs});
+  fm = fs;
+  cm = cs;
 }
 
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
