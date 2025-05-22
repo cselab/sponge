@@ -21890,8 +21890,8 @@ _attribute[u.z.i].dirty=1,_attribute[u.z.i].boundary[embed]=_boundary20,_attribu
   if (is_constant (cm)) {
     cm = cs;
   }
-  _attribute[cs.i].refine = embed_fraction_refine;
-  _attribute[cs.i].prolongation = fraction_refine;
+
+
   
     _attribute[fs.x.i].prolongation = embed_face_fraction_refine_x;
     
