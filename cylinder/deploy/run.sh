@@ -19,4 +19,4 @@ then
 			-5 -6.25 -6.25 12.5  $l $m  64 center.stl basilisk.$l.$m.dump
 fi
 $mpiexec ./cylinder -v -i \
-    	 -r 2000 -l $l -m $m -p 1 -e 200 -f force.dat -d basilisk.$l.$m.dump -o h -b pp -i
+    	 -r 2000 -l $l -m $m -p 1 -e 200 -f force.dat -d basilisk.$l.$m.dump -o h -b nn -i
