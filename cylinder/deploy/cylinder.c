@@ -21879,8 +21879,8 @@ foreach () {
 _attribute[u.x.i].dirty=1,_attribute[u.x.i].boundary[embed]=_boundary18,_attribute[u.x.i].boundary_homogeneous[embed]=_boundary18_homogeneous;
 _attribute[u.y.i].dirty=1,_attribute[u.y.i].boundary[embed]=_boundary19,_attribute[u.y.i].boundary_homogeneous[embed]=_boundary19_homogeneous;
 _attribute[u.z.i].dirty=1,_attribute[u.z.i].boundary[embed]=_boundary20,_attribute[u.z.i].boundary_homogeneous[embed]=_boundary20_homogeneous;
-  fm = fs;
-  cm = cs;
+
+
 }{end_tracing("init_0","cylinder.c",491);return 0;}end_tracing("init_0","cylinder.c",491);}
 
 static int properties_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
