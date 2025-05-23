@@ -8,8 +8,11 @@ set -eu
 
 make cylinder
 (cd ../../dump && make dump2xdmf stl2dump)
-../../stl/cylinder.py -n 64 ver.stl
-../../stl/center.py ver.stl center.stl
+if test ! -f center.stl
+then
+    ../../stl/cylinder.py -n 64 ver.stl
+    ../../stl/center.py ver.stl center.stl
+fi
 zlim=`../../stl/size.py center.stl`
 if test ! -f basilisk.$l.$m.dump
 then
