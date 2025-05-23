@@ -459,7 +459,7 @@ event init(t = 0) {
   }
   if (InitFileFlag == 0) {
     if (Verbose && pid() == 0)
-      fprintf(stderr, "cylinder: initialize velocity to zeros\n");
+      fprintf(stderr, "cylinder: initialize velocity to inlet velocity\n");
     foreach () {
       u.x[] = cs[];
       u.y[] = 0;
