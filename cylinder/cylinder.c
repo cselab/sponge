@@ -453,9 +453,6 @@ event init(t = 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: starting from '%s': time: %g, step: %d\n",
               dump_path, t, i);
-    fractions(phi, cs, fs);
-    if (Verbose)
-      fields_stats();
   }
   u.n[embed] = dirichlet(0);
   u.t[embed] = dirichlet(0);
@@ -473,6 +470,9 @@ event init(t = 0) {
       fprintf(stderr, "cylinder: initialize velocity from dump file\n");
   }
   event("metric");
+  fractions(phi, cs, fs);
+  if (Verbose)
+    fields_stats();
 }
 
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
