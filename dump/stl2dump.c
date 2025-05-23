@@ -77,6 +77,11 @@ static const struct {
 };
 static const int shift[][3] = {{0, 0, 0}, {0, 0, 1}, {0, 1, 0}, {0, 1, 1},
                                {1, 0, 0}, {1, 0, 1}, {1, 1, 0}, {1, 1, 1}};
+static const int shift_sym[][3] = {
+    {0, 0, 0},   {0, 0, 1},  {0, 1, 0},   {0, 1, 1},   {1, 0, 0},
+    {1, 0, 1},   {1, 1, 0},  {1, 1, 1},   {0, 0, -1},  {0, -1, 0},
+    {0, -1, -1}, {-1, 0, 0}, {-1, 0, -1}, {-1, -1, 0}, {-1, -1, -1}};
+
 static char *fields_full[] = {"size",    "cs",      "u.x", "u.y", "u.z",
                               "g.x",     "g.y",     "g.z", "l2",  "omega.x",
                               "omega.y", "omega.z", "phi", NULL};
@@ -337,7 +342,7 @@ positional:
           s[0] = config.R[0] + delta * (x + 0.5);
           s[1] = config.R[1] + delta * (y + 0.5);
           s[2] = config.R[2] + delta * (z + 0.5);
-	  ncells += create_cell(&config, x, y, z, config.minlevel, 1);
+          ncells += create_cell(&config, x, y, z, config.minlevel, 1);
         }
       else
         for (x = 0; x < min_delta; x++)
@@ -538,7 +543,7 @@ static uint64_t traverse(uint64_t x, uint64_t y, uint64_t z, int level,
     values[i] = 0.0;
 
   values[config->phi_index] =
-    intersect % 2 == 0 ? sqrt(minimum) : -sqrt(minimum);
+      intersect % 2 == 0 ? sqrt(minimum) : -sqrt(minimum);
   code_ch = morton(x << 1, y << 1, z << 1);
   leaf = level + 1 > config->maxlevel ||
          !hash_search(config->hash[level + 1], code_ch, NULL);
@@ -689,10 +694,10 @@ static uint64_t create_cell(struct Config *config, int64_t x, int64_t y,
     sx = (x & 1) ? x + 1 : x - 1;
     sy = (y & 1) ? y + 1 : y - 1;
     sz = (z & 1) ? z + 1 : z - 1;
-    for (i = 0; i < sizeof shift / sizeof *shift; i++) {
-      u = (sx + shift[i][0]) >> 1;
-      v = (sy + shift[i][1]) >> 1;
-      w = (sz + shift[i][2]) >> 1;
+    for (i = 0; i < sizeof shift_sym / sizeof *shift_sym; i++) {
+      u = (sx + shift_sym[i][0]) >> 1;
+      v = (sy + shift_sym[i][1]) >> 1;
+      w = (sz + shift_sym[i][2]) >> 1;
       ncells += create_cell(config, u, v, w, level - 1, 1);
     }
     ncells += hash_insert(config->hash[level], code, NULL);
