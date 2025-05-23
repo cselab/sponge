@@ -122,7 +122,7 @@ static vector omega[];
 static scalar phi[];
 int main(int argc, char **argv) {
   NITERMIN = 2;
-  TOLERANCE = 1e-4;
+  NITERMAX = 10;
   char *end;
   const char *boundaries;
   int ReynoldsFlag, MaxLevelFlag, MinLevelFlag, PeriodFlag, TendFlag,

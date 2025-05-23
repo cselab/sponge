@@ -6,7 +6,7 @@ mkdir -p $re
 cd $0 &&
    mpiexec -n $k --map-by slot:PE=2 \
    --report-bindings ../cylinder \
-   -v -r $re -l $l -m $m -p 100 -e 10 -f force.dat -o h -b pp -S sphere -z 12.5 >stdout 2>stderr
+   -v -r $re -l $l -m $m -p 10 -e 100 -f force.dat -o h -b pp -S sphere -z 12.5 >stdout 2>stderr
    echo $? > status
 ' <<'!'
 0025

@@ -21460,7 +21460,7 @@ _init_solver();
   
 #line 124
 NITERMIN = 2;
-  TOLERANCE = 1e-4;
+  NITERMAX = 10;
   char *end;
   const char *boundaries;
   int ReynoldsFlag, MaxLevelFlag, MinLevelFlag, PeriodFlag, TendFlag,
