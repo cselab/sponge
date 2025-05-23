@@ -21831,19 +21831,25 @@ NULL
 _attribute[u.x.i].dirty=1,_attribute[u.x.i].boundary[embed]=_boundary18,_attribute[u.x.i].boundary_homogeneous[embed]=_boundary18_homogeneous;
 _attribute[u.y.i].dirty=1,_attribute[u.y.i].boundary[embed]=_boundary19,_attribute[u.y.i].boundary_homogeneous[embed]=_boundary19_homogeneous;
 _attribute[u.z.i].dirty=1,_attribute[u.z.i].boundary[embed]=_boundary20,_attribute[u.z.i].boundary_homogeneous[embed]=_boundary20_homogeneous;
+  event("metric");
+  fractions(phi, cs, fs
+#line 122 "/home/lisergey/basilisk/src/fractions.h"
+, 0.
+#line 461 "cylinder.c"
+);
   if (InitFileFlag == 0) {
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: initialize velocity to inlet velocity\n");
-    foreach_stencil (1,{(NonLocal[]){{"cs","scalar",(void *)&cs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},""," \n// #line 463 \"cylinder.c\"\n{\n      val_out_(u.x,0,0,0) = val(cs,0,0,0);\n      val_out_(u.y,0,0,0) = 0;\n      val_out_(u.z,0,0,0) = 0;\n    }"}) { 
+    foreach_stencil (1,{(NonLocal[]){{"cs","scalar",(void *)&cs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},""," \n// #line 465 \"cylinder.c\"\n{\n      val_out_(u.x,0,0,0) = val(cs,0,0,0);\n      val_out_(u.y,0,0,0) = 0;\n      val_out_(u.z,0,0,0) = 0;\n    }"}) { 
 _stencil_val(cs,0,0,0);
       
-#line 464
+#line 466
 _stencil_val_a(u.x,0,0,0); 
       _stencil_val_a(u.y,0,0,0);  
       _stencil_val_a(u.z,0,0,0);  
     }end_foreach_stencil();
     {
-#line 463
+#line 465
 foreach () {
       val(u.x,0,0,0) = val(cs,0,0,0);
       val(u.y,0,0,0) = 0;
@@ -21853,12 +21859,6 @@ foreach () {
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: initialize velocity from dump file\n");
   }
-  event("metric");
-  fractions(phi, cs, fs
-#line 122 "/home/lisergey/basilisk/src/fractions.h"
-, 0.
-#line 473 "cylinder.c"
-);
   if (Verbose)
     fields_stats();
 }{end_tracing("init_0","cylinder.c",476);return 0;}end_tracing("init_0","cylinder.c",476);}
