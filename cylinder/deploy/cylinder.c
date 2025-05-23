@@ -21769,7 +21769,7 @@ free_solver();
 
 #line 430
 }
-#line 460
+#line 457
 static double _boundary18(Point point,Point neighbor,scalar _s,void *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;{int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);POINT_VARIABLES;{return( _dirichlet(0, point, neighbor, _s, data));}}}static double _boundary18_homogeneous(Point point,Point neighbor,scalar _s,void *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;{int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);POINT_VARIABLES;{return( _dirichlet_homogeneous(0, point, neighbor, _s, data));}}}
 static double _boundary19(Point point,Point neighbor,scalar _s,void *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;{int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);POINT_VARIABLES;{return( _dirichlet(0, point, neighbor, _s, data));}}}static double _boundary19_homogeneous(Point point,Point neighbor,scalar _s,void *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;{int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);POINT_VARIABLES;{return( _dirichlet_homogeneous(0, point, neighbor, _s, data));}}}
 static double _boundary20(Point point,Point neighbor,scalar _s,void *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;{int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);POINT_VARIABLES;{return( _dirichlet(0, point, neighbor, _s, data));}}}static double _boundary20_homogeneous(Point point,Point neighbor,scalar _s,void *data){int ig=0;NOT_UNUSED(ig);int jg=0;NOT_UNUSED(jg);int kg=0;NOT_UNUSED(kg);POINT_VARIABLES;{int ig=neighbor.i-point.i;if(ig==0)ig=_attribute[_s.i].d.x;NOT_UNUSED(ig);int jg=neighbor.j-point.j;if(jg==0)jg=_attribute[_s.i].d.y;NOT_UNUSED(jg);int kg=neighbor.k-point.k;if(kg==0)kg=_attribute[_s.i].d.z;NOT_UNUSED(kg);POINT_VARIABLES;{return( _dirichlet_homogeneous(0, point, neighbor, _s, data));}}}
@@ -21827,13 +21827,6 @@ NULL
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: starting from '%s': time: %g, step: %d\n",
               dump_path, t, i);
-    fractions(phi, cs, fs
-#line 122 "/home/lisergey/basilisk/src/fractions.h"
-, 0.
-#line 456 "cylinder.c"
-);
-    if (Verbose)
-      fields_stats();
   }
 _attribute[u.x.i].dirty=1,_attribute[u.x.i].boundary[embed]=_boundary18,_attribute[u.x.i].boundary_homogeneous[embed]=_boundary18_homogeneous;
 _attribute[u.y.i].dirty=1,_attribute[u.y.i].boundary[embed]=_boundary19,_attribute[u.y.i].boundary_homogeneous[embed]=_boundary19_homogeneous;
@@ -21841,16 +21834,16 @@ _attribute[u.z.i].dirty=1,_attribute[u.z.i].boundary[embed]=_boundary20,_attribu
   if (InitFileFlag == 0) {
     if (Verbose && pid() == 0)
       fprintf(ferr, "cylinder: initialize velocity to inlet velocity\n");
-    foreach_stencil (1,{(NonLocal[]){{"cs","scalar",(void *)&cs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},""," \n// #line 466 \"cylinder.c\"\n{\n      val_out_(u.x,0,0,0) = val(cs,0,0,0);\n      val_out_(u.y,0,0,0) = 0;\n      val_out_(u.z,0,0,0) = 0;\n    }"}) { 
+    foreach_stencil (1,{(NonLocal[]){{"cs","scalar",(void *)&cs,NULL,0},{"u","vector",(void *)&u,NULL,0},{"N","int",(void *)&N,NULL,0},{"L0","double",(void *)&L0,NULL,0},{"Z0","double",(void *)&Z0,NULL,0},{"Y0","double",(void *)&Y0,NULL,0},{"X0","double",(void *)&X0,NULL,0},{0}},""," \n// #line 463 \"cylinder.c\"\n{\n      val_out_(u.x,0,0,0) = val(cs,0,0,0);\n      val_out_(u.y,0,0,0) = 0;\n      val_out_(u.z,0,0,0) = 0;\n    }"}) { 
 _stencil_val(cs,0,0,0);
       
-#line 467
+#line 464
 _stencil_val_a(u.x,0,0,0); 
       _stencil_val_a(u.y,0,0,0);  
       _stencil_val_a(u.z,0,0,0);  
     }end_foreach_stencil();
     {
-#line 466
+#line 463
 foreach () {
       val(u.x,0,0,0) = val(cs,0,0,0);
       val(u.y,0,0,0) = 0;
@@ -21861,6 +21854,13 @@ foreach () {
       fprintf(ferr, "cylinder: initialize velocity from dump file\n");
   }
   event("metric");
+  fractions(phi, cs, fs
+#line 122 "/home/lisergey/basilisk/src/fractions.h"
+, 0.
+#line 473 "cylinder.c"
+);
+  if (Verbose)
+    fields_stats();
 }{end_tracing("init_0","cylinder.c",476);return 0;}end_tracing("init_0","cylinder.c",476);}
 
 static int properties_0_expr0(int *ip,double *tp,Event *_ev){int i=*ip;double t=*tp;int ret=(i++)!=0;*ip=i;*tp=t;return ret;}
