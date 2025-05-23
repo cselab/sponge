@@ -27,7 +27,7 @@ struct Hash {
   struct {
     int64_t key;
     void *value;
-  } *nodes;
+  } * nodes;
 };
 
 struct DumpHeader {
@@ -393,7 +393,7 @@ positional:
           s[0] = config.R[0] + delta * (x + 0.5);
           s[1] = config.R[1] + delta * (y + 0.5);
           s[2] = config.R[2] + delta * (z + 0.5);
-          if (config.wall->inside(config.wall_data, 1, s))
+          if (!config.wall || config.wall->inside(config.wall_data, 1, s))
             ncells += create_cell(&config, x, y, z, config.minlevel, 1);
         }
       else
