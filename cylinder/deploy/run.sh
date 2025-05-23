@@ -14,7 +14,7 @@ then
 fi
 if test ! -f basilisk.$l.$m.dump
 then
-    ../../dump/stl2dump -v -s 26 -o  -- \
+    ../../dump/stl2dump -v -s $s -o  -- \
 			-5 -6.25 -6.25 12.5  $l $m  64 center.stl basilisk.$l.$m.dump
 fi
 $mpiexec ./cylinder -v \
