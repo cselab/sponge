@@ -6,7 +6,7 @@ set -eu
 : ${m=10}
 : ${mpiexec=mpiexec}
 
-make
+make stl2dump cylinder
 (cd ../../dump && make dump2xdmf stl2dump)
 ../../stl/cylinder.py -n 64 ver.stl
 ../../stl/center.py ver.stl center.stl
