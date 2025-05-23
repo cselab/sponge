@@ -4,6 +4,8 @@ set -eu
 #l=9 m=12
 : ${l=7}
 : ${m=10}
+: ${mpiexec=mpiexec}
+
 make
 (cd ../../dump && make dump2xdmf stl2dump)
 ../../stl/cylinder.py -n 64 ver.stl
@@ -16,5 +18,5 @@ then
 fi
 set -- $zlim
 zlim=$2
-mpiexec.openmpi ./cylinder -v -i -Z $zlim \
+$mpiexec ./cylinder -v -i -Z $zlim \
     	 -r 2000 -l $l -m $m -p 1 -e 200 -f force.dat -d basilisk.$l.$m.dump -o h -b pp
