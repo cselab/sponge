@@ -486,8 +486,6 @@ event init(t = 0) {
   u.n[embed] = dirichlet(0);
   u.t[embed] = dirichlet(0);
   u.r[embed] = dirichlet(0);
-  /* fm = fs;
-     cm = cs; */
 }
 
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
