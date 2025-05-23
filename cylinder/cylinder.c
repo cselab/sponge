@@ -457,6 +457,9 @@ event init(t = 0) {
     if (Verbose)
       fields_stats();
   }
+  u.n[embed] = dirichlet(0);
+  u.t[embed] = dirichlet(0);
+  u.r[embed] = dirichlet(0);
   if (InitFileFlag == 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: initialize velocity to inlet velocity\n");
@@ -469,9 +472,6 @@ event init(t = 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: initialize velocity from dump file\n");
   }
-  u.n[embed] = dirichlet(0);
-  u.t[embed] = dirichlet(0);
-  u.r[embed] = dirichlet(0);
 }
 
 event properties(i++) { foreach_face() muv.x[] = fm.x[] / reynolds; }
