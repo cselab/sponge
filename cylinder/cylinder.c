@@ -10,7 +10,7 @@
 #include "embed.h"
 #include "centered.h"
 #include "output_xdmf.h"
-static double reynolds, tend, zlim;
+static double reynolds, tend;
 trace static double embed_interpolate3(Point point, scalar s, coord p) {
   int i = sign(p.x), j = sign(p.y), k = sign(p.z);
   if (cs[i, 0, 0] && cs[0, j, 0] && cs[i, j, 0] && cs[0, 0, k] && cs[i, 0, k] &&
@@ -41,7 +41,6 @@ trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
                                coord *Fmu) {
   coord Fps = {0}, Fmus = {0};
   foreach (reduction(+ : Fps) reduction(+ : Fmus)) {
-    if (zlim == 0 || (-zlim + 2 * Delta < z && z < zlim - 2 * Delta)) {
       if (cs[] > 0. && cs[] < 1.) {
         coord n, b;
         double area = embed_geometry(point, &b, &n);
@@ -62,7 +61,6 @@ trace static void embed_force3(scalar p, vector u, face vector mu, coord *Fp,
         }
       }
     }
-  }
   Fp->x = Fps.x;
   Fp->y = Fps.y;
   Fp->z = Fps.z;
@@ -153,7 +151,7 @@ int main(int argc, char **argv) {
           "-l <resolution level> -m <maximum resolution level> "
           "-o <prefix> -p <dump period> -e <end time> "
           "-f <force file> -S cylinder|sphere "
-          "-z <domain size> [-b <boundaries>] [-d <dump file>] [-Z <zlim>]\n\n"
+          "-z <domain size> [-b <boundaries>] [-d <dump file>] \n\n"
           "Options:\n"
           "  -h          Display this help message\n"
           "  -v          Verbose\n"
@@ -285,18 +283,6 @@ int main(int argc, char **argv) {
         exit(1);
       }
       force_path = *argv;
-      break;
-    case 'Z':
-      argv++;
-      if (*argv == NULL) {
-        fprintf(stderr, "cylinder: error: -Z needs an argument\n");
-        exit(1);
-      }
-      zlim = strtod(*argv, &end);
-      if (*end != '\0') {
-        fprintf(stderr, "cylinder: error: '%s' is not a number\n", *argv);
-        exit(1);
-      }
       break;
     case 'F':
       FullOutput = 1;
