@@ -457,6 +457,8 @@ event init(t = 0) {
   u.n[embed] = dirichlet(0);
   u.t[embed] = dirichlet(0);
   u.r[embed] = dirichlet(0);
+  event("metric");
+  fractions(phi, cs, fs);
   if (InitFileFlag == 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: initialize velocity to inlet velocity\n");
@@ -469,8 +471,6 @@ event init(t = 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: initialize velocity from dump file\n");
   }
-  event("metric");
-  fractions(phi, cs, fs);
   if (Verbose)
     fields_stats();
 }
