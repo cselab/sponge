@@ -2,8 +2,7 @@
 set -eu
 
 #l=9 m=12
-: ${l=7}
-: ${m=10}
+: ${l=7} ${m=10} ${s=26}
 : ${mpiexec=mpiexec}
 
 make cylinder
