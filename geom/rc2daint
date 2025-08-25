@@ -1,0 +1,7 @@
+for i in `{ seq 100 305; seq 0 99; }`
+do i=`printf %08d $i`
+   ssh daint mkdir -p "'/scratch/snx3000/lisergey/sponge/Create Sponge Geometry STL'"/$i
+   scp \
+       rc:"'/n/holyscratch01/koumoutsakos_lab/slitvinov/sponge/Create Sponge Geometry STL'"/$i/basilisk.dump \
+       daint:"'/scratch/snx3000/lisergey/sponge/Create Sponge Geometry STL'"/$i/
+done

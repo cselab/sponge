@@ -1,0 +1,31 @@
+cat <<'!'
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta
+      charset="UTF-8">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0">
+    <title>sponge</title>
+  </head>
+  <body>
+!
+
+seq 0 305 | awk '
+{
+sub(/\/$/, "")
+printf \
+"    <a\n" \
+"      href=\"%08d.mp4\">\n" \
+"      <img\n" \
+"        alt=\"sponge image\"\n" \
+"        src=\"ver.%08d.png\"\n" \
+"        width=\"360\">\n" \
+"    </a>\n", $1, $1
+}'
+
+cat <<'!'
+  </body>
+</html>
+!

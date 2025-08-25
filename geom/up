@@ -1,0 +1,18 @@
+set -e
+
+for i in `seq 0 255`
+do d=`printf %08d $i`
+   echo $d
+   mkdir -p tmp
+   rsync -v \
+         rc:'/n/holyscratch01/koumoutsakos_lab/slitvinov/sponge/0sponge/Create Sponge Geometry STL'/$d/h.*[05]00.xdmf2 \
+	 rc:'/n/holyscratch01/koumoutsakos_lab/slitvinov/sponge/0sponge/Create Sponge Geometry STL'/$d/h.*[05]00.*.raw \
+	 rc:'/n/holyscratch01/koumoutsakos_lab/slitvinov/sponge/0sponge/Create Sponge Geometry STL'/$d/force.dat \
+	 tmp/
+   python post.py $d tmp/h.slice.*.attr.raw
+   co.ffmpeg -o $d.mp4 tmp/*.png
+   cp tmp/force.dat $d.dat
+   for f in tmp/*.png; do :; done
+   cp $f $d.png
+   rm -rf tmp
+done
