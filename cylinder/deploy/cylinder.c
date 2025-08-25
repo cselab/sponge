@@ -47751,8 +47751,8 @@ sum += val(rhs,0,0,0);}
 #line 164 "././poisson.h"
 {mpi_all_reduce_array(&sum,MPI_DOUBLE,MPI_SUM,1);}
   s.sum = sum;
-  nrelax = 100;
-  s.nrelax = nrelax > 0 ? nrelax : 4;
+
+  s.nrelax = 4;
 
 
 
