@@ -21,6 +21,9 @@ $ (MAKEFLAGS=-j`nproc`; make ast && make qcc)
 $ cp qcc "$HOME/.local/bin/"
 </pre>
 
+The path to `basilisk/src` is compiled into `qcc` and `ast/libast.a`;
+do not move the directory after building.
+
 # Build
 
 <pre>
@@ -35,7 +38,13 @@ $ make install
 mpicc cylinder.c -o cylinder -O2 -g  -I/home/lisergey/basilisk/src -lm
 mkdir -p -- '/home/lisergey/.local/bin' && \
 cp -- cylinder '/home/lisergey/.local/bin/'
+</pre>
+
+On macOS the Makefile sets `CC99=mpicc`, which drops `-D_DARWIN_C_SOURCE`
+from `config.osx`; pass it explicitly:
 <pre>
+$ make cylinder QCCFLAGS=-D_DARWIN_C_SOURCE
+</pre>
 
 # Examples
 
