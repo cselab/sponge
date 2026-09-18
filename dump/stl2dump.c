@@ -46,6 +46,11 @@ struct Wall {
   int (*inside)(struct WallData *, int, const double[3]);
   double (*dist2)(struct WallData *, const double[3]);
 };
+struct Cell {
+  uint64_t x, y, z, size;
+  int level, leaf;
+  double phi;
+};
 struct Config {
   double R[3], L, dgrid;
   int minlevel, maxlevel, outlevel, npe, ngrid, size_grid, phi_index, Verbose;
@@ -57,12 +62,18 @@ struct Config {
   struct DumpHeader header;
   struct Wall *wall;
   struct WallData *wall_data;
+  struct Cell *cells;
+  long ncell, maxcell;
+  double cap;
+  int32_t *near_grid;
 };
 static uint64_t morton(uint64_t, uint64_t, uint64_t);
 static int hash_ini(size_t, void *, struct Hash *);
 static int hash_insert(struct Hash *, int64_t, void *);
 static int hash_search(struct Hash *, int64_t, void **);
-static uint64_t traverse(uint64_t, uint64_t, uint64_t, int, struct Config *);
+static uint64_t collect(uint64_t, uint64_t, uint64_t, int, struct Config *);
+static void cell_phi(struct Cell *, struct Config *);
+static uint64_t write_cells(struct Config *);
 static double tri_point_distance2(const double[3], const double[3],
                                   const double[3], const double[3]);
 static double edg2_sq(const float[2], const float[2]);
@@ -101,7 +112,9 @@ int main(int argc, char **argv) {
   FILE *stl_file;
   float *a, *b, *c;
   int OutletFlag;
-  int32_t i, ilo[3], ihi[3];
+  int32_t i, ilo[3], ihi[3], *grid_data, *grid_off;
+  int ngrid, NgridFlag, pass;
+  long nentry, icell;
   int64_t inv_delta, min_delta, ncells, ncells_wall, x, y, z, size;
   int index, iy, iz, iv, iw, d, j;
   size_t nbytes, nfull, nmax, hash_size;
@@ -114,6 +127,8 @@ int main(int argc, char **argv) {
   config.wall = NULL;
   config.Verbose = 0;
   OutletFlag = 0;
+  NgridFlag = 0;
+  ngrid = 0;
   fields = fields_full;
   hash_size = 30;
   while (*++argv != NULL && argv[0][0] == '-')
@@ -127,6 +142,8 @@ int main(int argc, char **argv) {
               "  -o          Refine the outlet to a minimum level\n"
               "  -m          Minimal output (size and phi values only)\n"
               "  -s <val>    Set hash size to 2^val (default is 30)\n"
+              "  -g <val>    Triangle lookup grid: val x val buckets in (y, z)\n"
+              "              (default 2^(maxlevel - 2), capped at 4096)\n"
               "  -h          Display this help message and exit\n"
               "  -v          Enable verbose mode\n\n"
               "Arguments:\n"
@@ -187,6 +204,20 @@ int main(int argc, char **argv) {
       break;
     case 'v':
       config.Verbose = 1;
+      break;
+    case 'g':
+      argv++;
+      if (*argv == NULL) {
+        fprintf(stderr, "stl2dump: error: -g needs an argument\n");
+        exit(1);
+      }
+      ngrid = strtol(*argv, &end, 10);
+      if (*end != '\0' || ngrid < 4) {
+        fprintf(stderr, "stl2dump: error: '%s' is not an integer >= 4\n",
+                *argv);
+        exit(1);
+      }
+      NgridFlag = 1;
       break;
     case 'o':
       OutletFlag = 1;
@@ -315,8 +346,15 @@ positional:
     if ((d2 = edg2_sq(b + 1, c + 1)) > d2max)
       d2max = d2;
   }
-  config.dgrid = sqrt(d2max);
-  config.ngrid = ceil(config.L / config.dgrid);
+  config.cap = sqrt(d2max);
+  if (NgridFlag)
+    config.ngrid = ngrid;
+  else {
+    config.ngrid = config.maxlevel > 2 ? 1 << (config.maxlevel - 2) : 4;
+    if (config.ngrid > 4096)
+      config.ngrid = 4096;
+  }
+  config.dgrid = config.L / config.ngrid;
   config.size_grid = config.ngrid * config.ngrid;
   if ((config.grid = malloc(config.size_grid * sizeof *config.grid)) == NULL) {
     fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
@@ -327,32 +365,104 @@ positional:
     fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
     exit(1);
   }
+  if ((grid_off = malloc((config.size_grid + 1) * sizeof *grid_off)) == NULL) {
+    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
+    exit(1);
+  }
   for (i = 0; i < config.size_grid; i++) {
     config.grid[i] = NULL;
     config.max_grid[i] = 0;
   }
   ncells = 0;
-  for (i = 0; i < config.stl_nt; i++) { /* yz */
-    a = &config.stl_ver[9 * i];
-    b = &config.stl_ver[9 * i + 3];
-    c = &config.stl_ver[9 * i + 6];
-    s[0] = (a[0] + b[0] + c[0]) / 3;
-    s[1] = (a[1] + b[1] + c[1]) / 3;
-    s[2] = (a[2] + b[2] + c[2]) / 3;
-    iv = (s[1] - config.R[1]) / config.dgrid;
-    iw = (s[2] - config.R[2]) / config.dgrid;
-    for (iy = iv - 1; iy <= iv + 1; iy++)
-      for (iz = iw - 1; iz <= iw + 1; iz++) {
-        index = iy * config.ngrid + iz;
-        if (0 <= index && index < config.size_grid) {
-          config.max_grid[index]++;
-          config.grid[index] =
-              realloc(config.grid[index],
-                      config.max_grid[index] * sizeof *config.grid[index]);
-          config.grid[index][config.max_grid[index] - 1] = i;
-        }
+  for (pass = 0; pass < 2; pass++) {
+    for (i = 0; i < config.stl_nt; i++) { /* yz */
+      a = &config.stl_ver[9 * i];
+      b = &config.stl_ver[9 * i + 3];
+      c = &config.stl_ver[9 * i + 6];
+      for (d = 1; d < 3; d++) {
+        lo[d] = a[d] < b[d] ? a[d] : b[d];
+        if (c[d] < lo[d])
+          lo[d] = c[d];
+        hi[d] = a[d] > b[d] ? a[d] : b[d];
+        if (c[d] > hi[d])
+          hi[d] = c[d];
+        ilo[d] = floor((lo[d] - config.R[d]) / config.dgrid);
+        ihi[d] = floor((hi[d] - config.R[d]) / config.dgrid);
+        if (ilo[d] < 0)
+          ilo[d] = 0;
+        if (ihi[d] > config.ngrid - 1)
+          ihi[d] = config.ngrid - 1;
+        if (ihi[d] < ilo[d])
+          ihi[d] = ilo[d];
       }
+      for (iy = ilo[1]; iy <= ihi[1]; iy++)
+        for (iz = ilo[2]; iz <= ihi[2]; iz++) {
+          index = iy * config.ngrid + iz;
+          if (pass == 0)
+            config.max_grid[index]++;
+          else
+            config.grid[index][grid_off[index]++] = i;
+        }
+    }
+    if (pass == 0) {
+      nentry = 0;
+      for (i = 0; i < config.size_grid; i++)
+        nentry += config.max_grid[i];
+      if ((grid_data = malloc(nentry * sizeof *grid_data)) == NULL) {
+        fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
+        exit(1);
+      }
+      nentry = 0;
+      for (i = 0; i < config.size_grid; i++) {
+        config.grid[i] = &grid_data[nentry];
+        grid_off[i] = 0;
+        nentry += config.max_grid[i];
+      }
+    }
   }
+  free(grid_off);
+  if ((config.near_grid = malloc(config.size_grid * sizeof *config.near_grid)) ==
+      NULL) {
+    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
+    exit(1);
+  }
+  for (i = 0; i < config.size_grid; i++)
+    config.near_grid[i] = config.max_grid[i] > 0 ? 0 : config.ngrid + 1;
+  for (iy = 0; iy < config.ngrid; iy++)
+    for (iz = 0; iz < config.ngrid; iz++) {
+      int32_t m = config.near_grid[iy * config.ngrid + iz];
+      if (iy > 0 && config.near_grid[(iy - 1) * config.ngrid + iz] + 1 < m)
+        m = config.near_grid[(iy - 1) * config.ngrid + iz] + 1;
+      if (iz > 0 && config.near_grid[iy * config.ngrid + iz - 1] + 1 < m)
+        m = config.near_grid[iy * config.ngrid + iz - 1] + 1;
+      if (iy > 0 && iz > 0 &&
+          config.near_grid[(iy - 1) * config.ngrid + iz - 1] + 1 < m)
+        m = config.near_grid[(iy - 1) * config.ngrid + iz - 1] + 1;
+      if (iy > 0 && iz < config.ngrid - 1 &&
+          config.near_grid[(iy - 1) * config.ngrid + iz + 1] + 1 < m)
+        m = config.near_grid[(iy - 1) * config.ngrid + iz + 1] + 1;
+      config.near_grid[iy * config.ngrid + iz] = m;
+    }
+  for (iy = config.ngrid - 1; iy >= 0; iy--)
+    for (iz = config.ngrid - 1; iz >= 0; iz--) {
+      int32_t m = config.near_grid[iy * config.ngrid + iz];
+      if (iy < config.ngrid - 1 &&
+          config.near_grid[(iy + 1) * config.ngrid + iz] + 1 < m)
+        m = config.near_grid[(iy + 1) * config.ngrid + iz] + 1;
+      if (iz < config.ngrid - 1 &&
+          config.near_grid[iy * config.ngrid + iz + 1] + 1 < m)
+        m = config.near_grid[iy * config.ngrid + iz + 1] + 1;
+      if (iy < config.ngrid - 1 && iz < config.ngrid - 1 &&
+          config.near_grid[(iy + 1) * config.ngrid + iz + 1] + 1 < m)
+        m = config.near_grid[(iy + 1) * config.ngrid + iz + 1] + 1;
+      if (iy < config.ngrid - 1 && iz > 0 &&
+          config.near_grid[(iy + 1) * config.ngrid + iz - 1] + 1 < m)
+        m = config.near_grid[(iy + 1) * config.ngrid + iz - 1] + 1;
+      config.near_grid[iy * config.ngrid + iz] = m;
+    }
+  if (config.Verbose)
+    fprintf(stderr, "stl2dump: ngrid: %d, dgrid: %g, entries: %ld\n",
+            config.ngrid, config.dgrid, nentry);
   inv_delta = 1ul << config.maxlevel;
   for (i = 0; i < config.stl_nt; i++) {
     lo[0] = lo[1] = lo[2] = DBL_MAX;
@@ -474,13 +584,23 @@ positional:
     exit(1);
   }
   predicate_ini();
-  size = traverse(0, 0, 0, 0, &config);
+  config.cells = NULL;
+  config.ncell = 0;
+  config.maxcell = 0;
+  collect(0, 0, 0, 0, &config);
+  if (config.Verbose)
+    fprintf(stderr, "stl2dump: cells to evaluate: %ld\n", config.ncell);
+#pragma omp parallel for schedule(dynamic, 256)
+  for (icell = 0; icell < config.ncell; icell++)
+    cell_phi(&config.cells[icell], &config);
+  size = write_cells(&config);
+  free(config.cells);
   if (config.Verbose)
     fprintf(stderr, "stl2dump: size: %" PRIu64 "\n", size);
-  for (i = 0; i < config.size_grid; i++)
-    free(config.grid[i]);
+  free(grid_data);
   free(config.grid);
   free(config.max_grid);
+  free(config.near_grid);
   for (i = 0; i < config.maxlevel + 1; i++) {
     free(config.hash[i]);
     free(work[i]);
@@ -563,17 +683,15 @@ static int hash_search(struct Hash *set, int64_t key, void **pvalue) {
   exit(1);
 }
 
-static uint64_t traverse(uint64_t x, uint64_t y, uint64_t z, int level,
-                         struct Config *config) {
-  double delta, minimum, s[3], *values;
-  int leaf, i, intersect, iy, iz, index;
-  uint32_t leaf_code;
-  uint64_t cell_size, u, v, w;
-  long pos, curr, code_ch;
-  if ((values = malloc(config->header.len * sizeof *values)) == NULL) {
-    fprintf(stderr, "%s:%d: error: malloc failed\n", __FILE__, __LINE__);
-    exit(1);
-  }
+static void cell_phi(struct Cell *cell, struct Config *config) {
+  double delta, minimum, cap, s[3];
+  int i, intersect, iy, iz, jy, jz, r, nring, index;
+  uint64_t x, y, z;
+  int level;
+  x = cell->x;
+  y = cell->y;
+  z = cell->z;
+  level = cell->level;
   delta = config->L / (1ul << level);
   s[0] = config->R[0] + delta * (x + 0.5);
   s[1] = config->R[1] + delta * (y + 0.5);
@@ -581,16 +699,23 @@ static uint64_t traverse(uint64_t x, uint64_t y, uint64_t z, int level,
 
   iy = (s[1] - config->R[1]) / config->dgrid;
   iz = (s[2] - config->R[2]) / config->dgrid;
+  if (iy < 0)
+    iy = 0;
+  if (iy > config->ngrid - 1)
+    iy = config->ngrid - 1;
+  if (iz < 0)
+    iz = 0;
+  if (iz > config->ngrid - 1)
+    iz = config->ngrid - 1;
   index = iy * config->ngrid + iz;
   assert(0 <= index && index < config->size_grid);
-  intersect = 0;
-  minimum = config->dgrid;
   if (config->Verbose && level == 3)
     fprintf(stderr, "stl2dump: level: %d [%ld %ld %ld]\n", level, x, y, z);
-#pragma omp parallel for reduction(min : minimum) reduction(+ : intersect)
+  intersect = 0;
+#pragma omp parallel for reduction(+ : intersect) if (config->max_grid[index] > 256)
   for (i = 0; i < config->max_grid[index]; i++) {
     int j;
-    double a[3], b[3], c[3], e[3], dist2;
+    double a[3], b[3], c[3], e[3];
     j = 9 * config->grid[index][i];
     a[0] = config->stl_ver[j];
     a[1] = config->stl_ver[j + 1];
@@ -607,16 +732,58 @@ static uint64_t traverse(uint64_t x, uint64_t y, uint64_t z, int level,
     e[0] = s[0] + 3 * config->L;
     e[1] = s[1];
     e[2] = s[2];
-    dist2 = tri_point_distance2(a, b, c, s);
-    if (dist2 < minimum)
-      minimum = dist2;
     intersect += predicate_ray(s, e, a, b, c);
   }
-  for (i = 0; i < config->header.len; i++)
-    values[i] = 0.0;
+  cap = config->cap;
+  nring = ceil(cap / config->dgrid);
+  if (nring > config->ngrid)
+    nring = config->ngrid;
+  minimum = cap;
+  for (r = config->near_grid[index]; r <= nring; r++) {
+    for (jy = iy - r; jy <= iy + r; jy++) {
+      if (jy < 0 || jy > config->ngrid - 1)
+        continue;
+      for (jz = iz - r; jz <= iz + r; jz++) {
+        int idx;
+        if (jz < 0 || jz > config->ngrid - 1)
+          continue;
+        if (r > 0 && jy != iy - r && jy != iy + r && jz != iz - r &&
+            jz != iz + r)
+          continue;
+        idx = jy * config->ngrid + jz;
+        if (config->max_grid[idx] == 0)
+          continue;
+#pragma omp parallel for reduction(min : minimum)
+        for (i = 0; i < config->max_grid[idx]; i++) {
+          int j;
+          double a[3], b[3], c[3], dist2;
+          j = 9 * config->grid[idx][i];
+          a[0] = config->stl_ver[j];
+          a[1] = config->stl_ver[j + 1];
+          a[2] = config->stl_ver[j + 2];
+
+          b[0] = config->stl_ver[j + 3];
+          b[1] = config->stl_ver[j + 4];
+          b[2] = config->stl_ver[j + 5];
+
+          c[0] = config->stl_ver[j + 6];
+          c[1] = config->stl_ver[j + 7];
+          c[2] = config->stl_ver[j + 8];
+
+          dist2 = tri_point_distance2(a, b, c, s);
+          if (dist2 < minimum)
+            minimum = dist2;
+        }
+      }
+    }
+    if (minimum <= (double)r * config->dgrid * (double)r * config->dgrid)
+      break;
+    if (r >= config->ngrid)
+      break;
+  }
 
   if (config->wall == NULL) {
-    values[config->phi_index] =
+    cell->phi =
         intersect % 2 == 0 ? sqrt(minimum) : -sqrt(minimum);
   } else {
     double dist2;
@@ -625,41 +792,73 @@ static uint64_t traverse(uint64_t x, uint64_t y, uint64_t z, int level,
     dist2 = config->wall->dist2(config->wall_data, s);
     if (dist2 < minimum)
       minimum = dist2;
-    values[config->phi_index] = inside ? sqrt(minimum) : -sqrt(minimum);
+    cell->phi = inside ? sqrt(minimum) : -sqrt(minimum);
   }
+}
+
+static uint64_t collect(uint64_t x, uint64_t y, uint64_t z, int level,
+                        struct Config *config) {
+  int leaf, i;
+  uint64_t cell_size, u, v, w;
+  long code_ch, k;
+  if (config->ncell == config->maxcell) {
+    config->maxcell = 2 * config->maxcell + 1024;
+    if ((config->cells = realloc(config->cells,
+                                 config->maxcell * sizeof *config->cells)) ==
+        NULL) {
+      fprintf(stderr, "%s:%d: error: realloc failed\n", __FILE__, __LINE__);
+      exit(1);
+    }
+  }
+  k = config->ncell++;
+  config->cells[k].x = x;
+  config->cells[k].y = y;
+  config->cells[k].z = z;
+  config->cells[k].level = level;
   code_ch = morton(x << 1, y << 1, z << 1);
   leaf = level + 1 > config->maxlevel ||
          !hash_search(config->hash[level + 1], code_ch, NULL);
-  leaf_code = leaf ? 2 : 0;
-  if (fwrite(&leaf_code, sizeof(leaf_code), 1, config->dump_file) != 1) {
-    fprintf(stderr, "stl2dump: error: fail to write '%s'\n", config->dump_path);
-    exit(1);
-  }
-  pos = ftell(config->dump_file);
-  if (fwrite(values, config->header.len * sizeof *values, 1,
-             config->dump_file) != 1) {
-    fprintf(stderr, "stl2dump: error: fail to write '%s'\n", config->dump_path);
-    exit(1);
-  }
+  config->cells[k].leaf = leaf;
   cell_size = 1;
-  if (!leaf) {
-    for (i = 0; i < sizeof shift / sizeof *shift; i++) {
+  if (!leaf)
+    for (i = 0; i < (int)(sizeof shift / sizeof *shift); i++) {
       u = (x << 1) + shift[i][0];
       v = (y << 1) + shift[i][1];
       w = (z << 1) + shift[i][2];
-      cell_size += traverse(u, v, w, level + 1, config);
+      cell_size += collect(u, v, w, level + 1, config);
     }
-  }
-  curr = ftell(config->dump_file);
-  fseek(config->dump_file, pos, SEEK_SET);
-  values[0] = cell_size;
-  if (fwrite(&values[0], sizeof(values[0]), 1, config->dump_file) != 1) {
-    fprintf(stderr, "stl2dump: error: fail to write '%s'\n", config->dump_path);
+  config->cells[k].size = cell_size;
+  return cell_size;
+}
+
+static uint64_t write_cells(struct Config *config) {
+  double *values;
+  long k, i;
+  uint32_t leaf_code;
+  if ((values = calloc(config->header.len, sizeof *values)) == NULL) {
+    fprintf(stderr, "%s:%d: error: calloc failed\n", __FILE__, __LINE__);
     exit(1);
   }
+  for (k = 0; k < config->ncell; k++) {
+    leaf_code = config->cells[k].leaf ? 2 : 0;
+    if (fwrite(&leaf_code, sizeof leaf_code, 1, config->dump_file) != 1) {
+      fprintf(stderr, "stl2dump: error: fail to write '%s'\n",
+              config->dump_path);
+      exit(1);
+    }
+    for (i = 0; i < config->header.len; i++)
+      values[i] = 0.0;
+    values[0] = config->cells[k].size;
+    values[config->phi_index] = config->cells[k].phi;
+    if (fwrite(values, config->header.len * sizeof *values, 1,
+               config->dump_file) != 1) {
+      fprintf(stderr, "stl2dump: error: fail to write '%s'\n",
+              config->dump_path);
+      exit(1);
+    }
+  }
   free(values);
-  fseek(config->dump_file, curr, SEEK_SET);
-  return cell_size;
+  return config->ncell ? config->cells[0].size : 0;
 }
 
 static double edg2_sq(const float a[2], const float b[2]) {
