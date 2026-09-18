@@ -8,6 +8,8 @@ converted to a Basilisk dump, which the solver
 solver also has analytic shapes (`-S cylinder`, `-S sphere`) used for
 validation.
 
+![sponge](geom/sponge.png)
+
 Files:
 
 - [geom/gen.py](geom/gen.py): sponge parameters (`config.py`) to `ver.stl`
