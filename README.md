@@ -61,15 +61,38 @@ PYTHONPATH=. python3 ../geom/gen.py
 ../stl/center.py -v ver.stl center.stl
 set -- $(../stl/size.py center.stl)
 ../dump/stl2dump -v -o -w z 6 $1 $2 -- -5 -6.25 -6.25 12.5  4 7  4 center.stl basilisk.dump
-mpiexec -n 4 ../cylinder/cylinder -v -r 100 -p 100 -e 200 -Z $2 \
+mpiexec -n 4 ../cylinder/cylinder -v -F -r 100 -p 100 -e 200 -Z $2 \
         -f force.dat -d basilisk.dump -o h -b pp
 ```
 
 stl2dump arguments: `X0 Y0 Z0 L minlevel maxlevel npe file.stl
-out.dump`. Production runs use levels 10 13, see
-[geom/0pre.sh](geom/0pre.sh).
+out.dump`. The mesh is fixed by stl2dump and does not change during
+the run: minlevel everywhere (with `-o` the last 10% of the domain in
+x is coarser), maxlevel at the sponge surface, LEVEL at the walls.
+The wake is resolved at minlevel. Production runs use levels 10 13,
+see [geom/0pre.sh](geom/0pre.sh).
 
 Output: `force.dat` (columns: step, t, dt, total force, pressure force,
-viscous force, three components each), `h.y.*.xdmf2` and `h.z.*.xdmf2`
-slices for ParaView, `h.*.dump` restart files (restart with
-`-d h.N.dump -i`).
+viscous force, three components each), `h.N.xdmf2` full field (with
+`-F`), `h.y.N.xdmf2` and `h.z.N.xdmf2` slices for ParaView, `h.N.dump`
+restart files (restart with `-d h.N.dump -i`).
+
+## Render
+
+Iso-surfaces of |omega| (or lambda2 with `lVALUE`) from the full-field
+output (`-F`), extracted with
+[amriso](https://github.com/cselab/amriso)
+(`pip install git+https://github.com/cselab/amriso`) and rendered with
+ParaView. The sponge surface comes from the STL. `-Z ZCUT` drops
+cells with |z| > ZCUT, to hide the boundary layers on the end walls
+(the sponge above spans |z| < 2.06).
+
+```sh
+python3 ../tool/iso.py -Z 1.6 1 h.[0-9]*.xdmf2
+pvpython ../tool/pvsurf.py 1 center.stl h.[0-9]*.xdmf2
+ffmpeg -framerate 4 -pattern_type glob -i 'h.*.omega1.png' -pix_fmt yuv420p omega1.mp4
+```
+
+[tool/iso.py](tool/iso.py) writes `h.N.omega1.xdmf2` triangle meshes
+colored by omega_z, [tool/pvsurf.py](tool/pvsurf.py) writes
+`h.N.omega1.png` with a fixed camera and color range over all frames.
