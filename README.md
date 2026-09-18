@@ -77,11 +77,14 @@ see [geom/0pre.sh](geom/0pre.sh).
 Output: `force.dat` (columns: step, t, dt, total force, pressure force,
 viscous force, three components each), `h.N.xdmf2` full field (with
 `-F`), `h.y.N.xdmf2` and `h.z.N.xdmf2` slices for ParaView, `h.N.dump`
-restart files (restart with `-d h.N.dump -i`).
+restart files (restart with `-d h.N.dump -i`). Cell attributes in
+`h.N.attr.raw`: p, lambda2, Q, u (3), omega (3); the slices also have
+cs and phi after Q.
 
 ## Render
 
-Iso-surfaces of |omega| (or lambda2 with `lVALUE`) from the full-field
+Iso-surfaces of |omega| (or the Q criterion with `qVALUE`, lambda2
+with `lVALUE`) from the full-field
 output (`-F`), extracted with
 [amriso](https://github.com/cselab/amriso)
 (`pip install git+https://github.com/cselab/amriso`) and rendered with
@@ -98,3 +101,11 @@ ffmpeg -framerate 4 -pattern_type glob -i 'h.*.omega1.png' -pix_fmt yuv420p omeg
 [tool/iso.py](tool/iso.py) writes `h.N.omega1.xdmf2` triangle meshes
 colored by omega_z, [tool/pvsurf.py](tool/pvsurf.py) writes
 `h.N.omega1.png` with a fixed camera and color range over all frames.
+[tool/pvmulti.py](tool/pvmulti.py) draws several levels of one frame
+with their own opacity and color (`c` colored by omega_z, `b` pale
+blue, `p` pink, or `R/G/B`), for example two Q levels:
+
+```sh
+python3 ../tool/iso.py -Z 1.6 q1,q5 h.[0-9]*.xdmf2
+pvpython ../tool/pvmulti.py center.stl q1:0.3:b,q5:1.0:p h.[0-9]*.xdmf2
+```

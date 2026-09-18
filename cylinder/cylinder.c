@@ -98,6 +98,28 @@ static void vorticity_vector(const vector u, vector omega) {
   }
 }
 
+static void q_criterion(const vector u, scalar q) {
+  foreach () {
+    double g[3][3], inv2h, s;
+    int a, b;
+    inv2h = 0.5 / Delta;
+    g[0][0] = inv2h * (u.x[1] - u.x[-1]);
+    g[0][1] = inv2h * (u.x[0, 1] - u.x[0, -1]);
+    g[0][2] = inv2h * (u.x[0, 0, 1] - u.x[0, 0, -1]);
+    g[1][0] = inv2h * (u.y[1] - u.y[-1]);
+    g[1][1] = inv2h * (u.y[0, 1] - u.y[0, -1]);
+    g[1][2] = inv2h * (u.y[0, 0, 1] - u.y[0, 0, -1]);
+    g[2][0] = inv2h * (u.z[1] - u.z[-1]);
+    g[2][1] = inv2h * (u.z[0, 1] - u.z[0, -1]);
+    g[2][2] = inv2h * (u.z[0, 0, 1] - u.z[0, 0, -1]);
+    s = 0;
+    for (a = 0; a < 3; a++)
+      for (b = 0; b < 3; b++)
+        s -= 0.5 * g[a][b] * g[b][a];
+    q[] = s;
+  }
+}
+
 static int slice_z(double x, double y, double z, double Delta) {
   double epsilon = Delta / 10;
   return z <= -epsilon && z + Delta + epsilon >= 0;
@@ -118,6 +140,7 @@ static const int outlevel = 5;
 static int maxlevel, minlevel, Verbose, FullOutput, InitFileFlag, period;
 static face vector muv[];
 static scalar l2[];
+static scalar q[];
 static vector omega[];
 static scalar phi[];
 int main(int argc, char **argv) {
@@ -505,14 +528,15 @@ event dump(i++; t <= tend) {
     if (output_prefix != NULL) {
       vorticity_vector(u, omega);
       lambda2(u, l2);
+      q_criterion(u, q);
       if (FullOutput) {
 	sprintf(path, "%s.%09d", output_prefix, i);
-	output_xdmf(t, {p, l2}, {u, omega}, NULL, path);
+	output_xdmf(t, {p, l2, q}, {u, omega}, NULL, path);
       }
       snprintf(path, sizeof path, "%s.y.%09d", output_prefix, i);
-      output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice_y, path);
+      output_xdmf(t, {p, l2, q, cs, phi}, {u, omega}, slice_y, path);
       snprintf(path, sizeof path, "%s.z.%09d", output_prefix, i);
-      output_xdmf(t, {p, l2, cs, phi}, {u, omega}, slice_z, path);
+      output_xdmf(t, {p, l2, q, cs, phi}, {u, omega}, slice_z, path);
       if (i % (10 * period) == 0) {
 	snprintf(path, sizeof path, "%s.%09d.dump", output_prefix, i);
 	dump(path);

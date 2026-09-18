@@ -25,7 +25,7 @@ def do(path):
     assert ncell * 3 * 8 == xyz.size
     attr = np.memmap(attr_path, dtype)
     attr = attr.reshape((ncell, -1))
-    omega = attr[:, 9]
+    omega = attr[:, 10]
     patches = []
     colors = []
     colors = np.ndarray(ncell)

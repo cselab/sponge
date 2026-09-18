@@ -7,20 +7,24 @@ import sys
 if len(sys.argv) < 4:
     sys.stderr.write(
         "usage: pvpython pvsurf.py LEVEL[,ZOOM[,WIDTH]] center.stl FILE.xdmf2 [FILE.xdmf2 ...]\n"
-        "       LEVEL is an |omega| value or lVALUE (lambda2), as given to iso.py\n"
+        "       LEVEL is an |omega| value, qVALUE or lVALUE, as given to iso.py\n"
         "       center.stl is the sponge surface as given to stl2dump\n"
-        "       writes FILE.omegaLEVEL.png or FILE.l2VALUE.png\n")
+        "       writes FILE.omegaLEVEL.png, FILE.qVALUE.png or FILE.l2VALUE.png\n")
     sys.exit(1)
 arg = sys.argv[1].split(",")
 spec = arg[0]
-tag = "l2%g" % float(spec[1:]) if spec.startswith("l") else "omega%g" % float(spec)
+if spec.startswith("l"):
+    tag = "l2%g" % float(spec[1:])
+elif spec.startswith("q"):
+    tag = "q%g" % float(spec[1:])
+else:
+    tag = "omega%g" % float(spec)
 zoom = float(arg[1]) if len(arg) > 1 else 1.0
 width = int(arg[2]) if len(arg) > 2 else 1920
 stl = sys.argv[2]
 paths = [p for p in sys.argv[3:]
-         if not re.search(r"\.(omega|l2)[0-9.e+-]+\.xdmf2$", p)]
+         if not re.search(r"\.(omega|l2|q)[0-9.e+-]+\.xdmf2$", p)]
 
-# color range and camera box over the whole sequence
 m = 0.0
 lo = np.full(3, np.inf)
 hi = np.full(3, -np.inf)
@@ -52,6 +56,7 @@ bodyn.UpdatePipeline()
 b = bodyn.GetDataInformation().GetBounds()
 lo = np.minimum(lo, b[0::2])
 hi = np.maximum(hi, b[1::2])
+hi[0] = max(hi[0], lo[0] + (hi[2] - lo[2]) * width / (width * 9 // 16))
 c = (lo + hi) / 2
 L = float((hi - lo).max())
 
@@ -74,12 +79,14 @@ for path in paths:
     sd.Specular = 0.2
     sd.Opacity = 0.45
     Render(view)
-    # flow along x, sponge axis along z: look from the -y side, slightly above
-    view.CameraFocalPoint = list(c)
-    view.CameraViewUp = [0, 0, 1]
-    view.CameraPosition = [c[0] + 0.3 * L, c[1] - 1.2 * L, c[2] + 0.5 * L]
+    view.CameraParallelProjection = 1
     view.ResetCamera(lo[0], hi[0], lo[1], hi[1], lo[2], hi[2])
-    view.GetActiveCamera().Dolly(zoom)
+    scale = 0.6 * (hi[2] - lo[2]) / zoom
+    fx = lo[0] - 0.1 * scale + scale * width / (width * 9 // 16)
+    view.CameraFocalPoint = [fx, c[1], c[2]]
+    view.CameraPosition = [fx, c[1] - 1.2 * L, c[2] + 0.35 * L]
+    view.CameraViewUp = [0, 0, 1]
+    view.GetActiveCamera().SetParallelScale(scale)
     Render(view)
     SaveScreenshot("%s.%s.png" % (base, tag), view)
     Delete(sd)
