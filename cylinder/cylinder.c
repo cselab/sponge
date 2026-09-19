@@ -498,6 +498,7 @@ event init(t = 0) {
   u.r[embed] = dirichlet(0);
   event("metric");
   fractions(phi, cs, fs);
+  fractions_cleanup(cs, fs);
   if (InitFileFlag == 0) {
     if (Verbose && pid() == 0)
       fprintf(stderr, "cylinder: initialize velocity to inlet velocity\n");
