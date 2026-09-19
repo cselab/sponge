@@ -11,7 +11,7 @@ validation.
 [![sponge](real.png)](real.stl)
 
 [real.stl](real.stl): the scanned sponge, centred and scaled to unit
-diameter by [stl/center.py](stl/center.py), binary STL without colours.
+diameter by [stl/center.py](stl/center.py).
 
 Files:
 
