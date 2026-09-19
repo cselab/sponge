@@ -5,11 +5,8 @@ circumferential beams, small double helices, large helices) and writes
 `ver.stl`. It reads the parameters below from a `config.py` in the
 current directory; `R`, `H` and `D_SHELIX` are fixed in `gen.py`.
 
-![sponge](sponge.png)
-
-Sponge with NV = 20, NC = 30, AA = 0.25, BB = 0.5, LOOP_NO = 1, R_E = 1.2,
-NumBelix = 1, NumBelix2 = 0, rendered from `ver.stl` with
-[vis.py](vis.py) (`pvpython vis.py`).
+Rendering of a generated `ver.stl`: `pvpython vis.py`.  The scanned
+sponge is [../real.stl](../real.stl).
 
 | Parameter | Description                                    | Range in mm  |
 |-----------|------------------------------------------------|--------------|

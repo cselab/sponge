@@ -8,7 +8,10 @@ converted to a Basilisk dump, which the solver
 solver also has analytic shapes (`-S cylinder`, `-S sphere`) used for
 validation.
 
-![sponge](geom/sponge.png)
+[![sponge](real.png)](real.stl)
+
+[real.stl](real.stl): the scanned sponge, centred and scaled to unit
+diameter by [stl/center.py](stl/center.py), binary STL without colours.
 
 Files:
 

@@ -5,14 +5,9 @@ set -eu
 : ${l=7} ${m=10} ${s=26} ${re=2000}
 : ${mpiexec=mpiexec}
 
-center=~/00000017/center.stl
+center=../../real.stl
 make cylinder
 (cd ../../dump && make stl2dump)
-if test ! -f $center
-then
-    ../../stl/cylinder.py -n 64 ver.stl
-    ../../stl/center.py ver.stl $center
-fi
 zlim=`../../stl/size.py $center`
 if test ! -f basilisk.$l.$m.dump
 then
