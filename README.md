@@ -17,8 +17,11 @@ diameter by [stl/center.py](stl/center.py).
 
 ![Re 4000](real4000.gif)
 
-Q criterion at four levels, Re 2000 above and Re 4000 below, every
-sixth frame of the runs described under [Render](#render).
+Flow is from left to right, Reynolds number 2000 above and 4000 below,
+based on the sponge diameter and the inlet velocity, both 1. The four
+surfaces are levels of the Q criterion, Q = 0.2, 0.6, 1.8 and 3, from
+the most transparent grey to the opaque pink. The dark body is
+[real.stl](real.stl). See [Render](#render) for the commands.
 
 Files:
 
