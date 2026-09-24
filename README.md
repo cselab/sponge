@@ -13,6 +13,13 @@ validation.
 [real.stl](real.stl): the scanned sponge, centred and scaled to unit
 diameter by [stl/center.py](stl/center.py).
 
+![Re 2000](real2000.gif)
+
+![Re 4000](real4000.gif)
+
+Q criterion at four levels, Re 2000 above and Re 4000 below, every
+sixth frame of the runs described under [Render](#render).
+
 Files:
 
 - [geom/gen.py](geom/gen.py): sponge parameters (`config.py`) to `ver.stl`
@@ -92,8 +99,10 @@ output (`-F`), extracted with
 [amriso](https://github.com/cselab/amriso)
 (`pip install git+https://github.com/cselab/amriso`) and rendered with
 ParaView. The sponge surface comes from the STL. `-Z ZCUT` drops
-cells with |z| > ZCUT, to hide the boundary layers on the end walls
-(the sponge above spans |z| < 2.06).
+cells with |z| > ZCUT, to hide the boundary layers on the end walls.
+`-X XCUT` and `-Y YCUT` keep the surface inside the refined wake box
+and upstream of the outlet coarsening; without them the coarse far
+field contributes large flat facets.
 
 ```sh
 python3 ../tool/iso.py -Z 1.6 1 h.[0-9]*.xdmf2
@@ -104,6 +113,10 @@ ffmpeg -framerate 4 -pattern_type glob -i 'h.*.omega1.png' -pix_fmt yuv420p omeg
 [tool/iso.py](tool/iso.py) writes `h.N.omega1.xdmf2` triangle meshes
 colored by omega_z, [tool/pvsurf.py](tool/pvsurf.py) writes
 `h.N.omega1.png` with a fixed camera and color range over all frames.
+The camera is set from the STL alone, so it is the same in every frame.
+`-w WIDTH -H HEIGHT` sets the image size and `-z ZOOM` how much is in
+view; `-w 3840 -H 2160 -z 0.83` puts the whole wake in a 16:9 frame.
+`-A AZ,EL` turns the camera.
 [tool/pvmulti.py](tool/pvmulti.py) draws several levels of one frame
 with their own opacity and color (`c` colored by omega_z, `b` pale
 blue, `p` pink, or `R/G/B`), for example two Q levels:

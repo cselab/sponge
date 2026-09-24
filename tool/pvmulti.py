@@ -1,5 +1,6 @@
 from paraview.simple import *
 import json
+import math
 import numpy as np
 import os
 import re
@@ -7,7 +8,8 @@ import sys
 
 if len(sys.argv) < 4:
     sys.stderr.write(
-        "usage: pvpython pvmulti.py [-z ZOOM] [-w WIDTH] [-r SAMPLES] [-a] [-c PERCENTILE]\n"
+        "usage: pvpython pvmulti.py [-z ZOOM] [-w WIDTH] [-H HEIGHT] [-r SAMPLES] [-a]\n"
+        "                           [-c PERCENTILE] [-m MAX] [-A AZ,EL]\n"
         "                           center.stl TAG:OPACITY[:MODE],... FILE.xdmf2 [FILE.xdmf2 ...]\n"
         "       TAG is a mesh written by iso.py: omega1, q5, l21, ...\n"
         "       MODE c colour by omega_z (default), g grey, w white, b pale blue,\n"
@@ -20,6 +22,9 @@ if len(sys.argv) < 4:
         "                      light intensity\n"
         "       -a          screen space ambient occlusion (rasterizer only)\n"
         "       -c PERCENTILE  colour range percentile of |omega_z| (default 99)\n"
+        "       -m MAX      fixed colour range instead of the percentile\n"
+        "       -w WIDTH -H HEIGHT  image size, default WIDTH 1920 and 16:9\n"
+        "       -A AZ,EL    camera azimuth and elevation in degrees, default 0,20\n"
         "       writes FILE.multi.png\n"
         "example: pvmulti.py -r 32 center.stl q1:0.3:b,q5:1.0:p h.[0-9]*.xdmf2\n")
     sys.exit(1)
@@ -30,6 +35,10 @@ rays = 0
 ssao = 0
 pct = 99.0
 glass = 0.0
+cmax = 0.0
+height = 0
+az = None
+el = None
 kit = None
 light = None
 materials = {}
@@ -55,6 +64,15 @@ while args[0].startswith("-"):
     elif args[0] == "-l":
         light = [float(x) for x in args[1].split(",")]
         args = args[2:]
+    elif args[0] == "-H":
+        height = int(args[1])
+        args = args[2:]
+    elif args[0] == "-A":
+        az, el = [float(x) for x in args[1].split(",")]
+        args = args[2:]
+    elif args[0] == "-m":
+        cmax = float(args[1])
+        args = args[2:]
     elif args[0] == "-a":
         ssao = 1
         args = args[1:]
@@ -68,8 +86,7 @@ colors = {"g": [0.72, 0.75, 0.80], "w": [0.95, 0.96, 1.0], "b": [0.72, 0.78, 0.9
           "l": [0.68, 0.66, 0.92], "s": [0.50, 0.56, 0.76], "p": [0.86, 0.42, 0.50]}
 
 m = 0.0
-lo = np.full(3, np.inf)
-hi = np.full(3, -np.inf)
+
 for path in paths:
     base = os.path.splitext(path)[0]
     for spec in surf:
@@ -78,15 +95,13 @@ for path in paths:
             a = np.fromfile(name + ".attr.raw", np.float32)
             if a.size:
                 m = max(m, float(np.percentile(np.abs(a), pct)))
-        x = np.fromfile(name + ".xyz.raw", np.float32).reshape(-1, 3)
-        if x.size:
-            lo = np.minimum(lo, x.min(0))
-            hi = np.maximum(hi, x.max(0))
+if cmax:
+    m = cmax
 if m == 0:
     m = 1.0
 
 view = GetActiveViewOrCreate("RenderView")
-view.ViewSize = [width, width * 9 // 16]
+view.ViewSize = [width, height if height else width * 9 // 16]
 view.Background = [1, 1, 1]
 view.OrientationAxesVisibility = 0
 view.UseColorPaletteForBackground = 0
@@ -104,9 +119,10 @@ bd.DiffuseColor = [0.28, 0.27, 0.32]
 bd.Specular = 0.0 if (ssao or rays) else 0.3
 bodyn.UpdatePipeline()
 b = bodyn.GetDataInformation().GetBounds()
-lo = np.minimum(lo, b[0::2])
-hi = np.maximum(hi, b[1::2])
-hi[0] = max(hi[0], lo[0] + (hi[2] - lo[2]) * width / (width * 9 // 16))
+lo = np.array(b[0::2], float)
+hi = np.array(b[1::2], float)
+H = height if height else width * 9 // 16
+hi[0] = max(hi[0], lo[0] + (hi[2] - lo[2]) * width / H)
 c = (lo + hi) / 2
 L = float((hi - lo).max())
 
@@ -152,9 +168,16 @@ for path in paths:
     view.CameraParallelProjection = 1
     view.ResetCamera(lo[0], hi[0], lo[1], hi[1], lo[2], hi[2])
     scale = 0.6 * (hi[2] - lo[2]) / zoom
-    fx = lo[0] - 0.1 * scale + scale * width / (width * 9 // 16)
+    fx = lo[0] - 0.1 * scale + scale * width / H
     view.CameraFocalPoint = [fx, c[1], c[2]]
-    view.CameraPosition = [fx, c[1] - 1.2 * L, c[2] + 0.35 * L]
+    if az is None:
+        view.CameraPosition = [fx, c[1] - 1.2 * L, c[2] + 0.35 * L]
+    else:
+        a = math.radians(az)
+        e = math.radians(el)
+        view.CameraPosition = [fx + 1.6 * L * math.cos(e) * math.sin(a),
+                               c[1] - 1.6 * L * math.cos(e) * math.cos(a),
+                               c[2] + 1.6 * L * math.sin(e)]
     view.CameraViewUp = [0, 0, 1]
     view.GetActiveCamera().SetParallelScale(scale)
     if rays:

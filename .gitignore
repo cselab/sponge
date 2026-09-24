@@ -1,0 +1,17 @@
+# build products
+cylinder/cylinder
+cylinder/_cylinder.c
+dump/stl2dump
+dump/dump2xdmf
+geom/stl2dump
+geom/dump2xdmf
+*.o
+*.dSYM/
+.qcc/
+
+# run output
+*.mp4
+*.dump
+*.raw
+h.[0-9]*.xdmf2
+force.dat
